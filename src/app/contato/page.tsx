@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Button from "@/components/Button";
 import { SITE, whatsappLink } from "@/content/site";
+import Visual from "@/components/Visual";
+import { firstPhoto } from "@/content/photos";
 import { InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
@@ -52,8 +54,10 @@ export default function ContatoPage() {
               <a href={SITE.maps} target="_blank" rel="noopener noreferrer" className="label link-line mt-3 inline-block text-champagne">
                 Ver no Google Maps
               </a>
+              <p className="mt-2 text-[15px] text-mute">Fechado aos domingos e às segundas.</p>
               <p className="mt-6 text-[15px] text-mute">{SITE.lgbt}.</p>
             </div>
+            <Visual photo={firstPhoto("fachada")} label="Fachada do prédio" className="aspect-[4/3] w-full" position="50% 38%" sizes="(min-width:1024px) 40vw, 100vw" />
             <ul className="space-y-3 text-[17px]">
               <li>
                 <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="link-line inline-flex items-center gap-3">

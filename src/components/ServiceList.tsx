@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useRef } from "react";
 import { gsap, finePointer, reduceMotion } from "@/lib/gsap";
 import { SERVICES, serviceHref } from "@/content/services";
-import { firstPhoto } from "@/content/photos";
 import Visual from "./Visual";
 
 /** Lista editorial: a foto do serviço aparece seguindo o mouse, com leve atraso, no hover de cada linha. */
@@ -64,7 +63,7 @@ export default function ServiceList() {
       >
         {SERVICES.map((s, i) => (
           <div key={s.slug} data-pv style={{ display: i === 0 ? "block" : "none" }} className="h-full w-full">
-            <Visual photo={firstPhoto(s.fotoKey)} num={s.num} label={s.nome} className="h-full w-full" sizes="240px" />
+            <Visual num={s.num} label={s.nome} className="h-full w-full" sizes="240px" />
           </div>
         ))}
       </div>

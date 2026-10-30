@@ -57,6 +57,7 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
         {photos.map((p, i) => (
           <div key={p.src} data-g className="w-[78vw] shrink-0 snap-center overflow-hidden md:w-[32vw]">
             <Visual photo={p} label={p.alt} className="aspect-[4/5] w-full" sizes="(min-width:768px) 32vw, 78vw" priority={i === 0} />
+            {p.legenda && <p className="label mt-3 text-[11px] text-champagne">{p.legenda}</p>}
           </div>
         ))}
       </div>

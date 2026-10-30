@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function OSalaoPage() {
   const netto = TEAM.find((m) => m.destaque);
   const equipe = TEAM.filter((m) => !m.destaque);
-  const espaco = photosFor("salao");
+  const espaco = photosFor("salao-detalhes");
   return (
     <>
       <PageHero
@@ -27,10 +27,17 @@ export default function OSalaoPage() {
         intro="Beleza, cuidado e experiência em cada detalhe. Um espaço feito para você ser cuidada."
       />
 
+      <section className="bg-ink pb-20 md:pb-28" aria-label="A equipe">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-10">
+          <Visual photo={firstPhoto("salao-equipe")} label="Equipe do NS Concept Hair" className="mx-auto aspect-[9/16] w-full max-w-[560px] md:aspect-[4/5]" sizes="(min-width:768px) 560px, 100vw" priority />
+          <p className="label mt-4 text-center text-[11px] text-mute">A equipe do NS Concept Hair</p>
+        </div>
+      </section>
+
       <section className="on-light bg-ivory py-24 md:py-36">
         <div className="mx-auto grid max-w-[1440px] items-center gap-14 px-5 md:px-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <Visual photo={firstPhoto("equipe")} num="NS" label="Netto Sillva" className="aspect-[4/5] w-full !bg-sand !text-ink" sizes="(min-width:1024px) 40vw, 100vw" />
+            <Visual photo={undefined} num="NS" label="Netto Sillva" className="aspect-[4/5] w-full !bg-sand !text-ink" sizes="(min-width:1024px) 40vw, 100vw" />
           </div>
           <div className="lg:col-span-7">
             <Fade as="p" className="label mb-6 text-champagne-deep">
@@ -69,7 +76,7 @@ export default function OSalaoPage() {
         </div>
       </section>
 
-      {espaco.length > 1 && <Gallery photos={espaco} />}
+      {espaco.length > 0 && <Gallery photos={espaco} />}
 
       <section className="grain relative bg-graphite py-24 md:py-32">
         <div className="mx-auto max-w-[900px] px-5 text-center md:px-10">

@@ -11,7 +11,8 @@ export type Service = {
   pontos: string[];
   etapas?: { titulo: string; texto: string }[];
   faq: { q: string; a: string }[];
-  fotoKey?: string; // chave em photos.ts
+  fotoKey?: string; // chave em photos.ts (página do serviço)
+  vitrineKey?: string; // chave em photos.ts (vitrine da Home); sem foto = painel tipográfico
   opcoes: BookingOption[]; // opções do agendamento
 };
 
@@ -50,6 +51,7 @@ export const SERVICES: Service[] = [
       { q: "Quais técnicas vocês trabalham?", a: "A equipe apresenta as opções na avaliação, de acordo com o seu cabelo." },
     ],
     fotoKey: "mega-hair",
+    vitrineKey: "home-mega-hair",
     opcoes: [
       {
         id: "avaliacao-mega-hair",
@@ -76,6 +78,7 @@ export const SERVICES: Service[] = [
       { q: "Como agendo?", a: "Pelo site; o salão confirma o horário pelo WhatsApp." },
     ],
     fotoKey: "coloracao",
+    vitrineKey: "home-coloracao",
     opcoes: [
       { id: "morena-iluminada", nome: "Morena iluminada" },
       { id: "mechas", nome: "Mechas" },
@@ -99,6 +102,7 @@ export const SERVICES: Service[] = [
       { q: "Quem faz?", a: "A Sil, cabeleireira visagista, e a equipe do salão." },
     ],
     fotoKey: "corte",
+    vitrineKey: "home-corte",
     opcoes: [{ id: "corte-visagismo", nome: "Corte com visagismo" }],
   },
   {
@@ -117,6 +121,7 @@ export const SERVICES: Service[] = [
       { q: "Como agendo?", a: "Pelo site; o salão confirma o horário pelo WhatsApp." },
     ],
     fotoKey: "tratamentos",
+    vitrineKey: "home-tratamentos",
     opcoes: [
       { id: "escova", nome: "Escova" },
       { id: "tratamento", nome: "Hidratação e tratamentos" },

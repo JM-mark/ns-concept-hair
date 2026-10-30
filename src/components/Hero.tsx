@@ -31,12 +31,16 @@ export default function Hero() {
   const root = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const [posterOnly, setPosterOnly] = useState(false);
+  const [mobile, setMobile] = useState(false);
 
   // Vídeo só quando há conexão/preferência para isso; pausa fora da tela e com a aba oculta
   useEffect(() => {
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const only = reduceMotion() || !!conn?.saveData;
-    const t = window.setTimeout(() => setPosterOnly(only), 0);
+    const t = window.setTimeout(() => {
+      setPosterOnly(only);
+      setMobile(window.innerWidth < 768);
+    }, 0);
     const v = video.current;
     if (!v || only) return () => window.clearTimeout(t);
     const io = new IntersectionObserver(([e]) => {
@@ -184,26 +188,28 @@ export default function Hero() {
     <section ref={root} className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink" aria-label="Apresentação">
       {/* fundo */}
       <div className="h-bg absolute inset-0 opacity-0 will-change-transform" aria-hidden="true">
-        {SITE.heroVideo ? (
-          useVideo ? (
-            <video
-              ref={video}
-              className="h-full w-full object-cover"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster={SITE.heroVideoSrc.poster}
-            >
-              <source src={SITE.heroVideoSrc.webm} type="video/webm" />
-              <source src={SITE.heroVideoSrc.mp4} type="video/mp4" />
-            </video>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={SITE.heroVideoSrc.poster} alt="" className="h-full w-full object-cover" />
-          )
+        {useVideo ? (
+          <video
+            ref={video}
+            className="absolute inset-y-0 right-0 h-full w-full object-cover md:w-[46vw] md:max-w-[760px] md:[mask-image:linear-gradient(to_right,transparent,#000_42%)]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={SITE.heroVideoSrc.poster}
+          >
+            {mobile ? (
+              <source src={SITE.heroVideoSrc.mp4Mobile} type="video/mp4" />
+            ) : (
+              <>
+                <source src={SITE.heroVideoSrc.webm} type="video/webm" />
+                <source src={SITE.heroVideoSrc.mp4} type="video/mp4" />
+              </>
+            )}
+          </video>
         ) : (
+          // Fallback: canvas de fios (reduced-motion e economia de dados mostram um quadro estático)
           <HairCanvas />
         )}
       </div>
@@ -246,7 +252,7 @@ export default function Hero() {
         <div className="h-fadeout mt-auto grid items-end gap-8 pt-12 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <p className="label h-tag invisible mb-5 text-champagne">Indaiatuba</p>
-            <h1 className="h-title font-display text-[clamp(44px,8.4vw,128px)] leading-[0.98]">
+            <h1 className="h-title font-display text-[clamp(44px,6.6vw,104px)] leading-[0.98]">
               <span className="line-mask">
                 <span>Seu espaço para ser</span>
               </span>

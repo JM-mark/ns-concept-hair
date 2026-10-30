@@ -40,7 +40,7 @@ export default function MegaHairFeature() {
     <section ref={root} className="on-light bg-ivory py-24 md:py-36">
       <div className="mx-auto grid max-w-[1440px] items-center gap-12 px-5 md:px-10 lg:grid-cols-12 lg:gap-16">
         <div className="mh-photo lg:col-span-6">
-          <Visual photo={firstPhoto(mega.fotoKey)} num="01" label="Mega Hair" className="aspect-[4/5] w-full bg-sand !text-ink" />
+          <Visual photo={firstPhoto("mega-hair-feature")} num="01" label="Mega Hair" className="aspect-[4/5] w-full bg-sand !text-ink" />
         </div>
         <div className="lg:col-span-6">
           <Fade as="p" className="label mb-6 text-champagne-deep">

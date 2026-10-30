@@ -100,7 +100,7 @@ export default function ServicesShowcase() {
           <div className="relative col-span-7">
             {SERVICES.map((s) => (
               <div key={s.slug} data-sv-panel className="absolute inset-0">
-                <Visual photo={firstPhoto(s.fotoKey)} num={s.num} label={s.nome} className="h-full w-full" sizes="55vw" />
+                <Visual photo={firstPhoto(s.vitrineKey)} num={s.num} label={s.nome} className="h-full w-full" sizes="55vw" />
               </div>
             ))}
           </div>
@@ -115,7 +115,7 @@ export default function ServicesShowcase() {
           {SERVICES.map((s) => (
             <li key={s.slug}>
               <Link href={serviceHref(s)} className="group block border border-[var(--line)]">
-                <Visual photo={firstPhoto(s.fotoKey)} num={s.num} label={s.nome} className="aspect-[4/3]" sizes="100vw" />
+                <Visual photo={firstPhoto(s.vitrineKey)} num={s.num} label={s.nome} className="aspect-[4/3]" sizes="100vw" />
                 <div className="p-5">
                   <h3 className="font-display text-3xl">{s.nome}</h3>
                   <p className="mt-2 text-[15px] text-mute">{s.linha}</p>

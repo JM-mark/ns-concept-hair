@@ -1,20 +1,11 @@
 import type { Service } from "@/content/services";
 import { photosFor, firstPhoto } from "@/content/photos";
-import type { ResultCategory } from "@/content/results";
 import PageHero from "./PageHero";
 import Visual from "./Visual";
 import Button from "./Button";
-import ResultsSection from "./ResultsSection";
 import CtaBand from "./CtaBand";
 import Gallery from "./Gallery";
 import { Fade } from "./motion";
-
-const CATEGORIA: Record<string, ResultCategory | undefined> = {
-  "mega-hair": "mega-hair",
-  coloracao: "coloracao",
-  "corte-e-visagismo": "corte",
-  tratamentos: "tratamentos",
-};
 
 /** Template único de página de serviço, alimentado por src/content/services.ts. */
 export default function ServicePage({ service: s }: { service: Service }) {
@@ -74,8 +65,7 @@ export default function ServicePage({ service: s }: { service: Service }) {
         </div>
       </section>
 
-      {photos.length > 1 && <Gallery photos={photos} />}
-      <ResultsSection categoria={CATEGORIA[s.slug]} link />
+      {photos.length > 1 && <Gallery photos={photos.slice(1)} />}
 
       <section className="bg-ink py-24 md:py-32" aria-labelledby="faq">
         <div className="mx-auto max-w-[900px] px-5 md:px-10">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PAIRS, GALLERY, type ResultCategory } from "@/content/results";
+import { MORE_PAIRS, GALLERY, type ResultCategory } from "@/content/results";
 import { SITE } from "@/content/site";
 import { asset } from "@/lib/asset";
 import BeforeAfter from "./BeforeAfter";
@@ -18,9 +18,10 @@ const FILTROS: { id: ResultCategory | "todos"; label: string }[] = [
 /** Galeria filtrável de resultados reais. Sem itens aprovados, a página leva para o Instagram do salão. */
 export default function ResultsGallery() {
   const [f, setF] = useState<ResultCategory | "todos">("todos");
-  const pairs = PAIRS.filter((p) => f === "todos" || p.categoria === f);
+  const pairs = MORE_PAIRS.filter((p) => f === "todos" || p.categoria === f);
   const items = GALLERY.filter((g) => f === "todos" || g.categoria === f);
-  const empty = !PAIRS.length && !GALLERY.length;
+  const empty = !MORE_PAIRS.length && !GALLERY.length;
+  const showFilters = MORE_PAIRS.length + GALLERY.length > 3;
 
   return (
     <section className="bg-ink pb-28">
@@ -37,6 +38,7 @@ export default function ResultsGallery() {
           </div>
         ) : (
           <>
+            {showFilters && (
             <div className="mb-12 flex flex-wrap gap-2" role="group" aria-label="Filtrar por serviço">
               {FILTROS.map((x) => (
                 <button
@@ -52,6 +54,7 @@ export default function ResultsGallery() {
                 </button>
               ))}
             </div>
+            )}
             {pairs.length > 0 && (
               <div className="mb-16 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
                 {pairs.map((p) => (
@@ -71,6 +74,9 @@ export default function ResultsGallery() {
                 ))}
               </ul>
             )}
+            <div className="mt-16">
+              <Button href={SITE.instagram}>Ver mais no Instagram</Button>
+            </div>
           </>
         )}
       </div>

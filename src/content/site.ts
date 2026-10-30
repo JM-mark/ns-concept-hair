@@ -28,8 +28,8 @@ export const SITE = {
   // Post do salão no Instagram + Google Maps: ter a sex 8h-19h, sáb 8h-18h. TODO confirmar segunda
   horarioResumo: "Ter a sex, 8h às 19h · Sáb, 8h às 18h",
   lgbt: "Espaço LGBTQ+ friendly",
-  // Vídeo do hero: coloque true quando os arquivos existirem em public/video/
-  heroVideo: false,
+  // Vídeo do hero (Pexels, licença livre: https://www.pexels.com/video/blonde-woman-showcasing-silky-long-hair-36707549/). Arquivos em public/video/
+  heroVideo: true,
   heroVideoSrc: {
     mp4: asset("/video/hero-1080.mp4"),
     mp4Mobile: asset("/video/hero-720.mp4"),

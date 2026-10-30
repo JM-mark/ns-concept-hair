@@ -1,4 +1,4 @@
-import { PAIRS, type ResultCategory } from "@/content/results";
+import { HOME_PAIRS, type ResultCategory } from "@/content/results";
 import BeforeAfter from "./BeforeAfter";
 import Button from "./Button";
 import { SplitTitle } from "./motion";
@@ -8,7 +8,7 @@ import { SplitTitle } from "./motion";
  * Pedir ao salão fotos de antes e depois autorizadas pelas clientes.
  */
 export default function ResultsSection({ categoria, limit = 3, link = true }: { categoria?: ResultCategory; limit?: number; link?: boolean }) {
-  const pairs = PAIRS.filter((p) => !categoria || p.categoria === categoria).slice(0, limit);
+  const pairs = HOME_PAIRS.filter((p) => !categoria || p.categoria === categoria).slice(0, limit);
   if (!pairs.length) return null;
   return (
     <section className="bg-ink py-24 md:py-36" aria-labelledby="res-title">

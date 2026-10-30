@@ -9,13 +9,14 @@ type Props = {
   sizes?: string;
   priority?: boolean;
   dataCursor?: string;
+  position?: string; // object-position, ex.: "50% 30%"
 };
 
 /**
  * Foto real quando existe; senão painel tipográfico (número grande + nome).
  * Nunca foto de banco.
  */
-export default function Visual({ photo, num, label, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority, dataCursor }: Props) {
+export default function Visual({ photo, num, label, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority, dataCursor, position }: Props) {
   if (photo) {
     return (
       <div className={`relative overflow-hidden bg-graphite ${className}`} data-cursor={dataCursor}>
@@ -31,7 +32,7 @@ export default function Visual({ photo, num, label, className = "", sizes = "(mi
           fetchPriority={priority ? "high" : undefined}
           decoding="async"
           className="h-full w-full object-cover"
-          style={photo.lqip ? { backgroundImage: `url(${photo.lqip})`, backgroundSize: "cover" } : undefined}
+          style={{ objectPosition: position, ...(photo.lqip ? { backgroundImage: `url(${photo.lqip})`, backgroundSize: "cover" } : {}) }}
         />
       </div>
     );
