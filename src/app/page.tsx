@@ -3,7 +3,6 @@ import { Marquee } from "@/components/motion";
 import Manifesto from "@/components/Manifesto";
 import ServicesShowcase from "@/components/ServicesShowcase";
 import MegaHairFeature from "@/components/MegaHairFeature";
-import ResultsSection from "@/components/ResultsSection";
 import ReviewsMap from "@/components/ReviewsMap";
 import CtaBand from "@/components/CtaBand";
 import { SERVICES } from "@/content/services";
@@ -16,7 +15,6 @@ export default function Home() {
       <Manifesto />
       <ServicesShowcase />
       <MegaHairFeature />
-      <ResultsSection />
       <ReviewsMap />
       <CtaBand />
     </>
