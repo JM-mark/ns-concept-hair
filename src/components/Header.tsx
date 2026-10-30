@@ -92,7 +92,7 @@ export default function Header() {
       <header className="pointer-events-none fixed inset-x-0 top-0 z-[100] px-3 pt-3 md:px-6">
         <div
           className={`pointer-events-auto relative mx-auto flex h-[60px] max-w-[1440px] items-center justify-between px-4 transition-[background-color,border-color,backdrop-filter] duration-500 md:h-[64px] md:px-6 ${
-            floating ? "rounded-full border border-white/10 bg-ink/60 backdrop-blur-[14px]" : "rounded-full border border-transparent"
+            floating ? "rounded-full border border-white/10 bg-ink/75 backdrop-blur-[14px]" : "rounded-full border border-transparent"
           } ${ink ? "text-ink" : "text-ivory"}`}
         >
           <Link href="/agendar/" className="label link-line z-10 hidden sm:inline-block">

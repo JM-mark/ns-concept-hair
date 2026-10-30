@@ -8,7 +8,7 @@ import { Fade, FillTitle } from "./motion";
 function Card({ r }: { r: Review }) {
   return (
     <figure className="rounded-[16px] border border-bronze-deep/15 bg-ivory/50 p-7">
-      <span className="block font-display text-[56px] italic leading-[0.6] text-bronze" aria-hidden="true">
+      <span className="block font-display text-[88px] not-italic leading-[0.7] text-bronze" aria-hidden="true">
         “
       </span>
       <blockquote className="mt-2 text-[16px] leading-relaxed text-ink">{r.texto}</blockquote>

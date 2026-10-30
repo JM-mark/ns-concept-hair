@@ -32,12 +32,12 @@ export default function WhyNS() {
 
   return (
     <section ref={root} className="on-light bg-sand py-24 md:py-40" aria-labelledby="why-title">
-      <div className="mx-auto max-w-[1100px] px-5 text-center md:px-10">
+      <div className="mx-auto max-w-[1240px] px-5 text-center md:px-10">
         <Fade as="p" className="eyebrow mb-10">
           <span id="why-title">Por que a NS</span>
         </Fade>
         <FillTitle
-          className="font-display text-[clamp(32px,4.6vw,64px)] font-medium leading-[1.12]"
+          className="font-display text-[clamp(30px,4vw,56px)] font-medium leading-[1.12]"
           lines={[
             "Beleza, cuidado e experiência",
             <em key="e" className="italic">em cada detalhe,</em>,

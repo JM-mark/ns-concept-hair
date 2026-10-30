@@ -1,73 +1,78 @@
 ---
 name: NS Concept Hair
-family: S08 Editorial Luxo (versão escura, seções marfim)
+family: S08 Editorial Luxo (escuro) com seções em areia; layout e motion inspirados na LuxySpa
 colors:
   ink: "#0B0B0B"
   graphite: "#161514"
+  espresso: "#1A140E"
   ivory: "#F3EEE6"
-  sand: "#E7DDCF"
+  sand: "#DCCFC0"
   champagne: "#CDB896"
-  champagne-deep: "#8C7356"
+  bronze: "#7A5F43"
+  bronze-deep: "#5E4630"
   mute: "#8E877D"
-  mute-dark: "#62594D"
   champagne-grad: "linear-gradient(120deg, #EFE3CF 0%, #C9AE88 45%, #8C7356 100%)"
 typography:
-  display: { family: "Bodoni Moda", weights: [400, 500], axes: { opsz: "variável" }, italic: true, sizes: "56px a 140px", tracking: "-0.02em", leading: 1.02 }
+  display: { family: "Bodoni Moda", weights: [500, 600], italic: true, hero: "clamp(64px, 9.3vw, 134px)", section: "clamp(44px, 5vw, 72px)", tracking: "-0.02em" }
   body: { family: "Jost", weights: [300, 400, 500], size: "17px", leading: 1.6 }
+  eyebrow: { family: "Jost", weight: 500, size: "12px", transform: uppercase, tracking: "0.6em" }
   label: { family: "Jost", weight: 500, size: "12-13px", transform: uppercase, tracking: "0.28em" }
-shapes: { radius: "0-2px", border: "1px hairline champagne a 30%", arcs: false }
-motion: { ease: ["expo.out", "power3.out"], duration: "0.6-1.2s", bounce: false, rotation: false }
+shapes: { photo: "16px", button: "pílula", glass: "20px" }
+motion: { ease: ["expo.out", "power3.out"], duration: "0.6-1.2s", bounce: false }
 ---
 
 # NS Concept Hair — Design System
 
+**Referência de layout e motion: LuxySpa (Framer), somente inspiração.** Nenhum código, texto, foto ou ilustração foi copiado.
+
 ## Overview
-Luxo noturno editorial. A logo é um monograma Didone champagne sobre preto e o feed do salão é preto, com cabelos
-longos, lisos e brilhantes. O site se comporta como marca de alta beleza (referência de clima: Dior Beauty,
-Kérastase), não como salão de bairro. Fundo escuro predominante, com seções marfim para respirar.
-Ritmo: escuro (hero) → escuro → **marfim** → escuro → marfim → escuro (footer).
+Luxo noturno editorial com seções em areia, o "irmão claro" do champagne. Ritmo da Home: hero escuro → areia (por que a NS) →
+areia (jornada) → areia (avaliações) → escuro (serviços em grade) → areia (equipe) → agendamento (espresso/vidro) → areia (FAQ) → footer escuro.
 
 ## Colors
 Tokens em `src/app/globals.css`. Só usar estes.
-- `--ink` fundo principal; `--graphite` cards e seções escuras alternadas; `--ivory` e `--sand` seções claras.
-- `--champagne` detalhes, linhas e ícones; `--champagne-grad` só em títulos grandes, botões primários e brilho metálico, nunca em texto corrido.
-- `--mute` texto secundário em fundo escuro; **em marfim usar `--mute-dark`** (o `--mute` não passa AA em marfim).
-- Contraste AA verificado para texto corrido: ivory sobre ink, champagne sobre ink, ink sobre ivory, mute-dark sobre ivory.
+- `--ink`, `--graphite`, `--espresso`: fundos escuros. `--sand`: fundo claro principal. `--ivory`: texto sobre escuro e botão sólido.
+- **Champagne só sobre fundo escuro.** Sobre areia ele dá 1,26:1 e nunca vai em texto, ícone ou linha fina.
+- Sobre areia: `--bronze-deep` (#5E4630) para rótulos, textos pequenos, ícones e linhas; `--bronze` (#7A5F43) só em títulos >= 32px.
+
+Pares de contraste (conferidos com `node scripts/contrast.mjs`):
+
+| Par | Razão | Uso |
+|---|---|---|
+| bronze-deep sobre sand | 5,73:1 | rótulos, textos, ícones, linhas |
+| bronze sobre sand | 3,87:1 | só títulos >= 32px (AA para texto grande) |
+| champagne sobre sand | 1,26:1 | **não usar** |
+| ink sobre sand | 12,87:1 | texto corrido |
+| champagne sobre ink | 10,21:1 | rótulos, linhas, ícones |
+| ivory sobre ink | 17,04:1 | texto |
+| mute sobre ink | 5,54:1 | texto secundário |
+| champagne sobre espresso | 9,47:1 | rótulos no vidro |
+| ivory sobre espresso | 15,81:1 | texto |
+| ivory sobre vidro (espresso 70% sobre foto clara) | 7,30:1 | agendamento |
+| ivory sobre bronze | 5,13:1 | setas redondas |
+| ivory sobre bronze-deep | 7,59:1 | botão em areia |
+| ink sobre champagne | 10,21:1 | botão primário |
 
 ## Typography
-Display Bodoni Moda (itálico para a palavra de destaque, com gradiente champagne). Texto e interface em Jost.
-Rótulos, menu e botões em Jost 500, 12–13px, caixa alta, tracking 0.28em (o espírito do "CONCEPT HAIR" da logo).
-Carregadas com `next/font/google`, `display: swap`.
+Bodoni Moda 500/600 nos títulos (itálico para a palavra de destaque), Jost no texto. Rótulos de seção (`.eyebrow`) com tracking de 0,6em;
+menu e botões (`.label`) com 0,28em.
 
-## Layout
-Contêiner 1440px, gutter 20px (mobile) e 40px (desktop). Hairlines de 1px. A **diagonal do N** é o motivo gráfico:
-divisores diagonais sutis, máscaras de revelação na diagonal, ângulo do brilho metálico e da cortina de transição.
+## Layout, Shapes e Components
+Contêiner de 1440px. Fotos com cantos de 16px, botões em pílula (fundo preenche da esquerda para a direita), cards com moldura deslocada
+de 8px em linha fina. Header com monograma centralizado e pílula MENU (vira pílula de vidro após 80px); menu em tela cheia sobre areia.
+Agendamento em card de vidro (`.glass`: espresso 70%, blur 18px, borda branca 10%, cantos de 20px).
 
 ## Elevation & Depth
-Sem sombras pesadas. Profundidade por camadas de cor (ink/graphite), grão de filme muito leve nas seções escuras
-(`.grain`) e véu em degradê sobre vídeo/foto.
-
-## Shapes
-Cantos retos (0px) ou 2px. Nada de cantos muito arredondados nem arcos. Exceção funcional: o puxador circular do
-antes e depois e o ponto do cursor.
-
-## Components
-Botão primário (gradiente champagne) e fantasma (borda champagne), ambos com texto que troca por cópia que sobe e
-magnetismo de até 6px. Header transparente sobre o hero, `--ink` com blur de 12px depois de 80px de scroll.
-Cards sem sombra, borda hairline. Painel tipográfico (número grande + nome) quando falta foto real; nunca foto de banco.
+Sem sombras pesadas. Profundidade por camadas, grão de filme nas seções escuras e vidro no agendamento.
 
 ## Motion
-GSAP + ScrollTrigger, Lenis (lerp 0,1), Framer Motion só em transição de página e do stepper. Easing `expo.out` /
-`power3.out`, durações de 0,6 a 1,2s, sem bounce e sem rotação.
-- Intro do hero (~2,4s, uma vez por sessão): N e S entram de lados opostos e se encaixam, brilho metálico na diagonal, "CONCEPT HAIR" letra por letra.
-- Rolagem: o monograma encolhe até virar o logo do header; vídeo dá zoom 1→1,1 e escurece.
-- Títulos sobem por linha com máscara (stagger 90ms). Manifesto acende palavra por palavra.
-- Vitrine de serviços fixa (pin) com máscara diagonal; só um título por vez.
-- Cortina de transição diagonal ≤700ms. Cursor personalizado só em desktop, via rAF e translate3d.
-- `prefers-reduced-motion`: sem intro, sem Lenis, sem pins, sem parallax, sem cursor; vídeo vira poster.
+GSAP + ScrollTrigger, Lenis, Framer Motion só no stepper. Easing `expo.out`/`power3.out`, 0,6 a 1,2s, sem bounce.
+- Títulos: palavra por palavra (blur 10px → 0, y 24px); títulos de seção em areia "preenchem" no scroll (letras de 18% à cor cheia).
+- Fotos: `clip-path` com cantos de 16px e escala 1,1 → 1, só após `img.decode()`.
+- Jornada do Mega Hair: título sticky de CSS (sem pin do GSAP) e cards por cima com moldura em parallax de 6px; odômetro nos números 01–04.
+- Avaliações em 3 colunas rolando em sentidos opostos (pausa no hover/foco); fios de cabelo em traço se desenham no scroll.
+- `prefers-reduced-motion`: títulos prontos, sem blur, sem odômetro, sem colunas rolando, sem sticky, sem parallax, vídeo vira canvas estático.
 
 ## Do's and Don'ts
-- Fazer: usar apenas tokens deste arquivo; fotos reais do salão; um tratamento de cor único nas fotos.
-- Fazer: manter o cursor do sistema dentro do agendamento e dos campos.
-- Não fazer: gradiente roxo, Inter, emojis como ícones, sombras pesadas, cantos arredondados, arcos.
-- Não fazer: nota média, contagem de avaliações, antes e depois gerado ou de banco, preços ou números inventados.
+- Fazer: usar só os tokens; fotos reais do salão sem profissionais; fotos de Pexels/Pixabay só sem rosto.
+- Não fazer: champagne em texto sobre areia, nota ou contagem de avaliações, antes e depois, preço, número inventado, foto de profissional do salão.
