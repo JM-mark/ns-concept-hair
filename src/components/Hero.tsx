@@ -8,6 +8,9 @@ import Monogram from "./Monogram";
 import HairCanvas from "./HairCanvas";
 import Button from "./Button";
 import { MONOGRAM } from "@/content/monogram";
+import { splitWords } from "./motion";
+import { photosFor } from "@/content/photos";
+import { asset } from "@/lib/asset";
 
 const SEEN_KEY = "ns-intro-v1";
 const BG_OPACITY = 0.55;
@@ -71,13 +74,19 @@ export default function Hero() {
       const s = q("[data-mono='s']");
       const shine = q("[data-mono='shine']");
       const letters = q(".h-letter");
-      const content = q(".h-title .line-mask > span, .h-sub, .h-cta");
+      const title = q(".h-title")[0] as HTMLElement | undefined;
+      if (title) splitWords(title);
+      const words = q(".h-title .w");
+      const content = q(".h-sub, .h-cta");
       const bg = q(".h-bg");
 
       const finalState = () => {
         gsap.set([n, s, letters], { clearProps: "all", autoAlpha: 1 });
         gsap.set(q(".h-tag"), { autoAlpha: 1 });
         gsap.set(content, { yPercent: 0, y: 0, autoAlpha: 1 });
+        gsap.set(title ?? [], { visibility: "visible" });
+        gsap.set(words, { clearProps: "all" });
+        gsap.set(q(".h-selo"), { autoAlpha: 1, y: 0 });
         gsap.set(bg, { opacity: BG_OPACITY });
         gsap.set(q(".h-diag"), { autoAlpha: 0 });
       };
@@ -89,7 +98,9 @@ export default function Hero() {
         gsap.set(n, { x: "-12vw", y: "-4vh", autoAlpha: 0, filter: "blur(8px)", clipPath: "inset(0% 0% 100% 0%)" });
         gsap.set(s, { x: "12vw", y: "4vh", autoAlpha: 0, filter: "blur(8px)", clipPath: "inset(100% 0% 0% 0%)" });
         gsap.set(letters, { autoAlpha: 0, letterSpacing: "0.6em" });
-        gsap.set(q(".h-title .line-mask > span"), { yPercent: 110, autoAlpha: 1 });
+        gsap.set(title ?? [], { visibility: "visible" });
+        gsap.set(words, { opacity: 0, y: 20, filter: "blur(12px)" });
+        gsap.set(q(".h-selo"), { y: 10, autoAlpha: 0 });
         gsap.set(q(".h-sub, .h-cta, .h-tag"), { y: 24, autoAlpha: 0 });
         gsap.set(bg, { opacity: 0 });
 
@@ -115,8 +126,9 @@ export default function Hero() {
           .to(q(".h-tag"), { y: 0, autoAlpha: 1, duration: 0.8 }, 1.9)
           .to(bg, { opacity: BG_OPACITY, duration: 0.6, ease: "power1.out" }, 1.8)
           // texto do hero
-          .to(q(".h-title .line-mask > span"), { yPercent: 0, duration: 1.1, stagger: 0.08 }, 2.1)
-          .to(q(".h-sub, .h-cta"), { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.08 }, 2.3);
+          .to(words, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out", stagger: 0.12, clearProps: "filter" }, 2.1)
+          .to(q(".h-sub, .h-cta"), { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.08 }, 2.7)
+          .to(q(".h-selo"), { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" }, 3.2);
       }
 
       // Rolagem: o monograma encolhe e sobe até virar o logo do header; vídeo dá zoom e escurece
@@ -227,7 +239,7 @@ export default function Hero() {
       </div>
 
       <noscript>
-        <style>{`.h-bg{opacity:.55!important}[data-mono],.h-letter,.h-tag,.h-sub,.h-cta,.h-title .line-mask>span{visibility:visible!important;opacity:1!important;transform:none!important}`}</style>
+        <style>{`.h-bg{opacity:.55!important}[data-mono],.h-letter,.h-tag,.h-sub,.h-cta,.h-selo,.h-title{visibility:visible!important;opacity:1!important;transform:none!important}`}</style>
       </noscript>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-5 pb-12 pt-[88px] md:px-10 md:pb-16">
@@ -248,28 +260,42 @@ export default function Hero() {
           </p>
         </div>
 
+        {/* selo flutuante: miniaturas de resultados reais + link para o Instagram */}
+        <a
+          href={SITE.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="h-selo h-fadeout invisible absolute right-5 top-[92px] z-20 flex items-center gap-3 rounded-full border border-ivory/25 bg-white/10 py-2 pl-2 pr-5 backdrop-blur-[10px] transition-colors hover:border-champagne md:right-10 md:top-[104px]"
+        >
+          <span className="flex -space-x-3" aria-hidden="true">
+            {photosFor("selo").map((p) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={p.src} src={asset(p.src800)} alt="" width={40} height={40} className="h-10 w-10 rounded-full border-2 border-ink object-cover" />
+            ))}
+          </span>
+          <span className="max-w-[150px] text-[12px] leading-tight text-ivory">Resultados reais no nosso Instagram</span>
+        </a>
+
         {/* texto */}
-        <div className="h-fadeout mt-auto grid items-end gap-8 pt-12 lg:grid-cols-12">
-          <div className="lg:col-span-8">
-            <p className="label h-tag invisible mb-5 text-champagne">Indaiatuba</p>
-            <h1 className="h-title font-display text-[clamp(44px,6.6vw,104px)] leading-[0.98]">
-              <span className="line-mask">
-                <span>Seu espaço para ser</span>
-              </span>
-              <span className="line-mask">
-                <span className="italic-champagne">cuidada.</span>
-              </span>
-            </h1>
-          </div>
-          <div className="lg:col-span-4">
+        <div className="h-fadeout mt-auto pt-12">
+          <p className="eyebrow h-tag invisible mb-5">Indaiatuba</p>
+          <h1 className="h-title invisible font-display text-[clamp(64px,9.3vw,134px)] font-medium leading-[0.98]">
+            <span className="block">Seu espaço para ser</span>
+            <span className="block">
+              <em className="italic-champagne">cuidada.</em>
+            </span>
+          </h1>
+          <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <p className="h-sub invisible max-w-md text-[17px] text-ivory/85">
               Mega Hair, coloração e visagismo com exclusividade. Beleza, cuidado e experiência em cada detalhe.
             </p>
-            <div className="h-cta invisible mt-8 flex flex-wrap gap-3">
-              <Button href="/agendar/" variant="primary">
+            <div className="h-cta invisible flex flex-wrap gap-3">
+              <Button href="/agendar/" variant="ivory">
                 Agendar horário
               </Button>
-              <Button href="/agendar/?servico=avaliacao-mega-hair">Avaliação de Mega Hair</Button>
+              <Button href="/agendar/?servico=avaliacao-mega-hair" variant="glass">
+                Avaliação de Mega Hair
+              </Button>
             </div>
           </div>
         </div>

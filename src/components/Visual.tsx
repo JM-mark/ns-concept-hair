@@ -1,5 +1,6 @@
 import type { Photo } from "@/content/photos";
 import { asset } from "@/lib/asset";
+import { PhotoReveal } from "./motion";
 
 type Props = {
   photo?: Photo;
@@ -19,7 +20,7 @@ type Props = {
 export default function Visual({ photo, num, label, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority, dataCursor, position }: Props) {
   if (photo) {
     return (
-      <div className={`relative overflow-hidden bg-graphite ${className}`} data-cursor={dataCursor}>
+      <PhotoReveal className={`relative overflow-hidden rounded-[16px] bg-graphite ${className}`} dataCursor={dataCursor}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={asset(photo.src800)}
@@ -34,12 +35,12 @@ export default function Visual({ photo, num, label, className = "", sizes = "(mi
           className="h-full w-full object-cover"
           style={{ objectPosition: position, ...(photo.lqip ? { backgroundImage: `url(${photo.lqip})`, backgroundSize: "cover" } : {}) }}
         />
-      </div>
+      </PhotoReveal>
     );
   }
   return (
     <div
-      className={`relative flex items-end overflow-hidden bg-graphite p-6 md:p-8 ${className}`}
+      className={`relative flex items-end overflow-hidden rounded-[16px] bg-graphite p-6 md:p-8 ${className}`}
       role="img"
       aria-label={label}
     >

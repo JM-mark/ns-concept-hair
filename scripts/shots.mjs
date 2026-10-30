@@ -1,7 +1,7 @@
-// Capturas de tela da prévia (1440 e 390) a partir do build estático em out/.
+// Capturas de tela (1440 e 390) e vídeo do scroll da Home, a partir do build estático em out/.
 // Uso: node scripts/shots.mjs [saida]   (padrão: scripts/_out/prints)
 import http from "node:http";
-import { readFileSync, existsSync, statSync, mkdirSync } from "node:fs";
+import { readFileSync, existsSync, statSync, mkdirSync, renameSync } from "node:fs";
 import { extname, join } from "node:path";
 import { createRequire } from "node:module";
 
@@ -18,78 +18,71 @@ const server = http.createServer((req, res) => {
   let f = join(ROOT, p);
   if (existsSync(f) && statSync(f).isDirectory()) f = join(f, "index.html");
   if (!existsSync(f)) { res.statusCode = 404; res.end("404"); return; }
-  const buf = readFileSync(f);
   res.setHeader("Content-Type", MIME[extname(f)] || "application/octet-stream");
-  res.setHeader("Accept-Ranges", "bytes");
-  res.end(buf);
+  res.end(readFileSync(f));
 }).listen(3290);
 
 const browser = await chromium.launch({ executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe", headless: true });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-async function shoot(page, name) {
-  await page.screenshot({ path: `${OUT}/${name}.png` });
-}
-async function toSel(page, sel, offset = 0, wait = 1400) {
-  await page.evaluate(([s, o]) => {
-    const el = document.querySelector(s);
-    if (!el) return;
-    const y = el.getBoundingClientRect().top + window.scrollY + o;
-    window.__lenis ? window.__lenis.scrollTo(y, { immediate: true }) : window.scrollTo(0, y);
-  }, [sel, offset]);
-  await sleep(wait);
-}
+const shoot = (page, name) => page.screenshot({ path: `${OUT}/${name}.png` });
+const jump = async (page, y, wait = 1500) => { await page.evaluate((v) => (window.__lenis ? window.__lenis.scrollTo(v, { immediate: true }) : window.scrollTo(0, v)), y); await sleep(wait); };
+const toSel = async (page, sel, offset = 0, wait = 1600) => {
+  const y = await page.evaluate(([s, o]) => { const el = document.querySelector(s); return el ? el.getBoundingClientRect().top + window.scrollY + o : null; }, [sel, offset]);
+  if (y !== null) await jump(page, y, wait);
+};
 
 for (const [label, vp] of [["1440", { width: 1440, height: 900 }], ["390", { width: 390, height: 844 }]]) {
-  const ctx = await browser.newContext({ viewport: vp, deviceScaleFactor: 1, hasTouch: label === "390", isMobile: label === "390" });
+  const mobile = label === "390";
+  const ctx = await browser.newContext({ viewport: vp, hasTouch: mobile, isMobile: mobile });
   const page = await ctx.newPage();
   const go = async (path, wait = 3200) => { await page.goto(`http://localhost:3290${path}`, { waitUntil: "networkidle" }); await sleep(wait); };
 
-  // Home
-  await go("/", 4200);
-  await shoot(page, `${label}-home-1-hero`);
+  await go("/", 6200);
+  await shoot(page, `${label}-01-header-hero`);
+  await page.click("[aria-controls='menu-cheio']");
+  await sleep(1800);
+  await shoot(page, `${label}-02-menu-aberto`);
+  await page.keyboard.press("Escape");
+  await sleep(900);
+  await toSel(page, "section[aria-labelledby='why-title']", -40, 2800);
+  await shoot(page, `${label}-03-por-que-a-ns`);
+  await toSel(page, "section[aria-labelledby='jr-title']", mobile ? 200 : 700, 2400);
+  await shoot(page, `${label}-04-jornada`);
+  await toSel(page, "section[aria-labelledby='rev-title']", 60, 2200);
+  await shoot(page, `${label}-05-avaliacoes`);
   await toSel(page, "section[aria-labelledby='sv-title']", 0, 1800);
-  await shoot(page, `${label}-home-2-vitrine`);
-  if (label === "1440") {
-    await page.evaluate(() => window.__lenis?.scrollTo(window.scrollY + 1400, { immediate: true }));
-    await sleep(1600);
-    await shoot(page, `${label}-home-2b-vitrine-meio`);
-  }
-  await toSel(page, ".mh-photo", -80, 2200);
-  await shoot(page, `${label}-home-3-megahair`);
-  await toSel(page, "section[aria-labelledby='res-title']", 0, 2600);
-  await shoot(page, `${label}-home-4-resultados`);
-  await toSel(page, "section[aria-labelledby='rev-title']", 0, 1800);
-  await shoot(page, `${label}-home-5-avaliacoes-mapa`);
+  if (!mobile) { await page.hover("section[aria-labelledby='sv-title'] li.group >> nth=0"); await sleep(900); }
+  await shoot(page, `${label}-06-servicos-grade`);
+  await toSel(page, "section[aria-labelledby='tm-title']", -40, 2200);
+  await shoot(page, `${label}-07-equipe`);
+  await toSel(page, "section[aria-labelledby='faq-home']", -40, 2400);
+  await shoot(page, `${label}-09-faq`);
 
-  // /servicos/mega-hair
+  await go("/agendar/?servico=avaliacao-mega-hair", 2500);
+  await shoot(page, `${label}-08-agendamento-vidro`);
   await go("/servicos/mega-hair/", 3000);
-  await shoot(page, `${label}-mega-hair-1-topo`);
-  await page.evaluate(() => window.__lenis?.scrollTo(window.innerHeight * 1.0, { immediate: true }));
-  await sleep(1800);
-  await shoot(page, `${label}-mega-hair-2-meio`);
-  await page.evaluate(() => window.__lenis?.scrollTo(window.innerHeight * 2.0, { immediate: true }));
-  await sleep(1800);
-  await shoot(page, `${label}-mega-hair-3-baixo`);
-
-  // /resultados
-  await go("/resultados/", 3000);
-  await shoot(page, `${label}-resultados-1`);
-  await page.evaluate(() => window.__lenis?.scrollTo(window.innerHeight * 0.9, { immediate: true }));
-  await sleep(2200);
-  await shoot(page, `${label}-resultados-2`);
-
-  // /o-salao
+  await shoot(page, `${label}-10-mega-hair-topo`);
   await go("/o-salao/", 3000);
-  await shoot(page, `${label}-o-salao-1`);
-  await page.evaluate(() => window.__lenis?.scrollTo(window.innerHeight * 1.0, { immediate: true }));
-  await sleep(1800);
-  await shoot(page, `${label}-o-salao-2`);
-  await page.evaluate(() => window.__lenis?.scrollTo(window.innerHeight * 2.2, { immediate: true }));
-  await sleep(1800);
-  await shoot(page, `${label}-o-salao-3`);
+  await jump(page, mobile ? 700 : 900, 2000);
+  await shoot(page, `${label}-11-o-salao`);
   await ctx.close();
 }
+
+// Vídeo curto rolando a Home inteira (1440x900)
+const vctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, recordVideo: { dir: `${OUT}/_video`, size: { width: 1440, height: 900 } } });
+const vp = await vctx.newPage();
+await vp.goto("http://localhost:3290/", { waitUntil: "networkidle" });
+await sleep(5500);
+const total = await vp.evaluate(() => document.documentElement.scrollHeight);
+for (let y = 0; y < total - 900; y += 650) {
+  await vp.evaluate((v) => window.__lenis?.scrollTo(v, { duration: 1.4 }), y + 650);
+  await sleep(1500);
+}
+await sleep(800);
+const vpath = await vp.video().path();
+await vctx.close();
+renameSync(vpath, `${OUT}/home-scroll.webm`);
+
 await browser.close();
 server.close();
 console.log("prints ok ->", OUT);

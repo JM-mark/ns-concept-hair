@@ -3,43 +3,128 @@
 import type { Photo } from "./photos";
 
 export const GENERATED: Record<string, Photo[]> = {
-  "home-mega-hair": [
+  "selo": [
     {
-      "src": "/photos/mh-vitrine.webp",
-      "src800": "/photos/mh-vitrine-800.webp",
-      "alt": "Cabelo loiro longo e ondulado, com as mechas seguradas por um profissional",
-      "fonte": "https://www.instagram.com/reel/DW6lzlhkYic/",
-      "lqip": "data:image/webp;base64,UklGRtIAAABXRUJQVlA4IMYAAADQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JbACdMoRwAdCgt18ZnfwcW7hUw71AIAD7FtQqTSlMWNod6dm7k02640xgZKRCsRBX0a5UURufB/x7ZkHaQwk/WzEEVbPCdiPRBvFWUzKqRKbcOiwrRK7oL3F6Jvu7uWKPb1gnLVYl9aRs2xl83UxJMp9sj9CLskbxjVovo58wrzktaxttpMStwf+7ULr6zPbSEbUSGot8+p0DcoKWaRZh1xwzWtHz7a/nnWkgAAA=",
-      "w": 1125,
+      "src": "/photos/selo-1.webp",
+      "src800": "/photos/selo-1-800.webp",
+      "alt": "Cabelo castanho com luzes caramelo",
+      "fonte": "https://www.instagram.com/reel/DfDfZFJJW1L/",
+      "lqip": "data:image/webp;base64,UklGRuQAAABXRUJQVlA4INgAAACwBACdASoQAB0APu1iqU2ppaOiMAgBMB2JZgCdMoHgAFQEGsA2Dv+jgzOmMWV4AP4ZujsiJ+TP+Ryh0lv03Hq3mNRPJIomnLHuF79+Mns4GWbmaNUQX8vzwK18Ak7yjZuoonw9CecYUX9f3ssSMWUWmTiLfx8BKV/ZGagY7+NS5ZDX7MNPX7mQkjovD7/co6BlPEnlc+lSCA60IChHYsDzCLRrT5G9NZ5mVwEKKFeSJmplHwMZeMpZCDBg+rKbxSdm9iB2f2S8WcAmoTG8WNs2dRjimwJAAAA=",
+      "w": 1124,
+      "h": 2000
+    },
+    {
+      "src": "/photos/selo-2.webp",
+      "src800": "/photos/selo-2-800.webp",
+      "alt": "Cabelo loiro com luzes suaves",
+      "fonte": "https://www.instagram.com/reel/DYDN0cMOMZg/",
+      "lqip": "data:image/webp;base64,UklGRs4AAABXRUJQVlA4IMIAAACQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JaACdMoGv/i2O001QLFoAuRbYwgAA/gSow8cA6u2pKYxnXyaCzR4imKA2sYSb3dlO+ZpIllEnlDf7red4qqd4q4qJjQcWeu8n5ZhjqNhcgzLcYEvLeDokyYT+iX9DIe/NVSC5KG1DbyBcDCIJu8TL24+tLdN1+a6v2uzrWxOzPRAfGaSPbRHU/ZlAJU6VFKWfCEKoalrCXMFZaPYM4vUVIUOIM76NmgAAAA==",
+      "w": 640,
+      "h": 1136
+    },
+    {
+      "src": "/photos/selo-3.webp",
+      "src800": "/photos/selo-3-800.webp",
+      "alt": "Cabelo loiro bege, longo e ondulado",
+      "fonte": "https://www.instagram.com/reel/DYcNh22MRnz/",
+      "lqip": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAACQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JaACdMoMYA+qBnzgO/xel+zz8KcAAzelR8LSSpBI7V70VtBHmcuiM0WtgSnfciwiSC3fBhfxAhDjV7BXqPGT4NTmU9RJjeJXLOSown7Cv2A3coA5lcR43QaQ2Ve1XOxHj5wlPwg5vU+UKE91UIbVrFPcnTw17O/p3YrFKuOjCS0DC0v2+TVCbmXFNKq8V+GhfNxuaRL8GuAAA",
+      "w": 640,
+      "h": 1136
+    }
+  ],
+  "why": [
+    {
+      "src": "/photos/why-1.webp",
+      "src800": "/photos/why-1-800.webp",
+      "alt": "Cabelo castanho longo e ondulado, com blazer branco",
+      "fonte": "https://www.instagram.com/reel/DPuSkQGEabO/",
+      "lqip": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAAAwBQCdASoQACYAPt1cpU2opSOiNUgBEBuJQBfnZYJz8fwutOtjG4+Y/y2SbIvhbmTSsAD+8U5m1rWKss9foPKhSS3ZbhC6zL+f+Jou7jLIo8g954DbUivPpj2zCIMn/OtB2uixJnhQIqjGDXCOXSYQ6G/8DZmMqkKrHmLzlUGE+s889+FQCfHPApwWnZtqbzQ4nhySjHqnGlbkTO531aU1XcRU1ibEtRIdtPH04ZUBkuCod1hQlK5aKH/DvboN37PjK1GzScNk6nD4AAA=",
+      "w": 836,
+      "h": 2000
+    },
+    {
+      "src": "/photos/why-2.webp",
+      "src800": "/photos/why-2-800.webp",
+      "alt": "Loiro bege em corte médio, com ondas suaves",
+      "fonte": "https://www.instagram.com/reel/DehZWEFtTXx/",
+      "lqip": "data:image/webp;base64,UklGRuAAAABXRUJQVlA4INQAAACwBACdASoQABwAPu1iqU2ppaOiMAgBMB2JbACdL1AVhEiCFaOkhI6QlYTrp3AAAPzH4I/7tWr21wDTtyCs55O5Gaa7TlvHP6jckYdPVF4cVI7h8J7EUdihnI/KQGyCNmQieFDe3B8LWUFTO21/0+6CDLZD9Xar56YKv1iWALB4hjUvgspr4yMRvnQ/I6c+uXCR3VD9bgmhOheOAM9N0JgR04bKSRWSz57HNXTb+xG+cyQvp+SkNge/NivAjQJPpW3p7OS9ofsT+68LUJY/4HbyUgAAAA==",
+      "w": 640,
+      "h": 1136
+    },
+    {
+      "src": "/photos/why-3.webp",
+      "src800": "/photos/why-3-800.webp",
+      "alt": "Fachada do prédio com o monograma NS",
+      "fonte": "https://www.instagram.com/reel/DUjOEewEa3M/",
+      "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JYgC06BFEIA4JPdVBvaagAObbUEE7yVsKnkhE+ONsIZvnL+8Z49JC0td+Nsb7A1Y7qyybF97ljNP+f6fpJBaTic2WEarH6csCEnNvFx+eCAAA",
+      "w": 1706,
       "h": 2000
     }
   ],
-  "mega-hair-feature": [
+  "jornada": [
     {
-      "src": "/photos/mh-feature.webp",
-      "src800": "/photos/mh-feature-800.webp",
-      "alt": "Mulher de cabelo castanho longo, volumoso e com pontas douradas, sorrindo",
-      "fonte": "https://www.instagram.com/reel/DUJu_4mkfzA/",
-      "lqip": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAADQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JbACdL1yrgV1bkAKoetCAgAkkoF8sQAD9mO4cWYDmtpIrThfLDHX87+BO/8F1skzeefqSpTvFXWEXS19+PjcD+dnVPn5M4B3kGaZbBUjY/UOy8Vsc/ixNS0iwWz1ylj5sXU/sCQi3ChIeo7tgZlh5ZCwPGQiFC3CBhwAA",
-      "w": 1355,
+      "src": "/photos/jornada-1.webp",
+      "src800": "/photos/jornada-1-800.webp",
+      "alt": "Cachos longos com pontas acobreadas",
+      "fonte": "https://www.instagram.com/reel/DavzpAbKwko/",
+      "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQAgCdASoQABAAA4BaJbACdADJ/lyLsOr4AP6KK4gR2/es9lwGqei4gLK7t4aY+2T17XAtZZtxnL8yFwkzjxkJORnRifkGehJIUsLr9eMjrAStcTXHL/2pWEAAAA==",
+      "w": 1217,
+      "h": 1253
+    },
+    {
+      "src": "/photos/jornada-2.webp",
+      "src800": "/photos/jornada-2-800.webp",
+      "alt": "Ondas longas em castanho com pontas claras",
+      "fonte": "https://www.instagram.com/reel/DfFGfBgITTj/",
+      "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAQCdASoQAA8AA4BaJQBOj+ABbkMA+gAA4n5EMhqyppkxLSWOiIicv60UygeWTXs9k3Dq+s2Mj+SLOuZeGFyF2mSKY/waFOF1bB8sFEe+Bhh5tSr3g1paK9vmHZnMERwMPrZJsS50S4AA",
+      "w": 1217,
+      "h": 1123
+    },
+    {
+      "src": "/photos/jornada-3.webp",
+      "src800": "/photos/jornada-3-800.webp",
+      "alt": "Cabelo castanho longo com pontas caramelo",
+      "fonte": "https://www.instagram.com/reel/DeANqknPlAo/",
+      "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABwAgCdASoQAA4AA4BaJYgCdAYv10hLyvyRvTwAAP7eI1YW1/HvtzCH/25TCsUCx522EHSljBuvpxPNmeCIKO9P2d93TsOmGZIcDABSmrkjqVmDx4kfgyQJkozdD0REdJchkWyf3qAAAA==",
+      "w": 720,
+      "h": 640
+    },
+    {
+      "src": "/photos/jornada-4.webp",
+      "src800": "/photos/jornada-4-800.webp",
+      "alt": "Loiro longo com ondas largas",
+      "fonte": "https://www.instagram.com/reel/DeP1AqSP8qT/",
+      "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQAgCdASoQAA0AA4BaJZACdADR3XFHJhQAAPz966bqlhQPRwwGMoObXtOckxFREbfa5tdHTOvXnm4S19mJA02gss6tM8T0vzPQcbv2wstYhRYVhm45ntzP6mnAAA==",
+      "w": 720,
+      "h": 576
+    }
+  ],
+  "home-mega-hair": [
+    {
+      "src": "/photos/grade-mega-hair.webp",
+      "src800": "/photos/grade-mega-hair-800.webp",
+      "alt": "Cabelo loiro com luzes, longo e volumoso, em blusa amarela",
+      "fonte": "https://www.instagram.com/reel/DQcp_vykbOY/",
+      "lqip": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAACQAwCdASoQABMAPu1iqU2ppaOiMAgBMB2JZACdABSqvEmm/HiYAP7D4gCkwVjK3VSyUqYTHJXoNDLW7SpNE7gvXRYRe/UC5Lv8EzH2Wgru2Wbb2GopIE4ws2yre2HG6ZYjzK1NR2HSHe2nKZwCv6CUDkcL/oVtMSSftjHO1DB7RfgAAAA=",
+      "w": 1705,
       "h": 2000
     }
   ],
   "home-coloracao": [
     {
-      "src": "/photos/col-vitrine.webp",
-      "src800": "/photos/col-vitrine-800.webp",
-      "alt": "Cabelo loiro mel, longo e volumoso, com ondas largas",
-      "fonte": "https://www.instagram.com/reel/DY-oAqtxOtJ/",
-      "lqip": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAADwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JbACdMoRwFf/i2CVZMSO8H+1xJbH8a2gA/qNyxBY9iMsy9Dcs0+CDnc5zSCyTmreM9J/tASqUP+1nLIG6xciixX7hK6/hPVV3w5djcF+K8AOoygNXUvdlA/22G+/GWpNXsrYXZQcut279eolljD9FiLxLqAIqfy2GRwj5snlFJa5Cnp4oP3aYTdJigAAA",
-      "w": 1142,
-      "h": 1490
+      "src": "/photos/grade-coloracao.webp",
+      "src800": "/photos/grade-coloracao-800.webp",
+      "alt": "Loiro dourado, longo e luminoso, de perfil",
+      "fonte": "https://www.instagram.com/reel/DdeTlcbRVzt/",
+      "lqip": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAABwBACdASoQABwAPu1iqU2ppaOiMAgBMB2JYgCdMoADdfysBoQSikTyJWyQAAD+8qa7w+sshEqvMfhgXAngPWGWs1Q5CBkuR0Mw488+oWC0WcobnnGNf+VyoSsa4D5MfCF0ndw/HoPsAgR8e+HXtBdltyAMIvi2cTvPPOoV/p56DOTYmgMUVxcEt+CEJhbiiu2PL9GkGCp+KqtP0QAAAA==",
+      "w": 1127,
+      "h": 2000
     }
   ],
   "home-corte": [
     {
-      "src": "/photos/corte-vitrine.webp",
-      "src800": "/photos/corte-vitrine-800.webp",
+      "src": "/photos/grade-corte.webp",
+      "src800": "/photos/grade-corte-800.webp",
       "alt": "Mulher de cabelo castanho ondulado, com corte em camadas, sorrindo",
       "fonte": "https://www.instagram.com/reel/DXSiZskD3Su/",
       "lqip": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAACwBACdASoQABwAPu1iqU2ppaQiMAgBMB2JYgCdMoAlyBZFfHu9jtcuKYCvMX3wAP7TkV9Z4U1QJcOK5lvgMK6QxvmfWaDUM30GCsuIAVDAYaTzgQaf1x9aiTJ5gRdEMV7K9kvDleq2Wsm7k0vqZ2a17tvN1EDw9m4h/1decBbqy1sxmwk3jXuR8K9CVQaDPqq2/zcvtrFHkj+gRAd5oImQ01JPORwH76RyC/orB5Y/gAAA",
@@ -49,8 +134,8 @@ export const GENERATED: Record<string, Photo[]> = {
   ],
   "home-tratamentos": [
     {
-      "src": "/photos/trat-vitrine.webp",
-      "src800": "/photos/trat-vitrine-800.webp",
+      "src": "/photos/grade-tratamentos.webp",
+      "src800": "/photos/grade-tratamentos-800.webp",
       "alt": "Cabelo preto, liso e brilhante, muito longo",
       "fonte": "https://www.instagram.com/reel/DedJkT4BtWs/",
       "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAA8AA4BaJZQC7ADdH0rrRuiAAP6zLTcBinT9m3mzf1Hls2mtZPWmv3WLJ3tEvg4tZwVZPFxusGBDb/gD5pijg4EfcXBdoVXXFAAA",
@@ -60,22 +145,44 @@ export const GENERATED: Record<string, Photo[]> = {
   ],
   "mega-hair": [
     {
-      "src": "/photos/mh-1.webp",
-      "src800": "/photos/mh-1-800.webp",
-      "alt": "Cliente de cabelo loiro longo e ondulado ao lado do Netto Sillva",
-      "fonte": "https://www.instagram.com/reel/DMJKFMHRBT-/",
-      "lqip": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAABwBACdASoQABoAPu1iqU2ppaOiMAgBMB2JZgCdMoAltRAgxwNdI12YyAC6AAD+yeGKw/4EKD5jXWRHr3keVzbzImLYQWvoiF8DjIwE7HD/zWlpFBvywdlh1ZwYSo2bfMmZecyuY/LMQiPx4OWl6U/EWAErVuT5OyWG/edyZP6VxDHSMW3lr8KPItMr8SXM+8n+bM/1QpAJpjduMXxWyc/Jdkt/duXMERp6KYaH9hLC97pPqZRL7f6fN6JqDjOHtXLg7iO75/OKf7I8VXfQ8AAA",
-      "w": 1251,
+      "src": "/photos/mh-feature.webp",
+      "src800": "/photos/mh-feature-800.webp",
+      "alt": "Mulher de cabelo castanho longo, volumoso e com pontas douradas, sorrindo",
+      "fonte": "https://www.instagram.com/reel/DUJu_4mkfzA/",
+      "lqip": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAADQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JbACdL1yrgV1bkAKoetCAgAkkoF8sQAD9mO4cWYDmtpIrThfLDHX87+BO/8F1skzeefqSpTvFXWEXS19+PjcD+dnVPn5M4B3kGaZbBUjY/UOy8Vsc/ixNS0iwWz1ylj5sXU/sCQi3ChIeo7tgZlh5ZCwPGQiFC3CBhwAA",
+      "w": 1355,
       "h": 2000
     },
     {
-      "src": "/photos/mh-2.webp",
-      "src800": "/photos/mh-2-800.webp",
-      "alt": "Cabelo loiro em camadas longas, com luzes douradas, penteado pelo Netto Sillva",
-      "fonte": "https://www.instagram.com/reel/DbGNfTJROOD/",
-      "lqip": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADQAwCdASoQABEAPu1iqU2ppaOiMAgBMB2JQBOgAw5frn5bTOt8AKwA9rL2I0VQfwar/5U28nCV4TeRKSAqEeF8cM370H1dJzuHnbUcc8kyL/6btDObdkb7ydHAMXa2KkzaQCpucoyjCx8rlzD2jgAA",
-      "w": 923,
-      "h": 972
+      "src": "/photos/mh-1.webp",
+      "src800": "/photos/mh-1-800.webp",
+      "alt": "Cabelo castanho escuro, longo e volumoso, com mega hair",
+      "fonte": "https://www.instagram.com/reel/DUZSrk2AbtR/",
+      "lqip": "data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JZgCdMoC4AUgHu9LAKkStq+S4cGQsAAD+pfx3i5Rc5AmxM6DN0udAmqsQppv7nzl+OBk++6JOZE5N4ojibwZE+0g4D7tOosmwBvz7BuvE8yP+989iT2NYIjJyqPZXtutourPPTD/tPjgUU3l3SW/bfs/KniyT9FJXx7p8u3WiJQ6SDQIZvOYdV2lBqACu1nQtIiP12lwwqM7rTiKaZNpzJ3QXu8I9BT5Z6Ogf3TNPGr9HpUa6yp9q2cdtLGYgyGkOxIOi3dYmAUUsHuJ98Ug6Su0PAAAA",
+      "w": 1125,
+      "h": 2000
+    }
+  ],
+  "faq": [
+    {
+      "src": "/photos/faq.webp",
+      "src800": "/photos/faq-800.webp",
+      "alt": "Retrato com cabelo castanho ondulado e maquiagem marcante",
+      "fonte": "https://www.instagram.com/p/Dcj5t-hEXoj/",
+      "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAADQBACdASoQABUAPu1iqU2ppaOiMAgBMB2JaACdMoRwJoADp28OF2qdbTp7KdO1QAD9w7ooc9RlQldyNATkxIYoppLZ47n6iZGUOk6vci+9KUcSE1snAUoSpT9cKIcTzH7BV1tq7NQ6umkSVPZsTT1QEXhml0vkixZ1z9fMNfYElnLvthkkr4izXGMkSpVTam4BZYIs5ckoAA==",
+      "w": 1508,
+      "h": 2000
+    }
+  ],
+  "agendar-bg": [
+    {
+      "src": "/photos/agendar-bg.webp",
+      "src800": "/photos/agendar-bg-800.webp",
+      "alt": "Fachada do salão com o monograma NS ao entardecer",
+      "fonte": "https://www.instagram.com/reel/DUJOzDuEboC/",
+      "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAwAgCdASoQAAkAA4BaJYgCdAYrngfzdcBbEADN+Dw3eV2rgLeUKGXzFcSoVXtH3yySN4HV4ATPWM3wkLVdj11nyhL0w78Pt1BSE5xQvEN3QJLOH+6YiAAA",
+      "w": 2000,
+      "h": 1137
     }
   ],
   "coloracao": [
@@ -174,11 +281,11 @@ export const GENERATED: Record<string, Photo[]> = {
     {
       "src": "/photos/trat-1.webp",
       "src800": "/photos/trat-1-800.webp",
-      "alt": "Cabelo castanho escuro, longo, liso e brilhante",
-      "fonte": "https://www.instagram.com/reel/DUZSrk2AbtR/",
-      "lqip": "data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JZgCdMoC4AUgHu9LAKkStq+S4cGQsAAD+pfx3i5Rc5AmxM6DN0udAmqsQppv7nzl+OBk++6JOZE5N4ojibwZE+0g4D7tOosmwBvz7BuvE8yP+989iT2NYIjJyqPZXtutourPPTD/tPjgUU3l3SW/bfs/KniyT9FJXx7p8u3WiJQ6SDQIZvOYdV2lBqACu1nQtIiP12lwwqM7rTiKaZNpzJ3QXu8I9BT5Z6Ogf3TNPGr9HpUa6yp9q2cdtLGYgyGkOxIOi3dYmAUUsHuJ98Ug6Su0PAAAA",
-      "w": 1125,
-      "h": 2000
+      "alt": "Cabelo castanho escuro, longo, macio e brilhante",
+      "fonte": "https://www.instagram.com/p/DZGDsk_IHRU/",
+      "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAADQAwCdASoQABQAPu1iqU2ppaOiMAgBMB2JQBOgAx45XN8G3DE1SIAA/t7uqv9SQvFl2YVnzSyfELCTWOMDT7IIQkFVKoQNQ9BjFCi0H2iRD4z23BLD8UAouF+iAoLzbVS8wxAjFmyvwrBBiqTt5dCjbZi6Dh/W1X2S9/YQja3rhq9qrCA8jUwOUC2jnwHUDyIaoZlBHYAAAA==",
+      "w": 1192,
+      "h": 1486
     }
   ],
   "unhas": [
@@ -190,17 +297,6 @@ export const GENERATED: Record<string, Photo[]> = {
       "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoQABIAPu1iqU2ppaOiMAgBMB2JZgCsACIQHRguXm3R0KPIAP7TN8GpksQ8ZOs4D/q7MS9YTIEnACvAJWIZPN+Rh4RAkesI6d93YZ7Bk6RdPxRgnhRGgLHl7ugzQCwkKLpQwpsRYAA=",
       "w": 1440,
       "h": 1591
-    }
-  ],
-  "salao-equipe": [
-    {
-      "src": "/photos/salao-equipe.webp",
-      "src800": "/photos/salao-equipe-800.webp",
-      "alt": "Equipe do NS Concept Hair reunida no salão",
-      "fonte": "https://www.instagram.com/reel/DZiTLVex4Se/",
-      "lqip": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAACwBACdASoQABwAPu1iqU2ppaOiMAgBMB2JQBOgMXNWpQGMkNFLwrMS2JtWA0CAAP7vUHcPY+A47i47944HLbDrlLdKgaP0fZDW/1ND1s9v3Bkklsr/wRxnCZzwbPViFgH3ZU0UJOekX9E/Fo3OBjeVeYN3tFNONe2nIGUHAt1b/3QdQlUmRfMZACcmP7E6mtT3mfAkZ5LGKxOGapPd6bNFn6/APZ5x03+TnExFqb1vlNzsrUOSdfhSUz5Inw32ooI6UWm9nUfxK4z7WEjRuzwA",
-      "w": 652,
-      "h": 1154
     }
   ],
   "salao-detalhes": [

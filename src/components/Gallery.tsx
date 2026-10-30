@@ -21,11 +21,6 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
         const img = it.querySelector("img");
         const run = () => {
           if (reduceMotion()) return;
-          gsap.fromTo(
-            it,
-            { clipPath: "inset(0 0 100% 0)" },
-            { clipPath: "inset(0 0 0% 0)", duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: it, start: "left 95%", horizontal: false } },
-          );
           if (img) gsap.fromTo(img, { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: it, scrub: true } });
         };
         if (img && !img.complete) img.decode().then(run, run);

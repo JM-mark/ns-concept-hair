@@ -21,14 +21,14 @@ export default function AvaliacoesPage() {
         intro="Trechos de avaliações publicadas no Google."
       />
       <ReviewsMap showHeading={false} />
-      <section className="on-light bg-ivory py-24 md:py-32">
+      <section className="on-light bg-sand py-24 md:py-32">
         <div className="mx-auto max-w-[1440px] px-5 md:px-10">
           <ul className="grid gap-12 md:grid-cols-2">
             {REVIEWS.map((r) => (
               <li key={r.nome} className="border-t border-[var(--line-dark)] pt-6">
                 <blockquote className="font-display text-[26px] italic leading-snug">“{r.texto}”</blockquote>
                 <p className="label mt-5 text-[12px]">
-                  {r.nome} <span className="ml-3 text-champagne-deep">Avaliação no Google</span>
+                  {r.nome} <span className="ml-3 text-bronze-deep">Avaliação no Google</span>
                 </p>
               </li>
             ))}

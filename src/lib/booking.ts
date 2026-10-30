@@ -1,13 +1,11 @@
 import { SERVICES, type BookingOption } from "@/content/services";
 import { HOURS, SLOT_MINUTES } from "@/content/hours";
-import { TEAM } from "@/content/team";
 import { SITE, whatsappLink } from "@/content/site";
 
 export type Periodo = "manha" | "tarde" | "qualquer";
 
 export type Booking = {
   servicos: string[]; // ids de opções
-  prof: string; // "" = sem preferência
   data: string; // YYYY-MM-DD
   hora: string; // HH:MM
   periodo: Periodo | "";
@@ -21,7 +19,6 @@ export type Booking = {
 
 export const EMPTY: Booking = {
   servicos: [],
-  prof: "",
   data: "",
   hora: "",
   periodo: "",
@@ -37,12 +34,6 @@ export const ALL_OPTIONS: (BookingOption & { slug: string })[] = SERVICES.flatMa
   s.opcoes.map((o) => ({ ...o, slug: s.slug })),
 );
 export const optionById = (id: string) => ALL_OPTIONS.find((o) => o.id === id);
-
-/** Profissionais que atendem os serviços escolhidos (só relações confirmadas em team.ts). */
-export function professionalsFor(optionIds: string[]) {
-  const slugs = new Set(optionIds.map((id) => optionById(id)?.slug).filter(Boolean) as string[]);
-  return TEAM.filter((m) => m.servicos.some((s) => slugs.has(s)));
-}
 
 const pad = (n: number) => String(n).padStart(2, "0");
 export const toISO = (d: Date) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -117,7 +108,6 @@ export function buildMessage(b: Booking): string {
     "Olá, NS Concept Hair! Gostaria de agendar:",
     "",
     `• Serviço(s): ${servicosTexto(b)}`,
-    `• Profissional: ${b.prof || "Sem preferência"}`,
     `• Data: ${formatDia(b.data)}`,
     `• Horário: ${horarioTexto(b)}`,
     `• Nome: ${b.nome.trim()}`,

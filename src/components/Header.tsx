@@ -5,15 +5,16 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { gsap, reduceMotion } from "@/lib/gsap";
 import { asset } from "@/lib/asset";
-import { NAV } from "@/content/site";
+import { NAV, SITE, whatsappLink } from "@/content/site";
 import { SERVICES, serviceHref } from "@/content/services";
-import Button from "./Button";
+import { InstagramIcon, WhatsAppIcon } from "./Icons";
 
 export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const menu = useRef<HTMLDivElement>(null);
+  const overlay = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
   const isHome = pathname === "/";
 
   useEffect(() => {
@@ -23,127 +24,170 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Fecha o menu ao trocar de página (evento externo: rota)
+  // Fecha o menu ao trocar de página
   useEffect(() => {
     const t = window.setTimeout(() => setOpen(false), 0);
     return () => window.clearTimeout(t);
   }, [pathname]);
 
+  // Cortina de cima para baixo (500ms, expo.inOut) e links em stagger de 60ms
   useEffect(() => {
+    const el = overlay.current;
+    if (!el) return;
+    const items = el.querySelectorAll("[data-m]");
     if (open) {
       window.__lenis?.stop();
       document.body.style.overflow = "hidden";
-      if (!reduceMotion() && menu.current) {
-        gsap.fromTo(
-          menu.current.querySelectorAll("[data-m]"),
-          { yPercent: 40, opacity: 0 },
-          { yPercent: 0, opacity: 1, duration: 0.9, ease: "expo.out", stagger: 0.07, delay: 0.1 },
-        );
+      el.style.visibility = "visible";
+      if (reduceMotion()) {
+        gsap.set(el, { clipPath: "inset(0% 0% 0% 0%)" });
+        gsap.set(items, { clearProps: "all" });
+      } else {
+        gsap.fromTo(el, { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.5, ease: "expo.inOut" });
+        gsap.fromTo(items, { yPercent: 110 }, { yPercent: 0, duration: 0.8, ease: "expo.out", stagger: 0.06, delay: 0.25 });
       }
+      window.setTimeout(() => el.querySelector<HTMLElement>("a")?.focus(), 350);
     } else {
       window.__lenis?.start();
       document.body.style.overflow = "";
+      if (reduceMotion()) el.style.visibility = "hidden";
+      else gsap.to(el, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.4, ease: "expo.inOut", onComplete: () => void (el.style.visibility = "hidden") });
     }
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
 
-  const solid = scrolled || open || !isHome;
+  // Esc fecha; Tab fica preso dentro do menu
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggle.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const f = [...(overlay.current?.querySelectorAll<HTMLElement>("a, button") ?? []), toggle.current].filter(Boolean) as HTMLElement[];
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const e = SITE.endereco;
+  const floating = scrolled && !open;
+  const ink = open; // sobre areia, texto escuro
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-[100] transition-[background-color,backdrop-filter,border-color] duration-500 ${
-          solid ? "border-b border-[var(--line)] bg-ink/85 backdrop-blur-[12px]" : "border-b border-transparent"
-        }`}
-      >
-        <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 md:px-10 lg:h-20">
-          <Link href="/" aria-label="NS Concept Hair, página inicial" id="header-logo" className={`block h-11 lg:h-12 ${isHome ? "home-logo" : ""}`}>
+      <header className="pointer-events-none fixed inset-x-0 top-0 z-[100] px-3 pt-3 md:px-6">
+        <div
+          className={`pointer-events-auto relative mx-auto flex h-[60px] max-w-[1440px] items-center justify-between px-4 transition-[background-color,border-color,backdrop-filter] duration-500 md:h-[64px] md:px-6 ${
+            floating ? "rounded-full border border-white/10 bg-ink/60 backdrop-blur-[14px]" : "rounded-full border border-transparent"
+          } ${ink ? "text-ink" : "text-ivory"}`}
+        >
+          <Link href="/agendar/" className="label link-line z-10 hidden sm:inline-block">
+            Agendar
+          </Link>
+          <span className="sm:hidden" aria-hidden="true" />
+
+          <Link
+            href="/"
+            aria-label="NS Concept Hair, página inicial"
+            id="header-logo"
+            className={`absolute left-1/2 top-1/2 block h-10 -translate-x-1/2 -translate-y-1/2 md:h-11 ${isHome ? "home-logo" : ""}`}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={asset("/brand/ns-monograma-champagne.png")} alt="NS Concept Hair" className="h-full w-auto" />
+            <img src={asset(ink ? "/brand/ns-monograma-escuro.png" : "/brand/ns-monograma-champagne.png")} alt="NS Concept Hair" className="h-full w-auto" />
           </Link>
 
-          <nav aria-label="Principal" className="hidden lg:block">
-            <ul className="flex items-center gap-10">
-              {NAV.map((item) => (
-                <li key={item.href} className="group relative">
-                  <Link
-                    href={item.href}
-                    className={`label link-line py-3 ${pathname.startsWith(item.href.slice(0, -1)) ? "text-champagne" : "text-ivory"}`}
-                  >
-                    {item.label}
-                  </Link>
-                  {"children" in item && item.children && (
-                    <div className="invisible absolute left-1/2 top-full w-72 -translate-x-1/2 translate-y-2 border border-[var(--line)] bg-ink/95 p-3 opacity-0 backdrop-blur-[12px] transition-all duration-300 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                      <ul>
-                        {SERVICES.map((s) => (
-                          <li key={s.slug}>
-                            <Link
-                              href={serviceHref(s)}
-                              className="flex items-baseline gap-4 px-3 py-2.5 text-[15px] text-ivory transition-colors hover:text-champagne"
-                            >
-                              <span className="label text-[11px] text-mute">{s.num}</span>
-                              {s.nome}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <Button href="/agendar/" variant="primary" className="hidden !min-h-[44px] !px-6 sm:inline-flex">
-              Agendar
-            </Button>
-            <button
-              type="button"
-              className="flex h-11 w-11 items-center justify-center lg:hidden"
-              aria-expanded={open}
-              aria-controls="menu-mobile"
-              aria-label={open ? "Fechar menu" : "Abrir menu"}
-              onClick={() => setOpen((v) => !v)}
-            >
-              <span className="relative block h-3 w-7">
-                <span
-                  className={`absolute left-0 top-0 h-px w-full bg-champagne transition-transform duration-500 ${open ? "translate-y-[6px] rotate-[20deg]" : ""}`}
-                />
-                <span
-                  className={`absolute bottom-0 left-0 h-px w-full bg-champagne transition-transform duration-500 ${open ? "-translate-y-[5px] -rotate-[20deg]" : ""}`}
-                />
-              </span>
-            </button>
-          </div>
+          <button
+            ref={toggle}
+            type="button"
+            aria-expanded={open}
+            aria-controls="menu-cheio"
+            onClick={() => setOpen((v) => !v)}
+            className={`z-10 flex h-11 items-center gap-3 rounded-full border px-5 transition-colors duration-300 ${
+              ink ? "border-ink/60 text-ink" : "border-ivory/40 text-ivory hover:border-champagne"
+            }`}
+          >
+            <span className="label text-[11px]">{open ? "Fechar" : "Menu"}</span>
+            <span className="relative block h-2.5 w-5" aria-hidden="true">
+              <span className={`absolute left-0 top-0 h-px w-full bg-current transition-transform duration-300 ${open ? "translate-y-[5px] rotate-45" : ""}`} />
+              <span className={`absolute bottom-0 left-0 h-px w-full bg-current transition-transform duration-300 ${open ? "-translate-y-[4px] -rotate-45" : ""}`} />
+            </span>
+          </button>
         </div>
       </header>
 
       <div
-        id="menu-mobile"
-        ref={menu}
-        className={`fixed inset-0 z-[90] flex flex-col justify-center bg-ink px-6 pb-10 pt-24 transition-opacity duration-500 lg:hidden ${
-          open ? "visible opacity-100" : "invisible opacity-0"
-        }`}
+        id="menu-cheio"
+        ref={overlay}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
         aria-hidden={!open}
+        style={{ visibility: "hidden", clipPath: "inset(0% 0% 100% 0%)" }}
+        className="on-light fixed inset-0 z-[90] flex flex-col bg-sand px-5 pb-8 pt-24 text-ink md:px-10"
       >
-        <nav aria-label="Menu mobile">
-          <ul className="space-y-2">
+        <nav aria-label="Menu principal" className="flex flex-1 flex-col items-center justify-center text-center">
+          <ul className="space-y-1">
             {[{ href: "/", label: "Início" }, ...NAV].map((item) => (
-              <li key={item.href} data-m>
-                <Link href={item.href} className="block py-1 font-display text-[44px] leading-[1.1] text-ivory">
-                  {item.label}
-                </Link>
+              <li key={item.href} className="overflow-hidden">
+                <div data-m>
+                  <Link
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    className="block font-display text-[clamp(44px,7vw,72px)] font-medium leading-[1.12] transition-colors hover:text-bronze"
+                  >
+                    {item.label}
+                  </Link>
+                  {item.href === "/servicos/" && (
+                    <ul className="mb-3 flex flex-wrap justify-center gap-x-6 gap-y-1">
+                      {SERVICES.map((s) => (
+                        <li key={s.slug}>
+                          <Link href={serviceHref(s)} onClick={() => setOpen(false)} className="label link-line text-[11px] text-bronze-deep">
+                            {s.nome}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
         </nav>
-        <div className="mt-10" data-m>
-          <Button href="/agendar/" variant="primary" className="w-full">
-            Agendar horário
-          </Button>
+
+        <div className="flex flex-col justify-between gap-6 text-[15px] md:flex-row md:items-end">
+          <address className="not-italic">
+            <div data-m>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="link-line inline-flex items-center gap-2 text-bronze-deep">
+                <WhatsAppIcon className="h-4 w-4" /> {SITE.telefone}
+              </a>
+              <br />
+              <a href={`mailto:${SITE.email}`} className="link-line break-all text-bronze-deep">
+                {SITE.email}
+              </a>
+              <p className="mt-1 text-bronze-deep">
+                {e.rua}, {e.complemento}, {e.cidade}/{e.uf}
+              </p>
+            </div>
+          </address>
+          <div data-m>
+            <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="link-line inline-flex items-center gap-2 text-bronze-deep">
+              <InstagramIcon className="h-4 w-4" /> @nsconcepthair
+            </a>
+          </div>
         </div>
       </div>
     </>

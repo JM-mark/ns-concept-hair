@@ -29,7 +29,7 @@ export default function BookingCalendar({ data, hora, periodo, now, onChange, er
   const slots = data ? slotsFor(fromISO(data), now) : [];
 
   return (
-    <div data-native-cursor className="grid gap-10 lg:grid-cols-[1fr_1fr]">
+    <div data-native-cursor className="grid gap-10">
       <div>
         <div className="mb-4 flex items-center justify-between">
           <button

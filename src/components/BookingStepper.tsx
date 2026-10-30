@@ -12,7 +12,6 @@ import {
   horarioTexto,
   maskPhone,
   optionById,
-  professionalsFor,
   sendWebhook,
   servicosTexto,
   validateDados,
@@ -22,10 +21,10 @@ import {
 import BookingCalendar from "./BookingCalendar";
 import { WhatsAppIcon } from "./Icons";
 
-const STEPS = ["Serviço", "Profissional", "Data e horário", "Seus dados", "Resumo"];
+const STEPS = ["Serviço", "Data e horário", "Seus dados", "Resumo"];
 
 const field =
-  "w-full border border-[var(--line)] bg-transparent px-4 py-3 text-[17px] text-ivory placeholder:text-mute focus:border-champagne focus:outline-none aria-[invalid=true]:border-[#ff9a8a]";
+  "w-full rounded-none border-0 border-b border-white/30 bg-transparent px-0 py-3 text-[17px] text-ivory placeholder:text-ivory/50 focus:border-champagne focus:outline-none aria-[invalid=true]:border-[#ff9a8a]";
 
 export default function BookingStepper() {
   const params = useSearchParams();
@@ -43,7 +42,6 @@ export default function BookingStepper() {
   const root = useRef<HTMLDivElement>(null);
   const mounted = useRef(false);
 
-  const pros = professionalsFor(b.servicos);
   const hasMega = b.servicos.some((id) => optionById(id)?.slug === "mega-hair");
 
   // Estado na URL (?servico=...&etapa=N), sem recarregar
@@ -75,20 +73,16 @@ export default function BookingStepper() {
   const set = (patch: Partial<Booking>) => setB((v) => ({ ...v, ...patch }));
 
   const toggleServico = (id: string) =>
-    setB((v) => {
-      const servicos = v.servicos.includes(id) ? v.servicos.filter((x) => x !== id) : [...v.servicos, id];
-      const ok = professionalsFor(servicos).some((m) => m.nome === v.prof);
-      return { ...v, servicos, prof: ok ? v.prof : "" };
-    });
+    setB((v) => ({ ...v, servicos: v.servicos.includes(id) ? v.servicos.filter((x) => x !== id) : [...v.servicos, id] }));
 
   const validate = (s: number) => {
     const err: Record<string, string> = {};
     if (s === 1 && !b.servicos.length) err.servicos = "Escolha pelo menos um serviço.";
-    if (s === 3) {
+    if (s === 2) {
       if (!b.data) err.data = "Escolha um dia.";
       else if (!b.hora && !b.periodo) err.data = "Escolha um horário ou um período.";
     }
-    if (s === 4) Object.assign(err, validateDados(b));
+    if (s === 3) Object.assign(err, validateDados(b));
     return err;
   };
 
@@ -128,7 +122,7 @@ export default function BookingStepper() {
 
   return (
     <div ref={root} data-native-cursor className="scroll-mt-28">
-      <p className="label mb-6 text-champagne">Agendamento</p>
+      <p className="eyebrow mb-6">Agendamento</p>
 
       {done ? (
         <div role="status">
@@ -182,7 +176,7 @@ export default function BookingStepper() {
             <motion.div key={step} {...anim} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
               {step === 1 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(36px,6vw,72px)] outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
                     Qual serviço você quer?
                   </h1>
                   <p className="mt-3 text-[16px] text-mute">O salão confirma o horário pelo WhatsApp. Você pode escolher mais de um serviço.</p>
@@ -192,14 +186,14 @@ export default function BookingStepper() {
                         <legend className="label mb-4 text-champagne">
                           {s.num} · {s.nome}
                         </legend>
-                        <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="grid gap-3">
                           {s.opcoes.map((o) => {
                             const on = b.servicos.includes(o.id);
                             return (
                               <label
                                 key={o.id}
-                                className={`flex min-h-[56px] cursor-pointer items-start gap-4 border p-4 transition-colors ${
-                                  o.destaque ? "sm:col-span-2" : ""
+                                className={`flex min-h-[56px] cursor-pointer items-start gap-4 rounded-[14px] border p-4 transition-colors ${
+                                  o.destaque ? "" : ""
                                 } ${on ? "border-champagne bg-champagne/10" : "border-[var(--line)] hover:border-champagne/70"} has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-champagne`}
                               >
                                 <input type="checkbox" className="sr-only" checked={on} onChange={() => toggleServico(o.id)} />
@@ -228,37 +222,7 @@ export default function BookingStepper() {
 
               {step === 2 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(36px,6vw,72px)] outline-none">
-                    Com quem?
-                  </h1>
-                  <p className="mt-3 text-[16px] text-mute">Se não tiver preferência, o salão encaixa com quem estiver disponível.</p>
-                  <fieldset className="mt-10 grid gap-3 sm:grid-cols-2">
-                    <legend className="sr-only">Profissional</legend>
-                    {[{ nome: "", funcao: "O salão escolhe para você" }, ...pros].map((m) => {
-                      const on = b.prof === m.nome;
-                      return (
-                        <label
-                          key={m.nome || "sem"}
-                          className={`flex min-h-[56px] cursor-pointer items-start gap-4 border p-4 transition-colors ${
-                            on ? "border-champagne bg-champagne/10" : "border-[var(--line)] hover:border-champagne/70"
-                          } has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-champagne`}
-                        >
-                          <input type="radio" name="prof" className="sr-only" checked={on} onChange={() => set({ prof: m.nome })} />
-                          <span className={`mt-1 inline-block h-[14px] w-[14px] shrink-0 rounded-full border ${on ? "border-champagne bg-champagne" : "border-champagne/60"}`} aria-hidden="true" />
-                          <span>
-                            <span className="block text-[17px]">{m.nome || "Sem preferência"}</span>
-                            {m.funcao && <span className="block text-[15px] text-mute">{m.funcao}</span>}
-                          </span>
-                        </label>
-                      );
-                    })}
-                  </fieldset>
-                </section>
-              )}
-
-              {step === 3 && (
-                <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(36px,6vw,72px)] outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
                     Quando fica bom?
                   </h1>
                   <p className="mt-3 mb-10 text-[16px] text-mute">Escolha o dia e um horário, ou só o período, se preferir.</p>
@@ -276,9 +240,9 @@ export default function BookingStepper() {
                 </section>
               )}
 
-              {step === 4 && (
+              {step === 3 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(36px,6vw,72px)] outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
                     Seus dados
                   </h1>
                   <form
@@ -385,9 +349,9 @@ export default function BookingStepper() {
                 </section>
               )}
 
-              {step === 5 && (
+              {step === 4 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(36px,6vw,72px)] outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
                     Confira o pedido
                   </h1>
                   <p className="mt-3 text-[16px] text-mute">É uma solicitação: o salão confirma o horário pelo WhatsApp.</p>
@@ -395,14 +359,13 @@ export default function BookingStepper() {
                     {(
                       [
                         ["Serviço(s)", servicosTexto(b), 1],
-                        ["Profissional", b.prof || "Sem preferência", 2],
-                        ["Data", formatDia(b.data), 3],
-                        ["Horário", horarioTexto(b), 3],
-                        ["Nome", b.nome.trim(), 4],
-                        ["WhatsApp", b.whats, 4],
-                        ["Já é cliente", b.cliente === "sim" ? "Sim" : "Ainda não", 4],
-                        ...(b.megaHair ? [["Comprimento e volume", b.megaHair, 4] as const] : []),
-                        ...(b.obs ? [["Observações", b.obs, 4] as const] : []),
+                                        ["Data", formatDia(b.data), 2],
+                        ["Horário", horarioTexto(b), 2],
+                        ["Nome", b.nome.trim(), 3],
+                        ["WhatsApp", b.whats, 3],
+                        ["Já é cliente", b.cliente === "sim" ? "Sim" : "Ainda não", 3],
+                        ...(b.megaHair ? [["Comprimento e volume", b.megaHair, 3] as const] : []),
+                        ...(b.obs ? [["Observações", b.obs, 3] as const] : []),
                       ] as readonly (readonly [string, string, number])[]
                     ).map(([k, v, s]) => (
                       <div key={k} className="flex items-baseline justify-between gap-6 border-b border-[var(--line)] p-4 last:border-b-0">
@@ -442,7 +405,7 @@ export default function BookingStepper() {
             >
               Voltar
             </button>
-            {step < 5 && (
+            {step < 4 && (
               <button type="button" onClick={next} className="btn btn-primary label">
                 <span className="btn-clip">
                   <span className="btn-label" data-label="Continuar">

@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
-import Visual from "@/components/Visual";
-import Button from "@/components/Button";
+import Team from "@/components/Team";
 import CtaBand from "@/components/CtaBand";
 import Gallery from "@/components/Gallery";
-import { Fade } from "@/components/motion";
-import { TEAM } from "@/content/team";
 import { SITE } from "@/content/site";
-import { firstPhoto, photosFor } from "@/content/photos";
+import { photosFor } from "@/content/photos";
 
 export const metadata: Metadata = {
   title: "O Salão",
@@ -16,8 +13,6 @@ export const metadata: Metadata = {
 };
 
 export default function OSalaoPage() {
-  const netto = TEAM.find((m) => m.destaque);
-  const equipe = TEAM.filter((m) => !m.destaque);
   const espaco = photosFor("salao-detalhes");
   return (
     <>
@@ -27,54 +22,7 @@ export default function OSalaoPage() {
         intro="Beleza, cuidado e experiência em cada detalhe. Um espaço feito para você ser cuidada."
       />
 
-      <section className="bg-ink pb-20 md:pb-28" aria-label="A equipe">
-        <div className="mx-auto max-w-[1440px] px-5 md:px-10">
-          <Visual photo={firstPhoto("salao-equipe")} label="Equipe do NS Concept Hair" className="mx-auto aspect-[9/16] w-full max-w-[560px] md:aspect-[4/5]" sizes="(min-width:768px) 560px, 100vw" priority />
-          <p className="label mt-4 text-center text-[11px] text-mute">A equipe do NS Concept Hair</p>
-        </div>
-      </section>
-
-      <section className="on-light bg-ivory py-24 md:py-36">
-        <div className="mx-auto grid max-w-[1440px] items-center gap-14 px-5 md:px-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <Visual photo={undefined} num="NS" label="Netto Sillva" className="aspect-[4/5] w-full !bg-sand !text-ink" sizes="(min-width:1024px) 40vw, 100vw" />
-          </div>
-          <div className="lg:col-span-7">
-            <Fade as="p" className="label mb-6 text-champagne-deep">
-              Direção criativa
-            </Fade>
-            <Fade as="h2" className="font-display text-[clamp(40px,5.5vw,84px)]">
-              {netto?.nome}
-            </Fade>
-            <Fade as="p" className="mt-8 max-w-xl text-[18px] text-mute" delay={0.1}>
-              NS é de Netto Sillva, diretor criativo do salão, que antes se chamava Netto Sillva Concept Hair.
-            </Fade>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Button href={SITE.instagramDiretor}>Instagram do Netto</Button>
-              <Button href="/agendar/" variant="primary">
-                Agendar horário
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-ink py-24 md:py-36" aria-labelledby="equipe">
-        <div className="mx-auto max-w-[1440px] px-5 md:px-10">
-          <h2 id="equipe" className="label mb-12 !font-sans text-champagne">
-            Equipe
-          </h2>
-          <ul className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
-            {equipe.map((m) => (
-              <li key={m.nome} className="border-t border-[var(--line)] py-6">
-                <p className="font-display text-[36px] leading-none">{m.nome}</p>
-                {/* TODO confirmar função de quem não tem função informada */}
-                {m.funcao && <p className="label mt-3 text-[11px] text-champagne">{m.funcao}</p>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      <Team titulo={false} />
 
       {espaco.length > 0 && <Gallery photos={espaco} />}
 
