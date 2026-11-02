@@ -250,6 +250,7 @@ export default function Hero() {
           </div>
           <p
             className="label h-fadeout mt-4 flex text-[11px] text-champagne md:text-[12px]"
+            role="img"
             aria-label="Concept Hair"
           >
             {"CONCEPT HAIR".split("").map((c, i) => (

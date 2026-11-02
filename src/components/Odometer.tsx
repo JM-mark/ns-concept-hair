@@ -30,7 +30,7 @@ export default function Odometer({ value, className = "" }: { value: string; cla
   );
 
   return (
-    <span ref={ref} className={`inline-flex ${className}`} role="text" aria-label={value}>
+    <span ref={ref} className={`inline-flex ${className}`} role="img" aria-label={value}>
       {value.split("").map((d, i) => (
         <span key={i} className="relative inline-block h-[1em] overflow-hidden leading-none" aria-hidden="true">
           {/* altura da coluna = 1em; o conteúdo rola dentro dela */}

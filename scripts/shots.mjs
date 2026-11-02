@@ -60,6 +60,11 @@ for (const [label, vp] of [["1440", { width: 1440, height: 900 }], ["390", { wid
 
   await go("/agendar/?servico=avaliacao-mega-hair", 2500);
   await shoot(page, `${label}-08-agendamento-vidro`);
+  await go("/servicos/", 3000);
+  await shoot(page, `${label}-12-servicos`);
+  await go("/contato/", 4000);
+  await jump(page, mobile ? 500 : 400, 2000);
+  await shoot(page, `${label}-13-contato`);
   await go("/servicos/mega-hair/", 3000);
   await shoot(page, `${label}-10-mega-hair-topo`);
   await go("/o-salao/", 3000);
@@ -67,21 +72,6 @@ for (const [label, vp] of [["1440", { width: 1440, height: 900 }], ["390", { wid
   await shoot(page, `${label}-11-o-salao`);
   await ctx.close();
 }
-
-// Vídeo curto rolando a Home inteira (1440x900)
-const vctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, recordVideo: { dir: `${OUT}/_video`, size: { width: 1440, height: 900 } } });
-const vp = await vctx.newPage();
-await vp.goto("http://localhost:3290/", { waitUntil: "networkidle" });
-await sleep(5500);
-const total = await vp.evaluate(() => document.documentElement.scrollHeight);
-for (let y = 0; y < total - 900; y += 650) {
-  await vp.evaluate((v) => window.__lenis?.scrollTo(v, { duration: 1.4 }), y + 650);
-  await sleep(1500);
-}
-await sleep(800);
-const vpath = await vp.video().path();
-await vctx.close();
-renameSync(vpath, `${OUT}/home-scroll.webm`);
 
 await browser.close();
 server.close();
