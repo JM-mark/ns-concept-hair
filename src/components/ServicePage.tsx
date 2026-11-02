@@ -5,7 +5,7 @@ import Visual from "./Visual";
 import Button from "./Button";
 import CtaBand from "./CtaBand";
 import Gallery from "./Gallery";
-import Journey from "./Journey";
+import StepsRow from "./StepsRow";
 import Accordion from "./Accordion";
 import { Fade } from "./motion";
 
@@ -54,17 +54,21 @@ export default function ServicePage({ service: s }: { service: Service }) {
             )}
           </div>
         </div>
+        {s.slug === "mega-hair" && (
+          <div className="mx-auto mt-16 max-w-[1100px] px-5 md:px-10">
+            <StepsRow />
+          </div>
+        )}
       </section>
 
       {photos.length > 1 && <Gallery photos={photos.slice(1)} />}
-      {s.slug === "mega-hair" && <Journey photos={false} />}
 
-      <section className="bg-ink py-24 md:py-32" aria-labelledby="faq">
+      <section className="on-light bg-sand py-20 md:py-28" aria-labelledby="faq">
         <div className="mx-auto max-w-[900px] px-5 md:px-10">
-          <h2 id="faq" className="label mb-10 !font-sans text-champagne">
+          <h2 id="faq" className="eyebrow mb-10">
             Perguntas frequentes
           </h2>
-          <Accordion items={s.faq} tone="dark" />
+          <Accordion items={s.faq} />
         </div>
       </section>
 

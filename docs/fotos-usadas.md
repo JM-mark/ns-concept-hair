@@ -8,22 +8,14 @@ Regras do cliente: **nenhuma foto de profissional do salão** (nem mão, braço 
 
 | Aparece em | Arquivo | Largura | Fonte | Crédito | Confirmado: cliente/resultado |
 |---|---|---|---|---|---|
-| Home, selo do hero | `selo-1.webp` | 1214×… | https://www.instagram.com/reel/DfDfZFJJW1L/ | @silvanakamer | cliente marcada (@lorenasouzastella) |
-| Home, selo do hero | `selo-2.webp` | 640×… | https://www.instagram.com/reel/DYDN0cMOMZg/ | @silvanakamer | clientes marcadas (@laisgodoyfp, @ana.rosito) |
-| Home, selo do hero | `selo-3.webp` | 640×… | https://www.instagram.com/reel/DYcNh22MRnz/ | @silvanakamer | legenda de resultado ("Esse loiro…") |
-| Home, Por que a NS (cápsula 1) | `why-1.webp` | 1134×… | https://www.instagram.com/reel/DPuSkQGEabO/ | @nettosillva.ns | resultado de Mega Hair; recorte só da cliente, sem o profissional |
-| Home, Por que a NS (cápsula 2) | `why-2.webp` | 640×… | https://www.instagram.com/reel/DehZWEFtTXx/ | @silvanakamer | legenda: "Para a Julia…" (cliente) |
-| Home, Por que a NS (cápsula 3) | `why-3.webp` | 1440×… | https://www.instagram.com/reel/DTFx-KIEYco/ | @nettosillva.ns | cliente marcada (@rafscorrea) |
-| Home, Jornada, etapa 1 | `jornada-1.webp` | 1217×… | https://www.instagram.com/reel/DavzpAbKwko/ | @nsconcepthair | cliente marcada (@lidsuzana); recorte só de cabelo |
-| Home, Jornada, etapa 2 | `jornada-2.webp` | 1217×… | https://www.instagram.com/reel/DfFGfBgITTj/ | @erikabombonatti | post da própria cliente; recorte só de cabelo |
-| Home, Jornada, etapa 3 | `jornada-3.webp` | 720×… | https://www.instagram.com/reel/DeANqknPlAo/ | @silvanakamer | legenda: "A Isabela…" (cliente); recorte só de cabelo |
-| Home, Jornada, etapa 4 | `jornada-4.webp` | 720×… | https://www.instagram.com/reel/DeP1AqSP8qT/ | @silvanakamer | cliente marcada (@pam_dovalle); recorte só de cabelo |
+| Home, Mega Hair em destaque | `mh-feature.webp` | 1134×… | https://www.instagram.com/reel/DPuSkQGEabO/ | @nettosillva.ns | resultado de Mega Hair; recorte só de cabelo da cliente, sem o profissional |
+| Tratamentos, galeria | `trat-2.webp` | 720×… | https://www.instagram.com/reel/DeANqknPlAo/ | @silvanakamer | legenda: "A Isabela…" (cliente); recorte só de cabelo |
+| Tratamentos, galeria | `trat-3.webp` | 720×… | https://www.instagram.com/reel/DeP1AqSP8qT/ | @silvanakamer | cliente marcada (@pam_dovalle); recorte só de cabelo |
 | Home, grade de serviços (Mega Hair) | `grade-mega-hair.webp` | 2268×… | https://www.instagram.com/reel/DQcp_vykbOY/ | @nettosillva.ns | cliente marcada (@maricarixtodesouza) |
 | Home, grade de serviços (Coloração) | `grade-coloracao.webp` | 1217×… | https://www.instagram.com/reel/DdeTlcbRVzt/ | @nettosillva.ns | cliente marcada (@janaina.lopes.souza) |
 | Home, grade de serviços (Corte e visagismo) | `grade-corte.webp` | 1216×… | https://www.instagram.com/reel/DXSiZskD3Su/ | @silvanakamer | cliente marcada (@leeticia_fee) |
-| Home, grade de serviços (Tratamentos) | `grade-tratamentos.webp` | 1440×… | https://www.instagram.com/reel/DVSHfNaDFZP/ | @silvanakamer | cliente marcada (@gabrielasabinoo_) |
+| Home, grade de serviços (Tratamentos) | `grade-tratamentos.webp` | 1008×… | https://www.instagram.com/reel/DVSHfNaDFZP/ | @silvanakamer | cliente marcada (@gabrielasabinoo_) |
 | Home, grade de serviços (Unhas e sobrancelhas) | `grade-unhas.webp` | 1440×… | https://www.instagram.com/p/DTz4E5zDijH/ | @gimarques.nails | mãos de cliente, sem rosto (post da manicure) |
-| Home, FAQ (cápsula) | `faq.webp` | 1215×… | https://www.instagram.com/reel/DcewLV6PB9D/ | @silvanakamer | cliente marcada (@leeticia_fee) |
 | /servicos, grade (Mega Hair) | `lista-mega-hair.webp` | 2268×… | https://www.instagram.com/reel/DWWJJJhjgto/ | @nettosillva.ns | cliente marcada (@cacaucolucci) |
 | /servicos, grade (Coloração) | `lista-coloracao.webp` | 3072×… | https://www.instagram.com/p/Da9FxK-lISa/ | @ericavieraa | post da própria cliente (transformação) |
 | /servicos, grade (Corte e visagismo) | `lista-corte.webp` | 1440×… | https://www.instagram.com/reel/DV_401jETMQ/ | @nettosillva.ns | cliente marcada (@fabianegoncalves.s) |

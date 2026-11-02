@@ -27,10 +27,10 @@ export default function OSalaoPage() {
           <Fade as="p" className="eyebrow mb-8">
             A marca
           </Fade>
-          <Fade as="p" className="font-display text-[clamp(28px,3.6vw,48px)] font-medium leading-[1.2] text-bronze" delay={0.05}>
+          <Fade as="p" className="font-display text-[clamp(32px,3.6vw,44px)] font-medium leading-[1.2] text-bronze" delay={0.05}>
             NS vem de Netto Sillva, diretor criativo do salão.
           </Fade>
-          <Fade as="p" className="mx-auto mt-8 max-w-xl text-[18px] text-bronze-deep" delay={0.1}>
+          <Fade as="p" className="mx-auto mt-8 max-w-xl text-[20px] text-bronze-deep" delay={0.1}>
             Seu espaço para ser cuidada: Mega Hair, coloração, visagismo, tratamentos, unhas e sobrancelhas, com exclusividade e atenção a cada detalhe.
           </Fade>
         </div>

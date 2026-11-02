@@ -9,8 +9,6 @@ import HairCanvas from "./HairCanvas";
 import Button from "./Button";
 import { MONOGRAM } from "@/content/monogram";
 import { splitWords } from "./motion";
-import { photosFor } from "@/content/photos";
-import { asset } from "@/lib/asset";
 
 const SEEN_KEY = "ns-intro-v1";
 const BG_OPACITY = 0.55;
@@ -261,20 +259,14 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* selo flutuante: miniaturas de resultados reais + link para o Instagram */}
+        {/* link discreto para o Instagram (some no celular) */}
         <a
           href={SITE.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="h-selo h-fadeout invisible absolute right-5 top-[92px] z-20 hidden items-center gap-3 rounded-full border border-ivory/25 bg-white/10 py-2 pl-2 pr-5 backdrop-blur-[10px] transition-colors hover:border-champagne md:right-10 md:top-[104px] md:flex"
+          className="h-selo h-fadeout label link-line invisible absolute right-5 top-[96px] z-20 hidden text-[11px] text-ivory/80 md:right-10 md:top-[110px] md:inline-block"
         >
-          <span className="flex -space-x-3" aria-hidden="true">
-            {photosFor("selo").map((p) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img key={p.src} src={asset(p.src800)} alt="" width={40} height={40} className="h-10 w-10 rounded-full border-2 border-ink object-cover" />
-            ))}
-          </span>
-          <span className="max-w-[150px] text-[12px] leading-tight text-ivory">Resultados reais no nosso Instagram</span>
+          Resultados no Instagram →
         </a>
 
         {/* texto */}

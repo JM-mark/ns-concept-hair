@@ -47,8 +47,9 @@ function Column({ items, dir, dur }: { items: Review[]; dir: "up" | "down"; dur:
  * Avaliações reais do Google em 3 colunas rolando em sentidos opostos (loop de ~40s), com pausa no hover/foco e
  * fades de 120px. Sem estrelas, sem nota e sem contagem. No celular, faixa horizontal lenta. Mapa embaixo.
  */
-export default function ReviewsMap({ showHeading = true }: { showHeading?: boolean }) {
-  const cols = [0, 1, 2].map((c) => REVIEWS.filter((_, i) => i % 3 === c));
+export default function ReviewsMap({ showHeading = true, limit, mapa = "completo" }: { showHeading?: boolean; limit?: number; mapa?: "completo" | "linha" }) {
+  const lista = limit ? REVIEWS.slice(0, limit) : REVIEWS;
+  const cols = [0, 1, 2].map((c) => lista.filter((_, i) => i % 3 === c));
   const e = SITE.endereco;
   return (
     <section className="on-light relative overflow-hidden bg-sand py-24 md:py-36" aria-labelledby="rev-title">
@@ -72,8 +73,8 @@ export default function ReviewsMap({ showHeading = true }: { showHeading?: boole
 
         {/* desktop: 3 colunas rolando */}
         <div
-          className="group hidden h-[680px] gap-5 md:grid md:grid-cols-3 motion-reduce:h-auto [&:hover_*]:[animation-play-state:paused] [&:focus-within_*]:[animation-play-state:paused]"
-          style={{ maskImage: "linear-gradient(to bottom, transparent, #000 120px, #000 calc(100% - 120px), transparent)" }}
+          className="group hidden h-[560px] gap-5 md:grid md:grid-cols-3 motion-reduce:h-auto [&:hover_*]:[animation-play-state:paused] [&:focus-within_*]:[animation-play-state:paused]"
+          style={{ maskImage: "linear-gradient(to bottom, transparent, #000 90px, #000 calc(100% - 90px), transparent)" }}
           tabIndex={0}
           aria-label="Avaliações de clientes"
         >
@@ -85,12 +86,12 @@ export default function ReviewsMap({ showHeading = true }: { showHeading?: boole
         {/* celular: faixa horizontal lenta, com pausa no toque */}
         <div className="group overflow-hidden md:hidden">
           <div className="flex w-max gap-4 [animation:marquee_70s_linear_infinite] group-active:[animation-play-state:paused] motion-reduce:!animate-none">
-            {REVIEWS.map((r) => (
+            {lista.map((r) => (
               <div key={r.nome} className="w-[82vw] shrink-0">
                 <Card r={r} />
               </div>
             ))}
-            {REVIEWS.map((r) => (
+            {lista.map((r) => (
               <div key={`${r.nome}-2`} className="w-[82vw] shrink-0 motion-reduce:hidden" aria-hidden="true">
                 <Card r={r} />
               </div>
@@ -98,6 +99,20 @@ export default function ReviewsMap({ showHeading = true }: { showHeading?: boole
           </div>
         </div>
 
+        {mapa === "linha" ? (
+          <>
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-bronze-deep/30 pt-6 md:flex-row md:items-center">
+          <address className="flex gap-3 not-italic">
+            <PinIcon className="mt-1 h-5 w-5 shrink-0 text-bronze-deep" />
+            <span className="text-[15px]">
+              {e.rua}, <strong className="font-medium">{e.complemento}</strong> · {e.bairro}, {e.cidade}/{e.uf}
+            </span>
+          </address>
+          <Button href={SITE.rotaMaps}>Como chegar</Button>
+        </div>
+          </>
+        ) : (
+          <>
         <div className="mt-20 grid items-end gap-10 md:grid-cols-12">
           <div className="relative aspect-[16/9] overflow-hidden rounded-[16px] border border-bronze-deep/20 md:col-span-8">
             <iframe
@@ -122,6 +137,8 @@ export default function ReviewsMap({ showHeading = true }: { showHeading?: boole
             </div>
           </div>
         </div>
+          </>
+        )}
       </div>
     </section>
   );

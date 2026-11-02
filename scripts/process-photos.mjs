@@ -18,22 +18,14 @@ const raw = (code, n = 1) => `${RAW}/ig_${code}_${n}.jpg`;
 // conf = por que é cliente/resultado (marcação da cliente ou legenda de resultado). minW = largura mínima do recorte final.
 const SPEC = [
   // ---- Home: selo, Por que a NS, jornada, grade, FAQ ----
-  { name: "selo-1", group: "selo", file: raw("DfDfZFJJW1L"), post: ig("DfDfZFJJW1L", 1), by: "@silvanakamer", alt: "Cabelo castanho com luzes caramelo", conf: "cliente marcada (@lorenasouzastella)", uso: "Home, selo do hero" },
-  { name: "selo-2", group: "selo", file: raw("DYDN0cMOMZg"), post: ig("DYDN0cMOMZg", 1), by: "@silvanakamer", alt: "Cabelo loiro com luzes suaves", conf: "clientes marcadas (@laisgodoyfp, @ana.rosito)", uso: "Home, selo do hero" },
-  { name: "selo-3", group: "selo", file: raw("DYcNh22MRnz"), post: ig("DYcNh22MRnz", 1), by: "@silvanakamer", alt: "Cabelo loiro bege, longo e ondulado", conf: "legenda de resultado (\"Esse loiro…\")", uso: "Home, selo do hero" },
-  { name: "why-1", group: "why", file: raw("DPuSkQGEabO"), post: ig("DPuSkQGEabO", 1), by: "@nettosillva.ns", alt: "Cabelo castanho longo e ondulado, com blazer branco", crop: [0.5, 0, 0.5, 0.78], conf: "resultado de Mega Hair; recorte só da cliente, sem o profissional", uso: "Home, Por que a NS (cápsula 1)" },
-  { name: "why-2", group: "why", file: raw("DehZWEFtTXx"), post: ig("DehZWEFtTXx", 1), by: "@silvanakamer", alt: "Loiro bege em corte médio, com ondas suaves", conf: "legenda: \"Para a Julia…\" (cliente)", uso: "Home, Por que a NS (cápsula 2)" },
-  { name: "why-3", group: "why", file: raw("DTFx-KIEYco"), post: ig("DTFx-KIEYco", 1), by: "@nettosillva.ns", alt: "Cabelo castanho com luzes loiras, em tom surf blond", conf: "cliente marcada (@rafscorrea)", uso: "Home, Por que a NS (cápsula 3)" },
-  { name: "jornada-1", group: "jornada", file: raw("DavzpAbKwko"), post: ig("DavzpAbKwko", 1), by: "@nsconcepthair", alt: "Cachos longos com pontas acobreadas", crop: [0, 0.42, 1, 0.58], conf: "cliente marcada (@lidsuzana); recorte só de cabelo", uso: "Home, Jornada, etapa 1" },
-  { name: "jornada-2", group: "jornada", file: raw("DfFGfBgITTj"), post: ig("DfFGfBgITTj", 1), by: "@erikabombonatti", alt: "Ondas longas em castanho com pontas claras", crop: [0, 0.48, 1, 0.52], conf: "post da própria cliente; recorte só de cabelo", uso: "Home, Jornada, etapa 2" },
-  { name: "jornada-3", group: "jornada", file: raw("DeANqknPlAo"), post: ig("DeANqknPlAo", 1), by: "@silvanakamer", alt: "Cabelo castanho longo com pontas caramelo", crop: [0, 0.5, 1, 0.5], conf: "legenda: \"A Isabela…\" (cliente); recorte só de cabelo", uso: "Home, Jornada, etapa 3" },
-  { name: "jornada-4", group: "jornada", file: raw("DeP1AqSP8qT"), post: ig("DeP1AqSP8qT", 1), by: "@silvanakamer", alt: "Loiro longo com ondas largas", crop: [0, 0.55, 1, 0.45], conf: "cliente marcada (@pam_dovalle); recorte só de cabelo", uso: "Home, Jornada, etapa 4" },
-  { name: "grade-mega-hair", group: "home-mega-hair", file: raw("DQcp_vykbOY"), post: ig("DQcp_vykbOY", 1), by: "@nettosillva.ns", alt: "Cabelo loiro com luzes, longo e volumoso, em blusa amarela", crop: [0, 0, 1, 0.66], conf: "cliente marcada (@maricarixtodesouza)", uso: "Home, grade de serviços (Mega Hair)" },
-  { name: "grade-coloracao", group: "home-coloracao", file: raw("DdeTlcbRVzt"), post: ig("DdeTlcbRVzt", 1), by: "@nettosillva.ns", alt: "Loiro dourado, longo e luminoso, de perfil", conf: "cliente marcada (@janaina.lopes.souza)", uso: "Home, grade de serviços (Coloração)" },
-  { name: "grade-corte", group: "home-corte", file: raw("DXSiZskD3Su"), post: ig("DXSiZskD3Su", 1), by: "@silvanakamer", alt: "Mulher de cabelo castanho ondulado, com corte em camadas, sorrindo", conf: "cliente marcada (@leeticia_fee)", uso: "Home, grade de serviços (Corte e visagismo)" },
-  { name: "grade-tratamentos", group: "home-tratamentos", file: raw("DVSHfNaDFZP"), post: ig("DVSHfNaDFZP", 1), by: "@silvanakamer", alt: "Cabelo castanho longo, liso e brilhante, com pontos de luz", conf: "cliente marcada (@gabrielasabinoo_)", uso: "Home, grade de serviços (Tratamentos)" },
+  { name: "mh-feature", group: "home-mega-feature", file: raw("DPuSkQGEabO"), post: ig("DPuSkQGEabO", 1), by: "@nettosillva.ns", alt: "Cabelo castanho longo e ondulado, com blazer branco", crop: [0.5, 0.33, 0.5, 0.3], minW: 900, conf: "resultado de Mega Hair; recorte só de cabelo da cliente, sem o profissional", uso: "Home, Mega Hair em destaque" },
+  { name: "trat-2", group: "tratamentos", file: raw("DeANqknPlAo"), post: ig("DeANqknPlAo", 1), by: "@silvanakamer", alt: "Cabelo castanho longo com pontas caramelo", crop: [0, 0.5, 1, 0.5], conf: "legenda: \"A Isabela…\" (cliente); recorte só de cabelo", uso: "Tratamentos, galeria" },
+  { name: "trat-3", group: "tratamentos", file: raw("DeP1AqSP8qT"), post: ig("DeP1AqSP8qT", 1), by: "@silvanakamer", alt: "Loiro longo com ondas largas", crop: [0, 0.55, 1, 0.45], conf: "cliente marcada (@pam_dovalle); recorte só de cabelo", uso: "Tratamentos, galeria" },
+  { name: "grade-mega-hair", group: "home-mega-hair", file: raw("DQcp_vykbOY"), post: ig("DQcp_vykbOY", 1), by: "@nettosillva.ns", alt: "Cabelo loiro com luzes, longo e volumoso, em blusa amarela", box: [0, 0.31, 1], aspect: 4 / 3.5, minW: 900, conf: "cliente marcada (@maricarixtodesouza)", uso: "Home, grade de serviços (Mega Hair)" },
+  { name: "grade-coloracao", group: "home-coloracao", file: raw("DdeTlcbRVzt"), post: ig("DdeTlcbRVzt", 1), by: "@nettosillva.ns", alt: "Loiro dourado, longo e luminoso, de perfil", box: [0, 0.36, 1], aspect: 4 / 3.5, minW: 900, conf: "cliente marcada (@janaina.lopes.souza)", uso: "Home, grade de serviços (Coloração)" },
+  { name: "grade-corte", group: "home-corte", file: raw("DXSiZskD3Su"), post: ig("DXSiZskD3Su", 1), by: "@silvanakamer", alt: "Cabelo castanho ondulado, com corte em camadas e bom caimento", box: [0, 0.41, 1], aspect: 4 / 3.5, minW: 900, conf: "cliente marcada (@leeticia_fee)", uso: "Home, grade de serviços (Corte e visagismo)" },
+  { name: "grade-tratamentos", group: "home-tratamentos", file: raw("DVSHfNaDFZP"), post: ig("DVSHfNaDFZP", 1), by: "@silvanakamer", alt: "Cabelo castanho longo, liso e brilhante, com pontos de luz", box: [0.15, 0.34, 0.7], aspect: 4 / 3.5, minW: 900, conf: "cliente marcada (@gabrielasabinoo_)", uso: "Home, grade de serviços (Tratamentos)" },
   { name: "grade-unhas", group: "home-unhas", file: raw("DTz4E5zDijH"), post: ig("DTz4E5zDijH"), by: "@gimarques.nails", alt: "Unhas amendoadas em rosa, com acabamento impecável", conf: "mãos de cliente, sem rosto (post da manicure)", uso: "Home, grade de serviços (Unhas e sobrancelhas)" },
-  { name: "faq", group: "faq", file: raw("DcewLV6PB9D"), post: ig("DcewLV6PB9D", 1), by: "@silvanakamer", alt: "Mulher sorrindo, de cabelo castanho longo com luzes loiras", conf: "cliente marcada (@leeticia_fee)", uso: "Home, FAQ (cápsula)" },
 
   // ---- /servicos: grade com fotos diferentes das da Home ----
   { name: "lista-mega-hair", group: "list-mega-hair", file: raw("DWWJJJhjgto"), post: ig("DWWJJJhjgto", 1), by: "@nettosillva.ns", alt: "Cabelo longo, volumoso e com luzes, em blusa rosa", crop: [0, 0, 1, 0.7], conf: "cliente marcada (@cacaucolucci)", uso: "/servicos, grade (Mega Hair)" },
@@ -82,7 +74,12 @@ for (const s of SPEC) {
   let base = sharp(s.file).rotate();
   const meta = await base.metadata();
   const W = meta.width, H = meta.height;
-  if (s.crop) {
+  if (s.box) {
+    const [l, tp, wf] = s.box;
+    const cw = Math.round(wf * W), ch = Math.round(cw / s.aspect);
+    const top = Math.min(Math.round(tp * H), Math.max(0, H - ch));
+    base = sharp(await base.extract({ left: Math.round(l * W), top, width: cw, height: Math.min(ch, H - top) }).toBuffer());
+  } else if (s.crop) {
     const [l, t, w, h] = s.crop;
     base = sharp(await base.extract({ left: Math.round(l * W), top: Math.round(t * H), width: Math.round(w * W), height: Math.round(h * H) }).toBuffer());
   }
@@ -113,6 +110,7 @@ for (const r of results) {
     ...(r.legenda ? { legenda: r.legenda } : {}),
   });
 }
+for (const g of Object.keys(groups)) groups[g].sort((x, y) => x.src.localeCompare(y.src, undefined, { numeric: true }));
 writeFileSync(
   "src/content/photos.generated.ts",
   `// Gerado por scripts/process-photos.mjs. Não editar à mão.\n// TODO confirmar uso com o salão e com as clientes que aparecem nas fotos.\nimport type { Photo } from "./photos";\n\nexport const GENERATED: Record<string, Photo[]> = ${JSON.stringify(groups, null, 2)};\n`,

@@ -7,15 +7,17 @@ import type { Photo } from "@/content/photos";
 import Visual from "./Visual";
 
 /**
- * Galeria horizontal: arrastável no desktop (data-cursor="drag"), carrossel com snap no celular.
- * Parallax leve (y ±6%) e revelação por máscara só depois de img.decode().
+ * Até 4 fotos: grade de colunas iguais (sem vazar da tela). Mais que isso: carrossel arrastável (data-cursor="drag"),
+ * com snap no celular e parallax leve (y ±6%) só aqui.
  */
 export default function Gallery({ photos }: { photos: Photo[] }) {
   const track = useRef<HTMLDivElement>(null);
   const drag = useRef({ down: false, x: 0, left: 0, moved: false });
+  const grid = photos.length <= 4;
 
   useGSAP(
     () => {
+      if (grid) return;
       const items = gsap.utils.toArray<HTMLElement>("[data-g]", track.current);
       items.forEach((it) => {
         const img = it.querySelector("img");
@@ -29,6 +31,22 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
     },
     { scope: track },
   );
+
+  if (grid) {
+    const cols = photos.length >= 4 ? "md:grid-cols-4" : photos.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2";
+    return (
+      <section className="bg-graphite py-16 md:py-24" aria-label="Galeria">
+        <div className={`mx-auto grid max-w-[1440px] grid-cols-2 gap-4 px-5 md:px-10 ${cols}`}>
+          {photos.map((p, i) => (
+            <figure key={p.src}>
+              <Visual photo={p} label={p.alt} className={photos.length === 2 ? "aspect-[4/3] w-full" : "aspect-[4/5] w-full"} sizes={`(min-width:768px) ${Math.round(100 / photos.length)}vw, 50vw`} priority={i === 0} />
+              {p.legenda && <figcaption className="label mt-3 text-[11px] text-champagne">{p.legenda}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-graphite py-20 md:py-28" aria-label="Galeria">
