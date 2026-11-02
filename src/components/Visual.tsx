@@ -20,7 +20,7 @@ type Props = {
 export default function Visual({ photo, num, label, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority, dataCursor, position }: Props) {
   if (photo) {
     return (
-      <PhotoReveal className={`relative overflow-hidden rounded-[16px] bg-graphite ${className}`} dataCursor={dataCursor}>
+      <PhotoReveal className={`relative overflow-hidden rounded-[6px] bg-graphite ${className}`} dataCursor={dataCursor}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={asset(photo.src800)}
@@ -33,7 +33,7 @@ export default function Visual({ photo, num, label, className = "", sizes = "(mi
           fetchPriority={priority ? "high" : undefined}
           decoding="async"
           className="h-full w-full object-cover"
-          style={{ objectPosition: position, ...(photo.lqip ? { backgroundImage: `url(${photo.lqip})`, backgroundSize: "cover" } : {}) }}
+          style={{ objectPosition: position ?? "50% 20%", ...(photo.lqip ? { backgroundImage: `url(${photo.lqip})`, backgroundSize: "cover" } : {}) }}
         />
       </PhotoReveal>
     );
@@ -53,7 +53,7 @@ export default function Visual({ photo, num, label, className = "", sizes = "(mi
         }}
       />
       {num && (
-        <span className="absolute right-5 top-2 font-display text-[clamp(90px,14vw,200px)] italic leading-none text-champagne/20" aria-hidden="true">
+        <span className="absolute right-5 top-2 font-display text-[clamp(63px,9.5vw,140px)] leading-none text-champagne/20" aria-hidden="true">
           {num}
         </span>
       )}

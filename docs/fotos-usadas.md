@@ -8,21 +8,22 @@ Regras do cliente: **nenhuma foto de profissional do salão** (nem mão, braço 
 
 | Aparece em | Arquivo | Largura | Fonte | Crédito | Confirmado: cliente/resultado |
 |---|---|---|---|---|---|
-| Home, Mega Hair em destaque | `mh-feature.webp` | 1134×… | https://www.instagram.com/reel/DPuSkQGEabO/ | @nettosillva.ns | resultado de Mega Hair; recorte só de cabelo da cliente, sem o profissional |
+| Home, agendamento | `agendar-1.webp` | 1440×… | https://www.instagram.com/reel/DTFx-KIEYco/ | @nsconcepthair | A CONFIRMAR: post do salão sem marcação verificada; trocar se for da equipe |
+| Home, Mega Hair em destaque | `mh-feature.webp` | 2268×… | https://www.instagram.com/reel/DUZSrk2AbtR/ | @nettosillva.ns | cliente marcada (@erikabombonatti) |
 | Tratamentos, galeria | `trat-2.webp` | 720×… | https://www.instagram.com/reel/DeANqknPlAo/ | @silvanakamer | legenda: "A Isabela…" (cliente); recorte só de cabelo |
 | Tratamentos, galeria | `trat-3.webp` | 720×… | https://www.instagram.com/reel/DeP1AqSP8qT/ | @silvanakamer | cliente marcada (@pam_dovalle); recorte só de cabelo |
 | Home, grade de serviços (Mega Hair) | `grade-mega-hair.webp` | 2268×… | https://www.instagram.com/reel/DQcp_vykbOY/ | @nettosillva.ns | cliente marcada (@maricarixtodesouza) |
 | Home, grade de serviços (Coloração) | `grade-coloracao.webp` | 1217×… | https://www.instagram.com/reel/DdeTlcbRVzt/ | @nettosillva.ns | cliente marcada (@janaina.lopes.souza) |
 | Home, grade de serviços (Corte e visagismo) | `grade-corte.webp` | 1216×… | https://www.instagram.com/reel/DXSiZskD3Su/ | @silvanakamer | cliente marcada (@leeticia_fee) |
-| Home, grade de serviços (Tratamentos) | `grade-tratamentos.webp` | 1008×… | https://www.instagram.com/reel/DVSHfNaDFZP/ | @silvanakamer | cliente marcada (@gabrielasabinoo_) |
-| Home, grade de serviços (Unhas e sobrancelhas) | `grade-unhas.webp` | 1440×… | https://www.instagram.com/p/DTz4E5zDijH/ | @gimarques.nails | mãos de cliente, sem rosto (post da manicure) |
-| /servicos, grade (Mega Hair) | `lista-mega-hair.webp` | 2268×… | https://www.instagram.com/reel/DWWJJJhjgto/ | @nettosillva.ns | cliente marcada (@cacaucolucci) |
+| Home, grade de serviços (Tratamentos) | `grade-tratamentos.webp` | 1080×… | https://www.instagram.com/reel/DVSHfNaDFZP/ | @silvanakamer | cliente marcada (@gabrielasabinoo_) |
+| Home, grade de serviços (Unhas e sobrancelhas) | `grade-unhas.webp` | 1152×… | https://www.instagram.com/p/DTz4E5zDijH/ | @gimarques.nails | mãos de cliente, sem rosto (post da manicure) |
+| /servicos, grade (Mega Hair) | `lista-mega-hair.webp` | 1214×… | https://www.instagram.com/reel/DfDfZFJJW1L/ | @nsconcepthair | A CONFIRMAR: post do salão sem marcação verificada; trocar se for da equipe |
 | /servicos, grade (Coloração) | `lista-coloracao.webp` | 3072×… | https://www.instagram.com/p/Da9FxK-lISa/ | @ericavieraa | post da própria cliente (transformação) |
 | /servicos, grade (Corte e visagismo) | `lista-corte.webp` | 1440×… | https://www.instagram.com/reel/DV_401jETMQ/ | @nettosillva.ns | cliente marcada (@fabianegoncalves.s) |
 | /servicos, grade (Tratamentos) | `lista-tratamentos.webp` | 900×… | https://www.instagram.com/reel/DdcgpA9SApe/ | @silvanakamer | cliente marcada (@snanttes) |
 | /servicos, grade (Unhas) | `lista-unhas.webp` | 1572×… | https://www.instagram.com/p/DbLJJbWuwGx/ | @gimarques.nails | mãos de cliente, sem rosto |
-| Mega Hair, imagem principal | `mh-1.webp` | 2268×… | https://www.instagram.com/reel/DUZSrk2AbtR/ | @nettosillva.ns | cliente marcada (@erikabombonatti) |
-| Mega Hair, galeria | `mh-2.webp` | 1756×… | https://www.instagram.com/reel/DW6lzlhkYic/ | @nettosillva.ns | resultado de Mega Hair; recorte só de cabelo, sem mãos nem braço |
+| Mega Hair, imagem principal | `mh-1.webp` | 2268×… | https://www.instagram.com/reel/DWWJJJhjgto/ | @nettosillva.ns | cliente marcada (@cacaucolucci) |
+| Mega Hair, galeria | `mh-2.webp` | 1240×… | https://www.instagram.com/reel/DW6lzlhkYic/ | @nettosillva.ns | resultado de Mega Hair; recorte só de cabelo, sem mãos nem braço |
 | Mega Hair, galeria | `mh-3.webp` | 1608×… | https://www.instagram.com/reel/DMJKFMHRBT-/ | @nsconcepthair | resultado de Mega Hair; recorte só de cabelo, sem o profissional |
 | Coloração, galeria 1/8 | `col-1.webp` | 1216×… | https://www.instagram.com/reel/Daqot_1qhwS/ | @nsconcepthair | clientes marcadas (@ericavieraa) |
 | Coloração, galeria 2/8 | `col-2.webp` | 1215×… | https://www.instagram.com/reel/DcepkS6R63g/ | @nettosillva.ns | cliente marcada (@maaytetu) |

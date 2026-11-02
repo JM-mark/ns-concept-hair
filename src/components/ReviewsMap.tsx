@@ -1,143 +1,144 @@
-import { REVIEWS, type Review } from "@/content/reviews";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { REVIEWS } from "@/content/reviews";
 import { SITE } from "@/content/site";
+import { reduceMotion } from "@/lib/gsap";
 import Button from "./Button";
-import HairStrands from "./HairStrands";
 import { PinIcon } from "./Icons";
 import { Fade, FillTitle } from "./motion";
 
-function Card({ r }: { r: Review }) {
-  return (
-    <figure className="rounded-[16px] border border-bronze-deep/15 bg-ivory/50 p-7">
-      <span className="block font-display text-[88px] not-italic leading-[0.7] text-bronze" aria-hidden="true">
-        “
-      </span>
-      <blockquote className="mt-2 text-[16px] leading-relaxed text-ink">{r.texto}</blockquote>
-      <figcaption className="mt-6 flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-bronze-deep font-display text-[18px] text-ivory" aria-hidden="true">
-          {r.nome[0]}
-        </span>
-        <span>
-          <span className="eyebrow block !text-[11px] !tracking-[0.25em]">{r.nome}</span>
-          <span className="block text-[12px] text-bronze-deep">Avaliação no Google</span>
-        </span>
-      </figcaption>
-    </figure>
-  );
-}
+/** Uma avaliação por vez, grande e centralizada. Crossfade a cada 7s, setas e pontos. Sem estrelas, nota ou contagem. */
+function Slider({ limit }: { limit?: number }) {
+  const lista = limit ? REVIEWS.slice(0, limit) : REVIEWS;
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [auto, setAuto] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
 
-function Column({ items, dir, dur }: { items: Review[]; dir: "up" | "down"; dur: number }) {
-  const anim = dir === "up" ? "col-up" : "col-down";
+  useEffect(() => {
+    const t = window.setTimeout(() => setAuto(!reduceMotion()), 0);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (!auto || paused) return;
+    const id = window.setInterval(() => setI((v) => (v + 1) % lista.length), 7000);
+    return () => window.clearInterval(id);
+  }, [auto, paused, lista.length, i]);
+
+  const go = (d: number) => setI((v) => (v + d + lista.length) % lista.length);
+
   return (
-    <div className="overflow-hidden motion-reduce:overflow-visible">
-      <div className="flex flex-col gap-5 motion-reduce:!animate-none" style={{ animation: `${anim} ${dur}s linear infinite` }}>
-        {items.map((r) => (
-          <Card key={r.nome} r={r} />
+    <div
+      ref={box}
+      className="relative mx-auto max-w-[1000px] text-center"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      role="region"
+      aria-roledescription="carrossel"
+      aria-label="Avaliações de clientes"
+    >
+      <div className="grid" aria-live={auto && !paused ? "off" : "polite"}>
+        {lista.map((r, k) => (
+          <figure
+            key={r.nome}
+            className="col-start-1 row-start-1 flex flex-col items-center justify-center px-2 transition-opacity duration-[800ms] ease-in-out md:px-16"
+            style={{ opacity: k === i ? 1 : 0, visibility: k === i ? "visible" : "hidden", transitionProperty: "opacity, visibility" }}
+            aria-hidden={k !== i}
+          >
+            <blockquote className="text-[clamp(19px,2.3vw,32px)] font-light leading-[1.4] text-ink">“{r.texto}”</blockquote>
+            <figcaption className="label mt-8 text-bronze-deep">
+              {r.nome} <span className="ml-3 opacity-80">Avaliação no Google</span>
+            </figcaption>
+          </figure>
         ))}
-        <div className="flex flex-col gap-5 motion-reduce:hidden" aria-hidden="true">
-          {items.map((r) => (
-            <Card key={`${r.nome}-2`} r={r} />
+      </div>
+
+      <div className="mt-10 flex items-center justify-center gap-6">
+        <button type="button" onClick={() => go(-1)} aria-label="Avaliação anterior" className="flex h-11 w-11 items-center justify-center rounded-full border border-bronze-deep/50 text-bronze-deep transition-colors hover:bg-bronze-deep hover:text-ivory">
+          ←
+        </button>
+        <div className="flex gap-2" role="tablist" aria-label="Escolher avaliação">
+          {lista.map((r, k) => (
+            <button
+              key={r.nome}
+              type="button"
+              role="tab"
+              aria-selected={k === i}
+              aria-label={`Avaliação de ${r.nome}`}
+              onClick={() => setI(k)}
+              className="flex h-6 w-4 items-center justify-center"
+            >
+              <span className={`block h-[5px] w-[5px] rounded-full transition-colors ${k === i ? "bg-bronze-deep" : "bg-bronze-deep/30"}`} />
+            </button>
           ))}
         </div>
+        <button type="button" onClick={() => go(1)} aria-label="Próxima avaliação" className="flex h-11 w-11 items-center justify-center rounded-full border border-bronze-deep/50 text-bronze-deep transition-colors hover:bg-bronze-deep hover:text-ivory">
+          →
+        </button>
       </div>
     </div>
   );
 }
 
-/**
- * Avaliações reais do Google em 3 colunas rolando em sentidos opostos (loop de ~40s), com pausa no hover/foco e
- * fades de 120px. Sem estrelas, sem nota e sem contagem. No celular, faixa horizontal lenta. Mapa embaixo.
- */
+/** Avaliações reais do Google (uma por vez) e o endereço com "Como chegar". `/avaliacoes` e `/contato` usam o mapa completo. */
 export default function ReviewsMap({ showHeading = true, limit, mapa = "completo" }: { showHeading?: boolean; limit?: number; mapa?: "completo" | "linha" }) {
-  const lista = limit ? REVIEWS.slice(0, limit) : REVIEWS;
-  const cols = [0, 1, 2].map((c) => lista.filter((_, i) => i % 3 === c));
   const e = SITE.endereco;
   return (
-    <section className="on-light relative overflow-hidden bg-sand py-24 md:py-36" aria-labelledby="rev-title">
-      <HairStrands className="pointer-events-none absolute -left-16 bottom-0 hidden h-[70%] w-auto md:block" />
+    <section className="on-light relative overflow-hidden bg-sand py-24 md:py-32" aria-labelledby="rev-title">
       <div className="relative mx-auto max-w-[1440px] px-5 md:px-10">
         {showHeading && (
-          <div className="mb-14 max-w-3xl">
+          <div className="mb-14 text-center">
             <Fade as="p" className="eyebrow mb-6">
-              <span id="rev-title">Avaliações</span>
+              <span id="rev-title">03 — Avaliações</span>
             </Fade>
-            <FillTitle
-              lines={["O que dizem", <em key="e" className="italic">nossas clientes</em>]}
-              className="font-display text-[clamp(44px,5vw,72px)] font-medium leading-[1.05]"
-            />
-            <p className="mt-6 text-[17px] text-bronze-deep">Trechos de avaliações publicadas no Google.</p>
-            <a href={SITE.maps} target="_blank" rel="noopener noreferrer" className="label link-line mt-4 inline-block text-bronze-deep">
-              Ver todas no Google
+            <FillTitle lines={["O que dizem", "nossas clientes"]} className="font-display text-[clamp(26px,3.4vw,50px)] leading-[1.05]" />
+            <a href={SITE.maps} target="_blank" rel="noopener noreferrer" className="label link-line mt-6 inline-block text-bronze-deep">
+              Trechos de avaliações do Google · ver todas
             </a>
           </div>
         )}
 
-        {/* desktop: 3 colunas rolando */}
-        <div
-          className="group hidden h-[560px] gap-5 md:grid md:grid-cols-3 motion-reduce:h-auto [&:hover_*]:[animation-play-state:paused] [&:focus-within_*]:[animation-play-state:paused]"
-          style={{ maskImage: "linear-gradient(to bottom, transparent, #000 90px, #000 calc(100% - 90px), transparent)" }}
-          tabIndex={0}
-          aria-label="Avaliações de clientes"
-        >
-          <Column items={cols[0]} dir="down" dur={44} />
-          <Column items={cols[1]} dir="up" dur={40} />
-          <Column items={cols[2]} dir="down" dur={48} />
-        </div>
-
-        {/* celular: faixa horizontal lenta, com pausa no toque */}
-        <div className="group overflow-hidden md:hidden">
-          <div className="flex w-max gap-4 [animation:marquee_70s_linear_infinite] group-active:[animation-play-state:paused] motion-reduce:!animate-none">
-            {lista.map((r) => (
-              <div key={r.nome} className="w-[82vw] shrink-0">
-                <Card r={r} />
-              </div>
-            ))}
-            {lista.map((r) => (
-              <div key={`${r.nome}-2`} className="w-[82vw] shrink-0 motion-reduce:hidden" aria-hidden="true">
-                <Card r={r} />
-              </div>
-            ))}
-          </div>
-        </div>
+        <Slider limit={limit} />
 
         {mapa === "linha" ? (
-          <>
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-bronze-deep/30 pt-6 md:flex-row md:items-center">
-          <address className="flex gap-3 not-italic">
-            <PinIcon className="mt-1 h-5 w-5 shrink-0 text-bronze-deep" />
-            <span className="text-[15px]">
-              {e.rua}, <strong className="font-medium">{e.complemento}</strong> · {e.bairro}, {e.cidade}/{e.uf}
-            </span>
-          </address>
-          <Button href={SITE.rotaMaps}>Como chegar</Button>
-        </div>
-          </>
-        ) : (
-          <>
-        <div className="mt-20 grid items-end gap-10 md:grid-cols-12">
-          <div className="relative aspect-[16/9] overflow-hidden rounded-[16px] border border-bronze-deep/20 md:col-span-8">
-            <iframe
-              title="Mapa: NS Concept Hair, Indaiatuba"
-              src={SITE.mapsEmbed}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="absolute inset-0 h-full w-full border-0 [filter:sepia(0.35)_saturate(0.8)]"
-            />
-          </div>
-          <div className="md:col-span-4">
+          <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-bronze-deep/30 pt-6 md:flex-row md:items-center">
             <address className="flex gap-3 not-italic">
               <PinIcon className="mt-1 h-5 w-5 shrink-0 text-bronze-deep" />
               <span className="text-[15px]">
-                {e.rua}, <strong className="font-medium">{e.complemento}</strong>
-                <br />
-                {e.bairro}, {e.cidade}/{e.uf}
+                {e.rua}, <strong className="font-normal">{e.complemento}</strong> · {e.bairro}, {e.cidade}/{e.uf}
               </span>
             </address>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button href={SITE.rotaMaps}>Como chegar</Button>
+            <Button href={SITE.rotaMaps}>Como chegar</Button>
+          </div>
+        ) : (
+          <div className="mt-20 grid items-end gap-10 md:grid-cols-12">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[6px] border border-bronze-deep/20 md:col-span-8">
+              <iframe
+                title="Mapa: NS Concept Hair, Indaiatuba"
+                src={SITE.mapsEmbed}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 h-full w-full border-0 [filter:sepia(0.35)_saturate(0.8)]"
+              />
+            </div>
+            <div className="md:col-span-4">
+              <address className="flex gap-3 not-italic">
+                <PinIcon className="mt-1 h-5 w-5 shrink-0 text-bronze-deep" />
+                <span className="text-[15px]">
+                  {e.rua}, <strong className="font-normal">{e.complemento}</strong>
+                  <br />
+                  {e.bairro}, {e.cidade}/{e.uf}
+                </span>
+              </address>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Button href={SITE.rotaMaps}>Como chegar</Button>
+              </div>
             </div>
           </div>
-        </div>
-          </>
         )}
       </div>
     </section>

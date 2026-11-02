@@ -126,8 +126,8 @@ export default function BookingStepper() {
 
       {done ? (
         <div role="status">
-          <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(40px,7vw,88px)] outline-none">
-            Pedido <em className="italic-champagne">pronto.</em>
+          <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(28px,4.8vw,62px)] outline-none">
+            Pedido pronto.
           </h1>
           <p className="mt-6 max-w-xl text-[18px] text-ivory/85">
             Se a conversa com o salão não abriu no WhatsApp, use o botão abaixo. Assim que o salão confirmar, você recebe a resposta no WhatsApp.
@@ -176,7 +176,7 @@ export default function BookingStepper() {
             <motion.div key={step} {...anim} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
               {step === 1 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Qual serviço você quer?
                   </h1>
                   <p className="mt-3 text-[16px] text-mute">O salão confirma o horário pelo WhatsApp. Você pode escolher mais de um serviço.</p>
@@ -222,7 +222,7 @@ export default function BookingStepper() {
 
               {step === 2 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Quando fica bom?
                   </h1>
                   <p className="mt-3 mb-10 text-[16px] text-mute">Escolha o dia e um horário, ou só o período, se preferir.</p>
@@ -242,7 +242,7 @@ export default function BookingStepper() {
 
               {step === 3 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Seus dados
                   </h1>
                   <form
@@ -351,7 +351,7 @@ export default function BookingStepper() {
 
               {step === 4 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(32px,4.2vw,48px)] font-medium outline-none">
+                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Confira o pedido
                   </h1>
                   <p className="mt-3 text-[16px] text-mute">É uma solicitação: o salão confirma o horário pelo WhatsApp.</p>

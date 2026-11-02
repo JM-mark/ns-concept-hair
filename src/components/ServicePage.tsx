@@ -28,7 +28,7 @@ export default function ServicePage({ service: s }: { service: Service }) {
           </div>
           <div className="lg:col-span-7 lg:pt-8">
             {s.paragrafos.map((p, i) => (
-              <Fade as="p" key={i} className="mb-6 max-w-2xl font-display text-[clamp(22px,2.6vw,34px)] leading-[1.3]" delay={i * 0.05}>
+              <Fade as="p" key={i} className="mb-6 max-w-2xl text-[clamp(18px,1.9vw,24px)] font-light leading-[1.4]" delay={i * 0.05}>
                 {p}
               </Fade>
             ))}

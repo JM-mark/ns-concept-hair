@@ -39,7 +39,7 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
         <div className={`mx-auto grid max-w-[1440px] grid-cols-2 gap-4 px-5 md:px-10 ${cols}`}>
           {photos.map((p, i) => (
             <figure key={p.src}>
-              <Visual photo={p} label={p.alt} className={photos.length === 2 ? "aspect-[4/3] w-full" : "aspect-[4/5] w-full"} sizes={`(min-width:768px) ${Math.round(100 / photos.length)}vw, 50vw`} priority={i === 0} />
+              <Visual photo={p} label={p.alt} className={"aspect-[4/5] w-full"} sizes={`(min-width:768px) ${Math.round(100 / photos.length)}vw, 50vw`} priority={i === 0} />
               {p.legenda && <figcaption className="label mt-3 text-[11px] text-champagne">{p.legenda}</figcaption>}
             </figure>
           ))}

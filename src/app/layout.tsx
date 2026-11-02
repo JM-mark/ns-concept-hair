@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Jost } from "next/font/google";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/content/site";
 import { hairSalonJsonLd } from "@/lib/jsonld";
@@ -9,20 +9,14 @@ import MobileBar from "@/components/MobileBar";
 import Cursor from "@/components/Cursor";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
+import Thread from "@/components/Thread";
 
-const bodoni = Bodoni_Moda({
+// Uma família só (Archivo): títulos em largura expandida (125%) peso 300; texto em largura normal peso 400.
+const archivo = Archivo({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
+  axes: ["wdth"],
   display: "swap",
-  variable: "--font-bodoni",
-});
-
-const jost = Jost({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  display: "swap",
-  variable: "--font-jost",
+  variable: "--font-archivo",
 });
 
 export const metadata: Metadata = {
@@ -47,7 +41,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${bodoni.variable} ${jost.variable}`}>
+    <html lang="pt-BR" className={archivo.variable}>
       <body>
         <a
           href="#conteudo"
@@ -60,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="conteudo">{children}</main>
         <Footer />
+        <Thread />
         <MobileBar />
         <PageTransition />
         <Cursor />

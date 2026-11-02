@@ -2,140 +2,104 @@ import Link from "next/link";
 import { SERVICES, serviceHref } from "@/content/services";
 import { firstPhoto } from "@/content/photos";
 import { asset } from "@/lib/asset";
-import HairStrands from "./HairStrands";
 import { Fade, SplitTitle } from "./motion";
 
-type Cell = { key: string; nome: string; href: string; itens: string[]; agendar: string; foto?: ReturnType<typeof firstPhoto>; num: string };
+type Cell = { key: string; nome: string; href: string; itens: string[]; agendar: string; foto?: ReturnType<typeof firstPhoto> };
 
 function cellsFor(variant: "home" | "full"): Cell[] {
   const find = (slug: string) => SERVICES.find((s) => s.slug === slug)!;
   const mk = (slug: string): Cell => {
     const s = find(slug);
     const foto = variant === "full" ? firstPhoto(`list-${s.slug}`) : firstPhoto(s.vitrineKey);
-    return { key: s.slug, nome: s.nome, href: serviceHref(s), itens: s.pontos.slice(0, 3), agendar: s.opcoes[0].id, foto, num: s.num };
+    return { key: s.slug, nome: s.nome, href: serviceHref(s), itens: s.pontos.slice(0, 2), agendar: s.opcoes[0].id, foto };
   };
   const base = ["mega-hair", "coloracao", "corte-e-visagismo", "tratamentos"].map(mk);
   if (variant === "full") return [...base, mk("unhas"), mk("sobrancelhas")];
-  // Home: Unhas e Sobrancelhas juntas (sem foto: painel tipográfico)
   return [
     ...base,
     {
       key: "unhas-sobrancelhas",
       nome: "Unhas e sobrancelhas",
       href: serviceHref(find("unhas")),
-      itens: ["Unhas", "Design de sobrancelhas", "Junto com outro serviço, se preferir"],
+      itens: ["Unhas", "Design de sobrancelhas"],
       agendar: find("unhas").opcoes[0].id,
       foto: firstPhoto("home-unhas"),
-      num: "05",
     },
   ];
 }
 
-function ServiceCell({ c }: { c: Cell }) {
+/** Card retrato 3:4: a foto inteira, nome e itens embaixo (fora da foto). Brilho diagonal no hover, sem zoom. */
+function ServiceCard({ c, n }: { c: Cell; n: number }) {
   return (
-    <li className="group relative bg-ink">
-      <div className="relative aspect-[4/3.5] overflow-hidden">
-        {c.foto ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={asset(c.foto.src800)}
-            srcSet={`${asset(c.foto.src800)} 800w, ${asset(c.foto.src)} 2000w`}
-            sizes="(min-width:768px) 34vw, 100vw"
-            alt={c.foto.alt}
-            width={c.foto.w}
-            height={c.foto.h}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.06] group-focus-within:scale-[1.06]"
-          />
-        ) : (
-          <div className="relative h-full w-full bg-graphite">
-            {c.key === "sobrancelhas" ? (
-              <svg viewBox="0 0 400 200" fill="none" className="absolute left-1/2 top-[32%] w-[70%] -translate-x-1/2" aria-hidden="true">
-                <path d="M20 120 C 90 40, 220 20, 380 70" stroke="var(--champagne)" strokeOpacity="0.55" strokeWidth="1.4" strokeLinecap="round" />
-                <path d="M40 140 C 110 70, 230 50, 370 96" stroke="var(--champagne)" strokeOpacity="0.25" strokeWidth="1" strokeLinecap="round" />
-              </svg>
-            ) : (
-              <span className="absolute right-6 top-2 font-display text-[clamp(110px,14vw,200px)] italic leading-none text-champagne/20" aria-hidden="true">
-                {c.num}
-              </span>
-            )}
-          </div>
-        )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" aria-hidden="true" />
-        <h3 className="absolute bottom-0 left-0 p-6 font-display text-[clamp(30px,3.2vw,46px)] font-medium leading-none text-ivory md:p-8">{c.nome}</h3>
-
-        {/* painel do hover (desktop): sobe de baixo com clip-path */}
-        <div className="absolute inset-0 hidden flex-col justify-between bg-espresso/85 p-8 backdrop-blur-[2px] [clip-path:inset(100%_0_0_0)] transition-[clip-path] duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-focus-within:[clip-path:inset(0)] group-hover:[clip-path:inset(0)] md:flex">
-          <div>
-            <h3 className="font-display text-[clamp(28px,2.8vw,40px)] font-medium text-ivory">{c.nome}</h3>
-            <ul className="mt-5">
-              {c.itens.map((i) => (
-                <li key={i} className="border-t border-white/15 py-3 text-[15px] text-ivory/90 last:border-b">
-                  {i}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex items-center justify-between">
-            <Link href={c.href} className="label link-line text-champagne">
-              Ver serviço →
-            </Link>
-            <Link href={`/agendar/?servico=${c.agendar}`} className="btn btn-ivory label !min-h-[40px] !px-5">
-              <span className="btn-clip">Agendar</span>
-            </Link>
-          </div>
+    <li className="w-[72%] shrink-0 snap-start sm:w-[46%] md:w-auto">
+      <Link href={c.href} className="shine group block">
+        <div className="relative aspect-[3/4] overflow-hidden rounded-[6px] bg-graphite">
+          {c.foto ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={asset(c.foto.src800)}
+              srcSet={`${asset(c.foto.src800)} 800w, ${asset(c.foto.src)} 2000w`}
+              sizes="(min-width:768px) 20vw, 72vw"
+              alt={c.foto.alt}
+              width={c.foto.w}
+              height={c.foto.h}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover object-[50%_20%]"
+            />
+          ) : (
+            <svg viewBox="0 0 400 200" fill="none" className="absolute left-1/2 top-[40%] w-[70%] -translate-x-1/2" aria-hidden="true">
+              <path d="M20 120 C 90 40, 220 20, 380 70" stroke="var(--champagne)" strokeOpacity="0.55" strokeWidth="1.4" strokeLinecap="round" />
+              <path d="M40 140 C 110 70, 230 50, 370 96" stroke="var(--champagne)" strokeOpacity="0.25" strokeWidth="1" strokeLinecap="round" />
+            </svg>
+          )}
+          <span className="shine-sweep" aria-hidden="true" />
         </div>
-      </div>
-
-      {/* celular: informações sempre visíveis abaixo da foto */}
-      <div className="border-t border-white/10 p-5 md:hidden">
-        <ul className="text-[14px] text-ivory/80">
-          {c.itens.map((i) => (
-            <li key={i} className="py-1">
-              {i}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-3 flex items-center justify-between">
-          <Link href={c.href} className="label link-line text-champagne">
-            Ver serviço →
-          </Link>
-          <Link href={`/agendar/?servico=${c.agendar}`} className="label link-line text-ivory">
-            Agendar
-          </Link>
+        <div className="pt-4">
+          <p className="text-[12px] tabular-nums text-ivory/50">{String(n).padStart(2, "0")}</p>
+          <h3 className="mt-1 font-display text-[clamp(17px,1.4vw,21px)] leading-tight text-ivory">{c.nome}</h3>
+          <p className="mt-2 text-[14px] text-ivory/70">{c.itens.join(" · ")}</p>
+          <span className="label link-line mt-3 inline-block text-champagne">Ver serviço →</span>
         </div>
-      </div>
+      </Link>
     </li>
   );
 }
 
-/** Serviços em grade de borda a borda, sem gap. Home: célula 1 é o texto. /servicos: 6 serviços. */
+/** Serviços: título acima, fileira de cards retrato (carrossel com snap no celular). */
 export default function ServicesGrid({ variant = "home" }: { variant?: "home" | "full" }) {
   const cells = cellsFor(variant);
+  const cols = variant === "home" ? "md:grid-cols-5" : "md:grid-cols-3";
   return (
-    <section className="bg-ink" aria-labelledby={variant === "home" ? "sv-title" : undefined} aria-label={variant === "full" ? "Serviços" : undefined}>
-      <ul className="grid grid-cols-1 md:grid-cols-3">
-        {variant === "home" && (
-          <li className="relative flex aspect-auto flex-col justify-center overflow-hidden bg-ink p-8 md:aspect-[4/3.5] md:p-10">
-            <HairStrands className="pointer-events-none absolute -right-10 top-0 h-full w-auto" color="var(--champagne)" opacity={0.15} />
-            <div className="relative">
-              <Fade as="p" className="eyebrow mb-6">
-                Serviços
-              </Fade>
-              <SplitTitle
-                as="h2"
-                lines={["Nossos", <em key="e" className="italic-champagne">serviços</em>]}
-                className="font-display text-[clamp(44px,5vw,72px)] font-medium leading-[1.02] text-ivory"
-              />
-              <p id="sv-title" className="mt-5 max-w-xs text-[16px] text-ivory/75">
-                Do Mega Hair às sobrancelhas, cada atendimento começa com uma conversa sobre o que você quer.
-              </p>
-            </div>
-          </li>
-        )}
-        {cells.map((c) => (
-          <ServiceCell key={c.key} c={c} />
+    <section
+      className="bg-ink py-20 md:py-28"
+      aria-labelledby={variant === "home" ? "sv-title" : undefined}
+      aria-label={variant === "full" ? "Serviços" : undefined}
+    >
+      {variant === "home" && (
+        <div className="mx-auto mb-12 max-w-[1440px] px-5 md:mb-16 md:px-10">
+          <Fade as="p" className="eyebrow mb-6">
+            01 — Serviços
+          </Fade>
+          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+            <SplitTitle
+              as="h2"
+              lines={["Nossos", "serviços"]}
+              className="font-display text-[clamp(31px,3.4vw,50px)] leading-[1.02] text-ivory"
+            />
+            <p id="sv-title" className="max-w-sm text-[16px] text-ivory/75">
+              Do Mega Hair às sobrancelhas, cada atendimento começa com uma conversa sobre o que você quer.
+            </p>
+          </div>
+        </div>
+      )}
+      <ul
+        className={`mx-auto flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:grid md:gap-5 md:overflow-visible md:px-10 [&::-webkit-scrollbar]:hidden ${cols} ${
+          variant === "full" ? "md:gap-y-14" : ""
+        }`}
+      >
+        {cells.map((c, i) => (
+          <ServiceCard key={c.key} c={c} n={i + 1} />
         ))}
       </ul>
     </section>

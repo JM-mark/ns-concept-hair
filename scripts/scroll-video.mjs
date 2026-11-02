@@ -25,7 +25,8 @@ const server = http.createServer((req, res) => {
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const browser = await chromium.launch({ executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe", headless: true });
 const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 } })).newPage();
-await page.goto("http://localhost:3291/", { waitUntil: "networkidle" });
+const t0 = Date.now();
+await page.goto("http://localhost:3291/", { waitUntil: "domcontentloaded" });
 
 let n = 0, rec = true;
 const grab = (async () => {
@@ -34,17 +35,20 @@ const grab = (async () => {
   }
 })();
 
-await sleep(5500);
+await sleep(6500); // intro (N/S, vídeo dentro das letras, máscara crescendo)
 const total = await page.evaluate(() => document.documentElement.scrollHeight);
 for (let y = 0; y < total - 900; y += 600) {
   await page.evaluate((v) => window.__lenis?.scrollTo(v, { duration: 1.3 }), y + 600);
   await sleep(1500);
+  const c = await page.evaluate(() => { const e = [...document.querySelectorAll(".shine")].find((x) => { const r = x.getBoundingClientRect(); return r.top > 100 && r.bottom < 800; }); if (!e || window.__hovered) return null; window.__hovered = true; const r = e.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+  if (c) { await page.mouse.move(c.x, c.y, { steps: 8 }); await sleep(1400); await page.mouse.move(c.x + 240, c.y, { steps: 8 }); await sleep(1400); }
 }
 await sleep(800);
 rec = false;
 await grab;
+const secs = (Date.now() - t0) / 1000;
 await browser.close();
 server.close();
 
-execFileSync(FF, ["-v", "error", "-y", "-framerate", "44", "-r", "24", "-i", `${FR}/f%04d.jpg`, "-vf", "scale=1280:-2", "-c:v", "libx264", "-crf", "28", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "scripts/_out/home-scroll.mp4"], { stdio: "inherit" });
-console.log("video ok,", n, "quadros");
+execFileSync(FF, ["-v", "error", "-y", "-framerate", String(Math.round(n / secs)), "-r", "24", "-i", `${FR}/f%04d.jpg`, "-vf", "scale=1280:-2", "-c:v", "libx264", "-crf", "28", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "scripts/_out/home-scroll.mp4"], { stdio: "inherit" });
+console.log("video ok,", n, "quadros em", secs.toFixed(1), "s");

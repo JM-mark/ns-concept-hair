@@ -14,7 +14,7 @@ export default function ServicosPage() {
     <>
       <PageHero
         label="Serviços"
-        lines={["Seis formas de", <em key="e" className="italic-champagne">cuidar.</em>]}
+        lines={["Seis formas de", "cuidar."]}
         intro="Do Mega Hair às sobrancelhas, cada serviço começa com uma conversa sobre o que você quer."
       />
       <ServicesGrid variant="full" />

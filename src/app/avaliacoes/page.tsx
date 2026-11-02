@@ -17,7 +17,7 @@ export default function AvaliacoesPage() {
     <>
       <PageHero
         label="Avaliações"
-        lines={["Palavras de quem", <em key="e" className="italic-champagne">já esteve aqui.</em>]}
+        lines={["Palavras de quem", "já esteve aqui."]}
         intro="Trechos de avaliações publicadas no Google."
       />
       <ReviewsMap showHeading={false} />
@@ -26,7 +26,7 @@ export default function AvaliacoesPage() {
           <ul className="grid gap-12 md:grid-cols-2">
             {REVIEWS.map((r) => (
               <li key={r.nome} className="border-t border-[var(--line-dark)] pt-6">
-                <blockquote className="font-display text-[26px] italic leading-snug">“{r.texto}”</blockquote>
+                <blockquote className="text-[22px] font-light leading-snug">“{r.texto}”</blockquote>
                 <p className="label mt-5 text-[12px]">
                   {r.nome} <span className="ml-3 text-bronze-deep">Avaliação no Google</span>
                 </p>

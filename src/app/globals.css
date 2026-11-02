@@ -30,8 +30,8 @@
   --color-espresso: var(--espresso);
   --color-bronze: var(--bronze);
   --color-bronze-deep: var(--bronze-deep);
-  --font-display: var(--font-bodoni), "Bodoni Moda", serif;
-  --font-sans: var(--font-jost), "Jost", system-ui, sans-serif;
+  --font-display: var(--font-archivo), "Archivo", system-ui, sans-serif;
+  --font-sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
 }
 
 html {
@@ -53,7 +53,7 @@ body {
   background: var(--ink);
   color: #f3eee6;
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 17px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -65,10 +65,21 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-weight: 300;
+  letter-spacing: -0.01em;
   line-height: 1.02;
-  font-variation-settings: "opsz" 96;
+}
+
+/* Títulos: Archivo expandida, caixa alta, peso 300. Nada de itálico colorido. */
+.font-display {
+  font-stretch: 125%;
+  text-transform: uppercase;
+  font-weight: 300 !important;
+  letter-spacing: -0.01em;
+  font-style: normal !important;
+}
+em {
+  font-style: normal;
 }
 
 ::selection {
@@ -99,37 +110,11 @@ h4 {
 /* Rótulos, menu e botões */
 .label {
   font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 12px;
+  font-weight: 400;
+  font-size: 13px;
   line-height: 1.4;
   text-transform: uppercase;
-  letter-spacing: 0.28em;
-}
-
-.italic-champagne {
-  font-style: italic;
-  background: var(--champagne-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding-right: 0.06em;
-}
-.italic-champagne .w {
-  background: var(--champagne-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  padding-right: 0.06em;
-}
-.on-light .italic-champagne .w {
-  background: linear-gradient(120deg, #7a5f43 0%, #5e4630 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-.on-light .italic-champagne {
-  background: linear-gradient(120deg, #a58a63 0%, #7a6244 60%, #5d4930 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+  letter-spacing: 0.08em;
 }
 
 .hairline {
@@ -160,7 +145,7 @@ h4 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 52px;
   padding: 0 32px;
   border: 1px solid var(--champagne);
   border-radius: 9999px;
@@ -276,9 +261,9 @@ h4 {
   top: 0;
   left: 0;
   z-index: 200;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
   border-radius: 50%;
   background: var(--champagne);
   pointer-events: none;
@@ -291,31 +276,12 @@ h4 {
   transition: width 0.4s var(--ease-out), height 0.4s var(--ease-out),
     margin 0.4s var(--ease-out), background 0.3s, border-color 0.3s, opacity 0.3s;
 }
-.cursor span {
-  font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
 .cursor[data-state="link"] {
-  width: 44px;
-  height: 44px;
-  margin: -22px 0 0 -22px;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
   background: transparent;
   border: 1px solid var(--champagne);
-}
-.cursor[data-state="drag"],
-.cursor[data-state="view"] {
-  width: 76px;
-  height: 76px;
-  margin: -38px 0 0 -38px;
-}
-.cursor[data-state="drag"] span,
-.cursor[data-state="view"] span {
-  opacity: 1;
 }
 @media (hover: hover) and (pointer: fine) and (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   .has-cursor .cursor {
@@ -379,11 +345,11 @@ html[data-hero="done"] .home-logo {
 /* Rótulo de seção: tracking muito aberto, em champagne (em areia: bronze-deep) */
 .eyebrow {
   font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 12px;
+  font-weight: 400;
+  font-size: 13px;
   line-height: 1.4;
   text-transform: uppercase;
-  letter-spacing: 0.6em;
+  letter-spacing: 0.08em;
   color: var(--champagne);
 }
 .on-light .eyebrow {
@@ -411,5 +377,22 @@ html[data-hero="done"] .home-logo {
   }
   to {
     transform: translateY(0);
+  }
+}
+
+/* Brilho diagonal no hover (no ângulo do N): luz atravessando o cabelo. Sem zoom. */
+.shine-sweep {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 38%, rgb(255 255 255 / 0.25) 50%, transparent 62%);
+  mix-blend-mode: soft-light;
+  transform: translateX(-120%);
+}
+@media (hover: hover) {
+  .shine:hover .shine-sweep,
+  .shine:focus-visible .shine-sweep {
+    transform: translateX(120%);
+    transition: transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

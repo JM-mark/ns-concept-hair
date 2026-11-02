@@ -38,7 +38,7 @@ export default function Accordion({ items, tone = "sand" }: { items: Item[]; ton
               aria-expanded={open === i}
               aria-controls={`faq-${i}`}
               onClick={() => toggle(i)}
-              className="flex min-h-[64px] w-full items-center justify-between gap-6 py-5 text-left font-display text-[clamp(20px,2.2vw,28px)] font-medium"
+              className="flex min-h-[64px] w-full items-center justify-between gap-6 py-5 text-left text-[clamp(17px,1.8vw,21px)]"
             >
               {it.q}
               <span className={`relative block h-4 w-4 shrink-0 transition-transform duration-300 ${open === i ? "rotate-45" : ""}`} aria-hidden="true">

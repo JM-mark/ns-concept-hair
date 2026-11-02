@@ -18,7 +18,7 @@ export default function ContatoPage() {
     <>
       <PageHero
         label="Contato"
-        lines={["Vamos", <em key="e" className="italic-champagne">conversar.</em>]}
+        lines={["Vamos", "conversar."]}
         intro="Fale com o salão pelo WhatsApp ou venha nos visitar."
       >
         <Button href={whatsappLink()} variant="primary">

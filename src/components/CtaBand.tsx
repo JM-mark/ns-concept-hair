@@ -10,8 +10,8 @@ export default function CtaBand({ servico, titulo }: { servico?: string; titulo?
           Agendamento
         </Fade>
         <SplitTitle
-          className="font-display text-[clamp(40px,6.5vw,96px)] font-medium"
-          lines={titulo ? [titulo] : ["Reserve o seu", <em key="e" className="italic-champagne">momento.</em>]}
+          className="font-display text-[clamp(24px,4.2vw,60px)]"
+          lines={titulo ? [titulo] : ["Reserve o seu", "momento."]}
         />
         <Fade as="p" className="mx-auto mt-8 max-w-md text-[17px] text-mute" delay={0.1}>
           Escolha serviço, dia e horário. O salão confirma pelo WhatsApp.

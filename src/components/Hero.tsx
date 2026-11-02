@@ -4,37 +4,43 @@ import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger, reduceMotion } from "@/lib/gsap";
 import { SITE } from "@/content/site";
+import { MONOGRAM } from "@/content/monogram";
+import { MONO_FOCUS } from "@/content/monogram-focus";
+import { asset } from "@/lib/asset";
 import Monogram from "./Monogram";
 import HairCanvas from "./HairCanvas";
 import Button from "./Button";
-import { MONOGRAM } from "@/content/monogram";
-import { splitWords } from "./motion";
 
-const SEEN_KEY = "ns-intro-v1";
-const BG_OPACITY = 0.55;
+const SEEN_KEY = "ns-intro-v2";
+const ASPECT = MONOGRAM.width / MONOGRAM.height;
+const DIAG = 56; // ângulo da diagonal do N, em graus
 
-function introSeen(): boolean {
+const introSeen = () => {
   try {
     return sessionStorage.getItem(SEEN_KEY) === "1";
   } catch {
     return false;
   }
-}
-function markSeen() {
+};
+const markSeen = () => {
   try {
     sessionStorage.setItem(SEEN_KEY, "1");
   } catch {
-    /* sem storage: roda a intro de novo, sem problema */
+    /* sem storage: a intro roda de novo, sem problema */
   }
-}
+};
 
+/**
+ * Intro: o N e o S deslizam ao longo da diagonal do N e se encaixam; o vídeo aparece DENTRO das letras
+ * (o monograma é a máscara do vídeo); o monograma cresce até a máscara cobrir a tela. Ao rolar, o vídeo
+ * volta a encolher para dentro do monograma, que vira o logo do header.
+ */
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const [posterOnly, setPosterOnly] = useState(false);
   const [mobile, setMobile] = useState(false);
 
-  // Vídeo só quando há conexão/preferência para isso; pausa fora da tela e com a aba oculta
   useEffect(() => {
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const only = reduceMotion() || !!conn?.saveData;
@@ -46,7 +52,6 @@ export default function Hero() {
     if (!v || only) return () => window.clearTimeout(t);
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !document.hidden) v.play().catch(() => {});
-      else v.pause();
     });
     io.observe(v);
     const onVis = () => (document.hidden ? v.pause() : v.play().catch(() => {}));
@@ -64,119 +69,155 @@ export default function Hero() {
       if (!el) return;
       const q = gsap.utils.selector(el);
       const html = document.documentElement;
-      html.dataset.hero = "intro";
-
-      const reduced = reduceMotion();
-      const skip = reduced || introSeen();
+      const layer = q(".h-layer")[0] as HTMLElement;
+      const mono = q(".h-mono")[0] as HTMLElement;
       const n = q("[data-mono='n']");
       const s = q("[data-mono='s']");
-      const shine = q("[data-mono='shine']");
-      const letters = q(".h-letter");
-      const title = q(".h-title")[0] as HTMLElement | undefined;
-      if (title) splitWords(title);
-      const words = q(".h-title .w");
-      const content = q(".h-sub, .h-cta");
-      const bg = q(".h-bg");
+      const lines = q(".h-line > span");
+      const rest = q(".h-sub, .h-cta, .h-selo");
+      const reduced = reduceMotion();
+      const skip = reduced || introSeen() || window.scrollY > 40;
+      html.dataset.hero = skip ? "final" : "intro";
 
-      const finalState = () => {
-        gsap.set([n, s, letters], { clearProps: "all", autoAlpha: 1 });
-        gsap.set(q(".h-tag"), { autoAlpha: 1 });
-        gsap.set(content, { yPercent: 0, y: 0, autoAlpha: 1 });
-        gsap.set(title ?? [], { visibility: "visible" });
-        gsap.set(words, { clearProps: "all" });
-        gsap.set(q(".h-selo"), { autoAlpha: 1, y: 0 });
-        gsap.set(bg, { opacity: BG_OPACITY });
-        gsap.set(q(".h-diag"), { autoAlpha: 0 });
+      const maskUrl = `url(${asset("/brand/ns-mask.svg")})`;
+      const setMask = (on: boolean) => {
+        const v = on ? maskUrl : "none";
+        layer.style.setProperty("mask-image", v);
+        layer.style.setProperty("-webkit-mask-image", v);
+        if (on) {
+          layer.style.setProperty("mask-repeat", "no-repeat");
+          layer.style.setProperty("-webkit-mask-repeat", "no-repeat");
+        }
+      };
+      /** Coloca a máscara: o ponto (fx, fy) da tela é o ponto mais grosso do monograma, de altura h. */
+      const place = (fx: number, fy: number, h: number) => {
+        const w = h * ASPECT;
+        const size = `${w}px ${h}px`;
+        const pos = `${fx - MONO_FOCUS.fx * w}px ${fy - MONO_FOCUS.fy * h}px`;
+        layer.style.setProperty("mask-size", size);
+        layer.style.setProperty("-webkit-mask-size", size);
+        layer.style.setProperty("mask-position", pos);
+        layer.style.setProperty("-webkit-mask-position", pos);
       };
 
-      if (skip) {
-        finalState();
-      } else {
-        gsap.set([n, s], { transformOrigin: "50% 50%" });
-        gsap.set(n, { x: "-12vw", y: "-4vh", autoAlpha: 0, filter: "blur(8px)", clipPath: "inset(0% 0% 100% 0%)" });
-        gsap.set(s, { x: "12vw", y: "4vh", autoAlpha: 0, filter: "blur(8px)", clipPath: "inset(100% 0% 0% 0%)" });
-        gsap.set(letters, { autoAlpha: 0, letterSpacing: "0.6em" });
-        gsap.set(title ?? [], { visibility: "visible" });
-        gsap.set(words, { opacity: 0, y: 20, filter: "blur(12px)" });
-        gsap.set(q(".h-selo"), { y: 10, autoAlpha: 0 });
-        gsap.set(q(".h-sub, .h-cta, .h-tag"), { y: 24, autoAlpha: 0 });
-        gsap.set(bg, { opacity: 0 });
+      // geometria (recalculada a cada refresh)
+      const geom = () => {
+        const vw = window.innerWidth, vh = window.innerHeight;
+        const h0 = mono.offsetHeight;
+        const w0 = h0 * ASPECT;
+        const cx = vw / 2, cy = vh / 2;
+        const f0 = { x: cx + (MONO_FOCUS.fx - 0.5) * w0, y: cy + (MONO_FOCUS.fy - 0.5) * h0 };
+        const far = Math.hypot(Math.max(f0.x, vw - f0.x), Math.max(f0.y, vh - f0.y));
+        const hEnd = (far * 1.04) / MONO_FOCUS.r; // altura em que o círculo inscrito cobre a tela
+        const logo = document.getElementById("header-logo")?.getBoundingClientRect();
+        const hl = logo?.height || 40;
+        const wl = hl * ASPECT;
+        const lc = { x: logo ? logo.left + logo.width / 2 : cx, y: logo ? logo.top + logo.height / 2 : 32 };
+        const fl = { x: lc.x + (MONO_FOCUS.fx - 0.5) * wl, y: lc.y + (MONO_FOCUS.fy - 0.5) * hl };
+        return { h0, f0, hEnd, hl, fl };
+      };
+      let g = geom();
 
-        const tl = gsap.timeline({ defaults: { ease: "expo.out" }, onComplete: markSeen });
-        tl.fromTo(q(".h-diag"), { xPercent: -120, autoAlpha: 1 }, { xPercent: 120, duration: 0.5, ease: "power2.inOut" }, 0)
-          .to(q(".h-diag"), { autoAlpha: 0, duration: 0.1 }, 0.4)
-          .to(n, { x: 0, y: 0, autoAlpha: 1, filter: "blur(0px)", clipPath: "inset(0% 0% 0% 0%)", duration: 1.0 }, 0.3)
-          .to(s, { x: 0, y: 0, autoAlpha: 1, filter: "blur(0px)", clipPath: "inset(0% 0% 0% 0%)", duration: 1.0 }, 0.3)
-          // encaixe: micro-overshoot e assentar
-          .to([n, s], { scale: 1.02, duration: 0.1, ease: "power1.out" }, 1.3)
-          .to([n, s], { scale: 1, duration: 0.25, ease: "power2.out" }, 1.4)
-          // brilho metálico na diagonal
-          .set(shine, { opacity: 1 }, 1.5)
-          .fromTo(
-            shine,
-            { attr: { x: -MONOGRAM.width * 0.7 } },
-            { attr: { x: MONOGRAM.width * 1.5 }, duration: 0.6, ease: "power2.inOut" },
-            1.5,
-          )
-          .set(shine, { opacity: 0 }, 2.1)
-          // CONCEPT HAIR letra por letra, tracking diminuindo
-          .to(letters, { autoAlpha: 1, letterSpacing: "0.28em", duration: 0.6, stagger: 0.03 }, 1.8)
-          .to(q(".h-tag"), { y: 0, autoAlpha: 1, duration: 0.8 }, 1.9)
-          .to(bg, { opacity: BG_OPACITY, duration: 0.6, ease: "power1.out" }, 1.8)
-          // texto do hero
-          .to(words, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out", stagger: 0.12, clearProps: "filter" }, 2.1)
-          .to(q(".h-sub, .h-cta"), { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.08 }, 2.7)
-          .to(q(".h-selo"), { y: 0, autoAlpha: 1, duration: 0.9, ease: "power3.out" }, 3.2);
+      const finalText = () => {
+        gsap.set(lines, { yPercent: 0 });
+        gsap.set(rest, { autoAlpha: 1, y: 0 });
+        gsap.set(q(".h-title"), { visibility: "visible" });
+      };
+
+      const runShrink = () => {
+        // rolagem: a máscara volta a encolher e viaja até o logo do header
+        const st = { p: 0 };
+        const apply = () => {
+          const p = st.p;
+          if (p < 0.001) {
+            setMask(false);
+            layer.style.visibility = "visible";
+            return;
+          }
+          setMask(true);
+          const e = gsap.parseEase("power2.inOut")(p);
+          const h = Math.pow(g.hEnd, 1 - e) * Math.pow(g.hl, e);
+          place(g.f0.x + (g.fl.x - g.f0.x) * e, g.f0.y + (g.fl.y - g.f0.y) * e, h);
+          const done = p > 0.985;
+          layer.style.visibility = done ? "hidden" : "visible";
+          if (done !== (html.dataset.hero === "done")) html.dataset.hero = done ? "done" : "final";
+        };
+        gsap.to(st, {
+          p: 1,
+          ease: "none",
+          onUpdate: apply,
+          scrollTrigger: {
+            trigger: el,
+            start: "top top",
+            end: () => `+=${el.offsetHeight * 0.9}`,
+            scrub: 0.6,
+            invalidateOnRefresh: true,
+            onRefresh: () => {
+              g = geom();
+              apply();
+            },
+          },
+        });
+        gsap.to(q(".h-fadeout"), {
+          autoAlpha: 0,
+          ease: "none",
+          scrollTrigger: { trigger: el, start: "top top", end: () => `+=${el.offsetHeight * 0.35}`, scrub: true },
+        });
+      };
+
+      if (reduced) {
+        // sem movimento: hero final estático, com o poster; o vídeo não toca
+        layer.style.position = "absolute";
+        gsap.set(layer, { autoAlpha: 1 });
+        gsap.set(mono, { autoAlpha: 0 });
+        finalText();
+        html.dataset.hero = "done";
+        return () => void delete html.dataset.hero;
       }
 
-      // Rolagem: o monograma encolhe e sobe até virar o logo do header; vídeo dá zoom e escurece
-      if (!reduced) {
-        const wrap = q(".h-mono")[0] as HTMLElement | undefined;
-        const logo = () => document.getElementById("header-logo");
-        if (wrap) {
-          const st = gsap.timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: {
-              trigger: el,
-              start: "top top",
-              end: () => `+=${el.offsetHeight}`,
-              scrub: 0.6,
-              invalidateOnRefresh: true,
-              onUpdate: (self) => {
-                const done = self.progress > 0.96;
-                if (done !== (html.dataset.hero === "done")) html.dataset.hero = done ? "done" : "intro";
-              },
-            },
-          });
-          st.to(
-            wrap,
-            {
-              x: () => {
-                const l = logo()?.getBoundingClientRect();
-                const w = wrap.getBoundingClientRect();
-                return l ? l.left + l.width / 2 - (w.left + w.width / 2) : 0;
-              },
-              y: () => {
-                const l = logo()?.getBoundingClientRect();
-                const w = wrap.getBoundingClientRect();
-                return l ? l.top + l.height / 2 - (w.top + w.height / 2) + el.offsetHeight : 0;
-              },
-              scale: () => {
-                const l = logo()?.getBoundingClientRect();
-                const w = wrap.getBoundingClientRect();
-                return l && w.height ? l.height / w.height : 0.2;
-              },
-              transformOrigin: "50% 50%",
-            },
-            0,
-          )
-            .to(q(".h-fadeout"), { autoAlpha: 0, duration: 0.3 }, 0)
-            .to(wrap, { autoAlpha: 0, duration: 0.04 }, 0.96)
-            .to(q(".h-bg"), { scale: 1.1, duration: 1 }, 0)
-            .to(q(".h-veil"), { opacity: 1, duration: 1 }, 0);
-        }
+      layer.style.position = "fixed";
+      gsap.set(mono, { autoAlpha: 0 });
+
+      if (skip) {
+        gsap.set(layer, { autoAlpha: 1 });
+        finalText();
+        runShrink();
       } else {
-        html.dataset.hero = "done";
+        const dx = Math.cos((DIAG * Math.PI) / 180), dy = Math.sin((DIAG * Math.PI) / 180);
+        const dist = Math.min(window.innerHeight * 0.55, 520);
+        gsap.set(layer, { autoAlpha: 0 });
+        setMask(true);
+        gsap.set(mono, { autoAlpha: 1 });
+        // N desce pela diagonal, vindo do alto à esquerda; S sobe pela mesma diagonal, vindo de baixo à direita
+        gsap.set(n, { x: -dx * dist, y: -dy * dist, autoAlpha: 0 });
+        gsap.set(s, { x: dx * dist, y: dy * dist, autoAlpha: 0 });
+        gsap.set(lines, { yPercent: 105 });
+        gsap.set(rest, { autoAlpha: 0, y: 16 });
+        gsap.set(q(".h-title"), { visibility: "visible" });
+        const hgt = { h: g.h0 };
+        const grow = () => place(g.f0.x, g.f0.y, hgt.h);
+        place(g.f0.x, g.f0.y, g.h0);
+
+        const tl = gsap.timeline({
+          onComplete: () => {
+            markSeen();
+            runShrink();
+            html.dataset.hero = "final";
+          },
+        });
+        tl.to([n, s], { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, 0.2)
+          // encaixe com leve overshoot (1,5s)
+          .to([n, s], { x: 0, y: 0, duration: 1.5, ease: "back.out(1.5)" }, 0.2)
+          // o vídeo aparece dentro das letras
+          .to(layer, { autoAlpha: 1, duration: 0.5, ease: "power1.out" }, 1.85)
+          .to(mono, { autoAlpha: 0, duration: 0.4 }, 2.1)
+          .add(() => void layer.querySelector("video")?.play().catch(() => {}), 1.85)
+          // a máscara cresce até cobrir a tela (1,2s, expo.inOut)
+          .to(hgt, { h: g.hEnd, duration: 1.2, ease: "expo.inOut", onUpdate: grow }, 2.75)
+          .add(() => setMask(false), 3.96)
+          // título por linhas, de baixo para cima
+          .to(lines, { yPercent: 0, duration: 0.6, ease: "power3.out", stagger: 0.12 }, 3.35)
+          .to(rest, { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.08 }, 3.7);
       }
 
       return () => {
@@ -186,9 +227,8 @@ export default function Hero() {
     { scope: root },
   );
 
-  // Garante medições corretas quando as fontes terminam de carregar
   useEffect(() => {
-    const id = window.setTimeout(() => ScrollTrigger.refresh(), 400);
+    const id = window.setTimeout(() => ScrollTrigger.refresh(), 500);
     return () => window.clearTimeout(id);
   }, []);
 
@@ -196,17 +236,17 @@ export default function Hero() {
 
   return (
     <section ref={root} className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink" aria-label="Apresentação">
-      {/* fundo */}
-      <div className="h-bg absolute inset-0 opacity-0 will-change-transform" aria-hidden="true">
+      {/* camada do vídeo: tela cheia; na intro e na rolagem vira a máscara do monograma */}
+      <div className="h-layer invisible fixed inset-0 z-[5]" aria-hidden="true">
         {useVideo ? (
           <video
             ref={video}
-            className="absolute inset-y-0 right-0 h-full w-full object-cover md:w-[46vw] md:max-w-[760px] md:[mask-image:linear-gradient(to_right,transparent,#000_42%)]"
+            className="absolute inset-0 h-full w-full object-cover"
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             poster={SITE.heroVideoSrc.poster}
           >
             {mobile ? (
@@ -219,63 +259,47 @@ export default function Hero() {
             )}
           </video>
         ) : (
-          // Fallback: canvas de fios (reduced-motion e economia de dados mostram um quadro estático)
           <HairCanvas />
         )}
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to top, rgb(11 11 11 / 0.82), rgb(11 11 11 / 0.25) 55%, rgb(11 11 11 / 0.35))" }}
+        />
       </div>
-      {/* véu: de --ink a 85% embaixo para 40% em cima, escurece no scroll */}
-      <div
-        className="absolute inset-0"
-        aria-hidden="true"
-        style={{ background: "linear-gradient(to top, rgb(11 11 11 / 0.85), rgb(11 11 11 / 0.4))" }}
-      />
-      <div className="h-veil absolute inset-0 bg-ink/50 opacity-0" aria-hidden="true" />
-      <div className="grain absolute inset-0" aria-hidden="true" />
-      {/* diagonal do N cruzando a tela na abertura */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
-        <div className="h-diag invisible h-px w-[160vmax] -rotate-[56deg] bg-gradient-to-r from-transparent via-champagne to-transparent" />
+
+      {/* monograma da intro (N e S em ouro); também serve de medida para a máscara */}
+      <div className="pointer-events-none absolute inset-0 z-[6] flex items-center justify-center" aria-hidden="true">
+        <div className="h-mono invisible">
+          <Monogram className="h-[22svh] max-h-[240px] min-h-[120px] w-auto" />
+        </div>
       </div>
 
       <noscript>
-        <style>{`.h-bg{opacity:.55!important}[data-mono],.h-letter,.h-tag,.h-sub,.h-cta,.h-selo,.h-title{visibility:visible!important;opacity:1!important;transform:none!important}`}</style>
+        <style>{`.h-layer{visibility:visible!important;opacity:1!important}.h-line>span,.h-sub,.h-cta,.h-selo{transform:none!important;visibility:visible!important;opacity:1!important}.h-mono{display:none}`}</style>
       </noscript>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-5 pb-12 pt-[88px] md:px-10 md:pb-16">
-        {/* monograma */}
-        <div className="flex flex-col items-center pt-4 md:pt-8">
-          <div className="h-mono will-change-transform">
-            <Monogram className="h-[22svh] max-h-[240px] min-h-[110px] w-auto" />
-          </div>
-          <p
-            className="label h-fadeout mt-4 flex text-[11px] text-champagne md:text-[12px]"
-            role="img"
-            aria-label="Concept Hair"
-          >
-            {"CONCEPT HAIR".split("").map((c, i) => (
-              <span key={i} className="h-letter invisible inline-block whitespace-pre" style={{ letterSpacing: "0.28em" }} aria-hidden="true">
-                {c}
-              </span>
-            ))}
-          </p>
-        </div>
-
-        {/* link discreto para o Instagram (some no celular) */}
         <a
           href={SITE.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="h-selo h-fadeout label link-line invisible absolute right-5 top-[96px] z-20 hidden text-[11px] text-ivory/80 md:right-10 md:top-[110px] md:inline-block"
+          className="h-selo h-fadeout label link-line invisible absolute right-5 top-[88px] z-20 hidden text-ivory/80 md:right-10 md:inline-block"
         >
           Resultados no Instagram →
         </a>
 
-        {/* texto */}
         <div className="h-fadeout mt-auto pt-12">
-          <p className="eyebrow h-tag invisible mb-5">Indaiatuba</p>
-          <h1 className="h-title invisible font-display text-[clamp(64px,9.3vw,134px)] font-medium leading-[0.98]">
-            <span className="block">Seu espaço para ser</span>
-            <span className="block">
-              <em className="italic-champagne">cuidada.</em>
+          <p className="h-sub invisible mb-5 text-[13px] uppercase tracking-[0.08em] text-champagne">NS Concept Hair · Indaiatuba</p>
+          <h1 className="h-title invisible font-display text-[clamp(34px,6.3vw,96px)] leading-[1.02] text-ivory" aria-label="Seu espaço para ser cuidada.">
+            <span className="h-line -mb-[0.1em] block overflow-hidden pb-[0.1em]">
+              <span className="block" aria-hidden="true">
+                Seu espaço
+              </span>
+            </span>
+            <span className="h-line -mb-[0.1em] block overflow-hidden pb-[0.1em]">
+              <span className="block" aria-hidden="true">
+                para ser cuidada.
+              </span>
             </span>
           </h1>
           <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

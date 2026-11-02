@@ -13,12 +13,13 @@ colors:
   mute: "#8E877D"
   champagne-grad: "linear-gradient(120deg, #EFE3CF 0%, #C9AE88 45%, #8C7356 100%)"
 typography:
-  display: { family: "Bodoni Moda", weights: [500, 600], italic: true, hero: "clamp(64px, 9.3vw, 134px)", section: "clamp(44px, 5vw, 72px)", tracking: "-0.02em" }
-  body: { family: "Jost", weights: [300, 400, 500], size: "17px", leading: 1.6 }
-  eyebrow: { family: "Jost", weight: 500, size: "12px", transform: uppercase, tracking: "0.6em" }
-  label: { family: "Jost", weight: 500, size: "12-13px", transform: uppercase, tracking: "0.28em" }
-shapes: { photo: "16px", button: "pílula", glass: "20px" }
-motion: { ease: ["expo.out", "power3.out"], duration: "0.6-1.2s", bounce: false }
+  display: { family: "Archivo", stretch: "125%", weight: 300, transform: uppercase, hero: "clamp(34px, 6.3vw, 96px)", h2: "clamp(22px, 3.3vw, 50px)", h3: "clamp(16px, 1.7vw, 24px)", tracking: "-0.01em" }
+  body: { family: "Archivo", stretch: "100%", weight: 400, size: "17px", leading: 1.6 }
+  eyebrow: { family: "Archivo", weight: 400, size: "13px", transform: uppercase, tracking: "0.08em", uso: "só como número de seção (01 — Serviços)" }
+  label: { family: "Archivo", weight: 400, size: "13px", transform: uppercase, tracking: "0.08em" }
+  button: { family: "Archivo", weight: 400, size: "13px", transform: uppercase, tracking: "0.08em", height: "52px" }
+shapes: { photo: "6px", button: "pílula", glass: "20px" }
+motion: { assinaturas: ["intro: vídeo dentro do monograma", "o fio (um traço que se desenha no scroll)", "pentear (fotos grandes)", "brilho diagonal no hover"], titulos: "máscara linha a linha, 600ms, sem blur", ease: ["expo.inOut", "power3.out"] }
 ---
 
 # NS Concept Hair — Design System
@@ -56,8 +57,7 @@ Pares de contraste (conferidos com `node scripts/contrast.mjs`):
 | champagne sobre header de vidro (ink 75% sobre areia) | 5,69:1 | link "Agendar" e MENU |
 
 ## Typography
-Bodoni Moda 500/600 nos títulos (itálico para a palavra de destaque), Jost no texto. Rótulos de seção (`.eyebrow`) com tracking de 0,6em;
-menu e botões (`.label`) com 0,28em.
+Uma família só: **Archivo**. Títulos em largura expandida (`font-stretch: 125%`), peso 300, caixa alta; texto em largura normal, peso 400 (2 pesos). Sem itálico colorido, sem rótulo com tracking largo. A logo é a única Didone do site: a tipografia contrasta com ela.
 
 ## Layout, Shapes e Components
 Contêiner de 1440px. Fotos com cantos de 16px, botões em pílula (fundo preenche da esquerda para a direita), cards com moldura deslocada
@@ -78,3 +78,9 @@ GSAP + ScrollTrigger, Lenis, Framer Motion só no stepper. Easing `expo.out`/`po
 ## Do's and Don'ts
 - Fazer: usar só os tokens; fotos reais do salão sem profissionais; fotos de Pexels/Pixabay só sem rosto.
 - Não fazer: champagne em texto sobre areia, nota ou contagem de avaliações, antes e depois, preço, número inventado, foto de profissional do salão.
+
+## Header (revisão 4)
+Barra de largura total, 64px, `--ink` a 92% com hairline champagne depois do hero; Menu à esquerda, monograma centralizado, "Agendar" à direita (botão). Na Home, o vídeo do hero encolhe de volta para dentro do monograma e vira o logo do header.
+
+## Fotos (revisão 4)
+Retrato 3:4 (cards de serviço) e 4:5 (Mega Hair), cabeça inteira, `object-position` 50% 20%. Nunca cortar entre a testa e o queixo.

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { finePointer, reduceMotion } from "@/lib/gsap";
 
-type CursorState = "dot" | "link" | "drag" | "view";
+type CursorState = "dot" | "link";
 
 /**
  * Um único elemento fixo, movido só com translate3d dentro de rAF (lerp 0,18).
@@ -11,7 +11,6 @@ type CursorState = "dot" | "link" | "drag" | "view";
  */
 export default function Cursor() {
   const ref = useRef<HTMLDivElement>(null);
-  const label = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -26,11 +25,10 @@ export default function Cursor() {
       raf = 0;
     let state: CursorState = "dot";
 
-    const setState = (s: CursorState, text = "") => {
-      if (s === state && (!text || label.current?.textContent === text)) return;
+    const setState = (s: CursorState) => {
+      if (s === state) return;
       state = s;
       el.dataset.state = s;
-      if (label.current) label.current.textContent = text;
     };
 
     const onMove = (e: PointerEvent) => {
@@ -63,11 +61,7 @@ export default function Cursor() {
         el.style.opacity = "0";
         return;
       }
-      const c = t.closest<HTMLElement>("[data-cursor]");
-      const kind = c?.dataset.cursor;
-      if (kind === "drag") setState("drag", "Arraste");
-      else if (kind === "view") setState("view", "Ver");
-      else if (t.closest("a, button, [role='button'], summary")) setState("link");
+      if (t.closest("a, button, [role='button'], summary")) setState("link");
       else setState("dot");
     };
 
@@ -96,7 +90,7 @@ export default function Cursor() {
 
   return (
     <div ref={ref} className="cursor" data-state="dot" aria-hidden="true">
-      <span ref={label} />
+      
     </div>
   );
 }

@@ -2,31 +2,25 @@
 
 import { useState } from "react";
 import { SERVICES } from "@/content/services";
+import { firstPhoto } from "@/content/photos";
 import Button from "./Button";
-import HairStrands from "./HairStrands";
+import Visual from "./Visual";
 import { Fade, SplitTitle } from "./motion";
 
-/** Bloco de agendamento da Home: card de vidro com o seletor de serviço; "Continuar" abre /agendar com o serviço escolhido. */
+/** Agendamento da Home: card de vidro com o seletor de serviço, alinhado ao grid, e uma foto retrato à direita. */
 export default function BookHome() {
   const opcoes = SERVICES.map((s) => ({ id: s.opcoes[0].id, nome: s.slug === "mega-hair" ? "Avaliação de Mega Hair" : s.nome }));
   const [sel, setSel] = useState(opcoes[0].id);
+  const foto = firstPhoto("home-agendar");
 
   return (
-    <section className="relative overflow-hidden bg-espresso py-24 md:py-36" aria-labelledby="book-title">
-      <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 md:block" aria-hidden="true">
-        <HairStrands className="h-full w-full" color="var(--champagne)" opacity={0.18} />
-      </div>
-      <div className="grain absolute inset-0" aria-hidden="true" />
-      <div className="relative mx-auto max-w-[1440px] px-5 md:px-10">
-        <div className="glass w-full max-w-[560px] p-7 md:p-10">
+    <section className="grain relative overflow-hidden bg-espresso py-20 md:py-28" aria-labelledby="book-title">
+      <div className="relative mx-auto grid max-w-[1440px] items-center gap-12 px-5 md:px-10 lg:grid-cols-12">
+        <div className="glass w-full p-7 md:p-10 lg:col-span-6 xl:col-span-5">
           <Fade as="p" className="eyebrow mb-6">
-            Agendamento
+            04 — Agendamento
           </Fade>
-          <SplitTitle
-            as="h2"
-            lines={["Agende sua", <em key="e" className="italic-champagne">experiência</em>]}
-            className="font-display text-[clamp(40px,5vw,64px)] font-medium"
-          />
+          <SplitTitle as="h2" lines={["Agende sua", "experiência"]} className="font-display text-[clamp(24px,3.2vw,46px)]" />
           <p id="book-title" className="mt-5 text-[16px] text-ivory/80">
             Escolha o serviço. O salão confirma o horário pelo WhatsApp.
           </p>
@@ -51,6 +45,9 @@ export default function BookHome() {
               Continuar
             </Button>
           </div>
+        </div>
+        <div className="lg:col-span-5 lg:col-start-8 xl:col-span-4 xl:col-start-9">
+          <Visual photo={foto} label="Agendamento" className="mx-auto aspect-[4/5] w-full max-w-[460px] lg:max-w-none" sizes="(min-width:1024px) 30vw, 90vw" />
         </div>
       </div>
     </section>

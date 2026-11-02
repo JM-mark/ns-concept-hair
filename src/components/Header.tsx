@@ -89,43 +89,43 @@ export default function Header() {
 
   return (
     <>
-      <header className="pointer-events-none fixed inset-x-0 top-0 z-[100] px-3 pt-3 md:px-6">
+      <header className="fixed inset-x-0 top-0 z-[100]">
         <div
-          className={`pointer-events-auto relative mx-auto flex h-[60px] max-w-[1440px] items-center justify-between px-4 transition-[background-color,border-color,backdrop-filter] duration-500 md:h-[64px] md:px-6 ${
-            floating ? "rounded-full border border-white/10 bg-ink/75 backdrop-blur-[14px]" : "rounded-full border border-transparent"
+          className={`relative mx-auto flex h-16 w-full items-center justify-between px-5 transition-[background-color,border-color] duration-500 md:px-10 ${
+            floating ? "border-b border-champagne/30 bg-ink/[0.92] backdrop-blur-[10px]" : "border-b border-transparent"
           } ${ink ? "text-ink" : "text-ivory"}`}
         >
-          <Link href="/agendar/" className="label link-line z-10 hidden sm:inline-block">
-            Agendar
-          </Link>
-          <span className="sm:hidden" aria-hidden="true" />
-
-          <Link
-            href="/"
-            aria-label="NS Concept Hair, página inicial"
-            id="header-logo"
-            className={`absolute left-1/2 top-1/2 block h-10 -translate-x-1/2 -translate-y-1/2 md:h-11 ${isHome ? "home-logo" : ""}`}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={asset(ink ? "/brand/ns-monograma-escuro.png" : "/brand/ns-monograma-champagne.png")} alt="NS Concept Hair" className="h-full w-auto" />
-          </Link>
-
           <button
             ref={toggle}
             type="button"
             aria-expanded={open}
             aria-controls="menu-cheio"
             onClick={() => setOpen((v) => !v)}
-            className={`z-10 flex h-11 items-center gap-3 rounded-full border px-5 transition-colors duration-300 ${
-              ink ? "border-ink/60 text-ink" : "border-ivory/40 text-ivory hover:border-champagne"
-            }`}
+            className="z-10 flex h-11 items-center gap-3 transition-colors duration-300 hover:text-champagne"
           >
-            <span className="label text-[11px]">{open ? "Fechar" : "Menu"}</span>
             <span className="relative block h-2.5 w-5" aria-hidden="true">
               <span className={`absolute left-0 top-0 h-px w-full bg-current transition-transform duration-300 ${open ? "translate-y-[5px] rotate-45" : ""}`} />
               <span className={`absolute bottom-0 left-0 h-px w-full bg-current transition-transform duration-300 ${open ? "-translate-y-[4px] -rotate-45" : ""}`} />
             </span>
+            <span className="label text-[12px]">{open ? "Fechar" : "Menu"}</span>
           </button>
+
+          <Link
+            href="/"
+            aria-label="NS Concept Hair, página inicial"
+            id="header-logo"
+            className={`absolute left-1/2 top-1/2 block h-9 -translate-x-1/2 -translate-y-1/2 md:h-10 ${isHome ? "home-logo" : ""}`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={asset(ink ? "/brand/ns-monograma-escuro.png" : "/brand/ns-monograma-champagne.png")} alt="NS Concept Hair" className="h-full w-auto" />
+          </Link>
+
+          <Link
+            href="/agendar/"
+            className={`btn z-10 hidden !min-h-[40px] !px-5 sm:inline-flex ${ink ? "btn-primary" : "btn-ivory"}`}
+          >
+            <span className="btn-clip label text-[12px]">Agendar</span>
+          </Link>
         </div>
       </header>
 
@@ -147,7 +147,7 @@ export default function Header() {
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="block font-display text-[clamp(44px,7vw,72px)] font-medium leading-[1.12] transition-colors hover:text-bronze"
+                    className="block font-display text-[clamp(31px,4.8vw,50px)] leading-[1.12] transition-colors hover:text-bronze"
                   >
                     {item.label}
                   </Link>
