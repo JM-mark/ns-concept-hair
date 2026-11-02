@@ -19,6 +19,8 @@ const PAIRS = [
   ["ivory sobre bronze (seta redonda)", "#F3EEE6", "#7A5F43"],
   ["ivory sobre bronze-deep", "#F3EEE6", "#5E4630"],
   ["ivory sobre vidro (espresso 70% sobre foto clara)", "#F3EEE6", blend("#1A140E", "#DCCFC0", 0.7)],
+  ["ivory sobre header de vidro (ink 75% sobre sand)", "#F3EEE6", blend("#0B0B0B", "#DCCFC0", 0.75)],
+  ["champagne sobre header de vidro (ink 75% sobre sand)", "#CDB896", blend("#0B0B0B", "#DCCFC0", 0.75)],
   ["bronze-deep sobre ivory", "#5E4630", "#F3EEE6"],
 ];
 for (const [n, a, b] of PAIRS) console.log(`${ratio(a, b).toFixed(2).padStart(6)}:1  ${n}  (${a} / ${b})`);

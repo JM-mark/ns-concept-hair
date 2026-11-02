@@ -11,7 +11,8 @@ function cellsFor(variant: "home" | "full"): Cell[] {
   const find = (slug: string) => SERVICES.find((s) => s.slug === slug)!;
   const mk = (slug: string): Cell => {
     const s = find(slug);
-    return { key: s.slug, nome: s.nome, href: serviceHref(s), itens: s.pontos.slice(0, 3), agendar: s.opcoes[0].id, foto: firstPhoto(s.vitrineKey), num: s.num };
+    const foto = variant === "full" ? firstPhoto(`list-${s.slug}`) : firstPhoto(s.vitrineKey);
+    return { key: s.slug, nome: s.nome, href: serviceHref(s), itens: s.pontos.slice(0, 3), agendar: s.opcoes[0].id, foto, num: s.num };
   };
   const base = ["mega-hair", "coloracao", "corte-e-visagismo", "tratamentos"].map(mk);
   if (variant === "full") return [...base, mk("unhas"), mk("sobrancelhas")];
@@ -24,6 +25,7 @@ function cellsFor(variant: "home" | "full"): Cell[] {
       href: serviceHref(find("unhas")),
       itens: ["Unhas", "Design de sobrancelhas", "Junto com outro serviço, se preferir"],
       agendar: find("unhas").opcoes[0].id,
+      foto: firstPhoto("home-unhas"),
       num: "05",
     },
   ];
@@ -48,9 +50,16 @@ function ServiceCell({ c }: { c: Cell }) {
           />
         ) : (
           <div className="relative h-full w-full bg-graphite">
-            <span className="absolute right-6 top-2 font-display text-[clamp(110px,14vw,200px)] italic leading-none text-champagne/20" aria-hidden="true">
-              {c.num}
-            </span>
+            {c.key === "sobrancelhas" ? (
+              <svg viewBox="0 0 400 200" fill="none" className="absolute left-1/2 top-[32%] w-[70%] -translate-x-1/2" aria-hidden="true">
+                <path d="M20 120 C 90 40, 220 20, 380 70" stroke="var(--champagne)" strokeOpacity="0.55" strokeWidth="1.4" strokeLinecap="round" />
+                <path d="M40 140 C 110 70, 230 50, 370 96" stroke="var(--champagne)" strokeOpacity="0.25" strokeWidth="1" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <span className="absolute right-6 top-2 font-display text-[clamp(110px,14vw,200px)] italic leading-none text-champagne/20" aria-hidden="true">
+                {c.num}
+              </span>
+            )}
           </div>
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" aria-hidden="true" />

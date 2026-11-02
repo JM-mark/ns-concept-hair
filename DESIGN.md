@@ -52,6 +52,8 @@ Pares de contraste (conferidos com `node scripts/contrast.mjs`):
 | ivory sobre bronze | 5,13:1 | setas redondas |
 | ivory sobre bronze-deep | 7,59:1 | botão em areia |
 | ink sobre champagne | 10,21:1 | botão primário |
+| ivory sobre header de vidro (ink 75% sobre areia) | 9,50:1 | menu e links do header sobre seções areia |
+| champagne sobre header de vidro (ink 75% sobre areia) | 5,69:1 | link "Agendar" e MENU |
 
 ## Typography
 Bodoni Moda 500/600 nos títulos (itálico para a palavra de destaque), Jost no texto. Rótulos de seção (`.eyebrow`) com tracking de 0,6em;

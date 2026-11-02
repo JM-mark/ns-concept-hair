@@ -18,7 +18,7 @@ function Card({ r }: { r: Review }) {
         </span>
         <span>
           <span className="eyebrow block !text-[11px] !tracking-[0.25em]">{r.nome}</span>
-          <span className="block text-[12px] text-bronze-deep">Avaliação no Google · {r.quando}</span>
+          <span className="block text-[12px] text-bronze-deep">Avaliação no Google</span>
         </span>
       </figcaption>
     </figure>

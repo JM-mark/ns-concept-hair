@@ -57,7 +57,11 @@ export default function ContatoPage() {
               <p className="mt-2 text-[15px] text-mute">Fechado aos domingos e às segundas.</p>
               <p className="mt-6 text-[15px] text-mute">{SITE.lgbt}.</p>
             </div>
-            <Visual photo={firstPhoto("fachada")} label="Fachada do prédio" className="aspect-[4/3] w-full" position="50% 38%" sizes="(min-width:1024px) 40vw, 100vw" />
+            <figure>
+              {/* TODO pedir foto atual da fachada ao salão */}
+              <Visual photo={firstPhoto("fachada")} label="Fachada do prédio" className="aspect-[4/3] w-full" position="50% 38%" sizes="(min-width:1024px) 40vw, 100vw" />
+              <figcaption className="mt-3 text-[13px] text-mute">Fachada do prédio (placa com o nome anterior do salão)</figcaption>
+            </figure>
             <ul className="space-y-3 text-[17px]">
               <li>
                 <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="link-line inline-flex items-center gap-3">

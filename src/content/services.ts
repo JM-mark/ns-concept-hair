@@ -140,6 +140,7 @@ export const SERVICES: Service[] = [
     pontos: ["Atendimento com a Gi", "Acabamento cuidadoso"],
     faq: [{ q: "Posso agendar junto com outro serviço?", a: "Sim. No agendamento você escolhe mais de um serviço." }],
     fotoKey: "unhas",
+    vitrineKey: "home-unhas",
     opcoes: [{ id: "unhas", nome: "Unhas" }],
   },
   {

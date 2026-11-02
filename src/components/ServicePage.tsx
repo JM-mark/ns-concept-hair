@@ -57,7 +57,7 @@ export default function ServicePage({ service: s }: { service: Service }) {
       </section>
 
       {photos.length > 1 && <Gallery photos={photos.slice(1)} />}
-      {s.slug === "mega-hair" && <Journey />}
+      {s.slug === "mega-hair" && <Journey photos={false} />}
 
       <section className="bg-ink py-24 md:py-32" aria-labelledby="faq">
         <div className="mx-auto max-w-[900px] px-5 md:px-10">

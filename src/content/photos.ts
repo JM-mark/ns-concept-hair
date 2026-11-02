@@ -13,9 +13,9 @@ export type Photo = {
 };
 
 /**
- * Gerado por scripts/process-photos.mjs. Nenhuma foto repete entre páginas:
- * home-* (vitrine da Home), mega-hair-feature (Home), mega-hair, coloracao, corte, tratamentos, unhas (páginas dos serviços),
- * salao-equipe e salao-detalhes (/o-salao), fachada (/contato).
+ * Gerado por scripts/process-photos.mjs. Nenhuma foto repete entre lugares (node scripts/check-unique.mjs):
+ * selo, why, jornada, home-* e faq (Home); list-* (/servicos); mega-hair, coloracao, corte, tratamentos, unhas (páginas dos serviços);
+ * salao-detalhes (/o-salao); fachada (/contato).
  */
 export const PHOTOS: Record<string, Photo[]> = GENERATED;
 

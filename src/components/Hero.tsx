@@ -265,7 +265,7 @@ export default function Hero() {
           href={SITE.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="h-selo h-fadeout invisible absolute right-5 top-[92px] z-20 flex items-center gap-3 rounded-full border border-ivory/25 bg-white/10 py-2 pl-2 pr-5 backdrop-blur-[10px] transition-colors hover:border-champagne md:right-10 md:top-[104px]"
+          className="h-selo h-fadeout invisible absolute right-5 top-[92px] z-20 hidden items-center gap-3 rounded-full border border-ivory/25 bg-white/10 py-2 pl-2 pr-5 backdrop-blur-[10px] transition-colors hover:border-champagne md:right-10 md:top-[104px] md:flex"
         >
           <span className="flex -space-x-3" aria-hidden="true">
             {photosFor("selo").map((p) => (

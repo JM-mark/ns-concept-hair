@@ -31,7 +31,7 @@ export default function WhyNS() {
   );
 
   return (
-    <section ref={root} className="on-light bg-sand py-24 md:py-40" aria-labelledby="why-title">
+    <section ref={root} className="on-light bg-sand pb-20 pt-24 md:pb-24 md:pt-32" aria-labelledby="why-title">
       <div className="mx-auto max-w-[1240px] px-5 text-center md:px-10">
         <Fade as="p" className="eyebrow mb-10">
           <span id="why-title">Por que a NS</span>

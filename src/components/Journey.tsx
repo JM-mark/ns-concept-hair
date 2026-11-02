@@ -39,9 +39,9 @@ const ICONS = [
   </svg>,
 ];
 
-function StepCard({ i }: { i: number }) {
+function StepCard({ i, photos }: { i: number; photos: boolean }) {
   const step = STEPS[i];
-  const photo = photosFor("jornada")[i];
+  const photo = photos ? photosFor("jornada")[i] : undefined;
   return (
     <div className="jr-card relative w-full max-w-[420px]">
       <span className="jr-frame pointer-events-none absolute inset-0 translate-x-2 translate-y-2 rounded-[18px] border border-bronze-deep/60" aria-hidden="true" />
@@ -72,7 +72,7 @@ function StepCard({ i }: { i: number }) {
  * A jornada do Mega Hair: título fixo no centro (sticky de CSS, sem pin do GSAP) e 4 cards que passam por cima,
  * alternando esquerda e direita, com moldura deslocada em parallax. No celular, coluna sem sticky.
  */
-export default function Journey() {
+export default function Journey({ photos = true }: { photos?: boolean }) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -108,7 +108,7 @@ export default function Journey() {
         <div className="relative z-10 -mt-[100vh] pb-[10vh] pt-[55vh]">
           {STEPS.map((_, i) => (
             <div key={i} className={`flex px-10 py-[7vh] ${i % 2 ? "justify-end pr-[12%]" : "justify-start pl-[12%]"}`}>
-              <StepCard i={i} />
+              <StepCard i={i} photos={photos} />
             </div>
           ))}
         </div>
@@ -123,7 +123,7 @@ export default function Journey() {
         />
         <div className="space-y-10">
           {STEPS.map((_, i) => (
-            <StepCard key={i} i={i} />
+            <StepCard key={i} i={i} photos={photos} />
           ))}
         </div>
       </div>
