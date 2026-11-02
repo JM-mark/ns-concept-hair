@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import WhyNS from "@/components/WhyNS";
 import ServicesGrid from "@/components/ServicesGrid";
 import MegaHairFeature from "@/components/MegaHairFeature";
-import ReviewsMap from "@/components/ReviewsMap";
+import ReviewsHome from "@/components/ReviewsHome";
 import BookHome from "@/components/BookHome";
 import FaqSection from "@/components/FaqSection";
 
@@ -14,7 +14,7 @@ export default function Home() {
       <WhyNS />
       <ServicesGrid />
       <MegaHairFeature />
-      <ReviewsMap limit={6} mapa="linha" />
+      <ReviewsHome />
       <BookHome />
       <FaqSection />
     </>
