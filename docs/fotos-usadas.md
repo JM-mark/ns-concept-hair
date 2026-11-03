@@ -51,4 +51,4 @@ Regras do cliente: **nenhuma foto de profissional do salão** (nem mão, braço 
 - Fachada: a placa mostra o nome anterior, "Netto Sillva Concept Hair". Só aparece em /contato, com legenda e `// TODO pedir foto atual`.
 - Destaque "O salão": só o primeiro story (recepção) mostra o espaço sem pessoas; os outros dois têm a equipe e não foram usados.
 - Maps, aba "Do proprietário": só traz retratos de clientes; a aba "Interior" tem uma selfie de academia. Nada de lá foi usado.
-- Vídeo do hero: Pexels, "Blonde Woman Showcasing Silky Long Hair" (Zenia Diamond), https://www.pexels.com/video/blonde-woman-showcasing-silky-long-hair-36707549/
+- Vídeo do hero: Pexels, "A woman with long brown hair", https://www.pexels.com/video/a-woman-with-long-brown-hair-8955573/ (licença Pexels). Ver README.

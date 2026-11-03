@@ -28,12 +28,13 @@ export const SITE = {
   // Post do salão no Instagram + Google Maps: ter a sex 8h-19h, sáb 8h-18h. TODO confirmar segunda
   horarioResumo: "Ter a sex, 8h às 19h · Sáb, 8h às 18h",
   lgbt: "Espaço LGBTQ+ friendly",
-  // Vídeo do hero (Pexels, licença livre: https://www.pexels.com/video/blonde-woman-showcasing-silky-long-hair-36707549/). Arquivos em public/video/
+  // Vídeo do hero: Pexels, "A woman with long brown hair" (licença Pexels), https://www.pexels.com/video/a-woman-with-long-brown-hair-8955573/ . Gerado do original 4K por scripts/make-hero-4k.mjs; arquivos em public/video/
   heroVideo: true,
   heroVideoSrc: {
-    mp4: asset("/video/hero-1080.mp4"),
-    mp4Mobile: asset("/video/hero-720.mp4"),
-    webm: asset("/video/hero.webm"),
+    // desktop 1920x1080; telas grandes (>= 1600px e DPR >= 2) 2560x1440; celular 1080x1350. O desktop nunca recebe a versão do celular.
+    d: { av1: asset("/video/hero-1080-av1.mp4"), webm: asset("/video/hero-1080.webm"), mp4: asset("/video/hero-1080.mp4") },
+    xl: { webm: asset("/video/hero-1440.webm"), mp4: asset("/video/hero-1440.mp4") },
+    m: { webm: asset("/video/hero-m.webm"), mp4: asset("/video/hero-m.mp4") },
     poster: asset("/video/poster.webp"),
   },
 } as const;

@@ -39,29 +39,36 @@ export default function Hero() {
   const root = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const [posterOnly, setPosterOnly] = useState(false);
-  const [mobile, setMobile] = useState(false);
+  const [variant, setVariant] = useState<"d" | "xl" | "m" | null>(null);
 
   useEffect(() => {
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const only = reduceMotion() || !!conn?.saveData;
     const t = window.setTimeout(() => {
       setPosterOnly(only);
-      setMobile(window.innerWidth < 768);
+      // versão certa para a tela: o desktop nunca recebe a do celular nem uma de resolução menor que 1080p
+      const w = window.innerWidth;
+      setVariant(w < 768 ? "m" : w >= 1600 && window.devicePixelRatio >= 2 ? "xl" : "d");
     }, 0);
+    return () => window.clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
     const v = video.current;
-    if (!v || only) return () => window.clearTimeout(t);
+    if (!v || !variant) return;
+    // pausa fora da tela (a camada some quando o vídeo vira logo) e com a aba oculta
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting && !document.hidden) v.play().catch(() => {});
+      else v.pause();
     });
     io.observe(v);
     const onVis = () => (document.hidden ? v.pause() : v.play().catch(() => {}));
     document.addEventListener("visibilitychange", onVis);
     return () => {
-      window.clearTimeout(t);
       io.disconnect();
       document.removeEventListener("visibilitychange", onVis);
     };
-  }, []);
+  }, [variant]);
 
   useGSAP(
     () => {
@@ -140,6 +147,9 @@ export default function Hero() {
           place(g.f0.x + (g.fl.x - g.f0.x) * e, g.f0.y + (g.fl.y - g.f0.y) * e, h);
           const done = p > 0.985;
           layer.style.visibility = done ? "hidden" : "visible";
+          const vid = layer.querySelector("video");
+          if (vid && done) vid.pause();
+          else if (vid && vid.paused) vid.play().catch(() => {});
           if (done !== (html.dataset.hero === "done")) html.dataset.hero = done ? "done" : "final";
         };
         gsap.to(st, {
@@ -238,8 +248,9 @@ export default function Hero() {
     <section ref={root} className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink" aria-label="Apresentação">
       {/* camada do vídeo: tela cheia; na intro e na rolagem vira a máscara do monograma */}
       <div className="h-layer invisible fixed inset-0 z-[5]" aria-hidden="true">
-        {useVideo ? (
+        {useVideo && variant ? (
           <video
+            key={variant}
             ref={video}
             className="absolute inset-0 h-full w-full object-cover"
             autoPlay
@@ -249,17 +260,15 @@ export default function Hero() {
             preload="auto"
             poster={SITE.heroVideoSrc.poster}
           >
-            {mobile ? (
-              <source src={SITE.heroVideoSrc.mp4Mobile} type="video/mp4" />
-            ) : (
-              <>
-                <source src={SITE.heroVideoSrc.webm} type="video/webm" />
-                <source src={SITE.heroVideoSrc.mp4} type="video/mp4" />
-              </>
-            )}
+            {variant === "d" && <source src={SITE.heroVideoSrc.d.av1} type='video/mp4; codecs="av01.0.08M.08"' />}
+            <source src={SITE.heroVideoSrc[variant].webm} type="video/webm" />
+            <source src={SITE.heroVideoSrc[variant].mp4} type="video/mp4" />
           </video>
-        ) : (
+        ) : !useVideo ? (
           <HairCanvas />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={SITE.heroVideoSrc.poster} alt="" className="absolute inset-0 h-full w-full object-cover" />
         )}
         <div
           className="absolute inset-0"
