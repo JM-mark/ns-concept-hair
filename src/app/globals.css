@@ -351,12 +351,6 @@ em {
   }
 }
 
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 /* Logo do header só aparece na home depois que o monograma do hero "chega" nele */
 .home-logo {
   opacity: 0;
@@ -442,28 +436,6 @@ html[data-hero="done"] .home-logo {
     animation: none;
     opacity: 0;
   }
-}
-
-/* Faixa "palavras das clientes": Archivo expandida 125% peso 200; alterna entre palavra preenchida (degradê champagne metálico) e só contorno (1px champagne a 70%) */
-.font-display.palavra {
-  font-weight: 200 !important;
-  transition: color 0.3s, -webkit-text-stroke-color 0.3s;
-}
-.palavra-cheia {
-  background: linear-gradient(120deg, #efe3cf, #c9ae88 45%, #8c7356);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.palavra-contorno {
-  color: transparent;
-  -webkit-text-stroke: 1px rgb(205 184 150 / 0.7);
-}
-.palavra-contorno:hover {
-  background: linear-gradient(120deg, #efe3cf, #c9ae88 45%, #8c7356);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-stroke-color: transparent;
 }
 
 /* Aspas da avaliação: traço vertical fino; o texto recua para dar espaço a ele */

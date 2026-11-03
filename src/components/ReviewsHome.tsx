@@ -11,19 +11,7 @@ import { Fade, SplitTitle } from "./motion";
 const LIST = REVIEWS.filter((r) => r.texto.length <= 220); // os trechos longos ficam em /avaliacoes
 const AUTO_MS = 7;
 
-// trechos curtos e exatos das avaliações reais
-const PALAVRAS = [
-  "você se sente uma princesa",
-  "saio com a autoestima renovada",
-  "vale muito",
-  "unhas impecáveis",
-  "uma aula de visagismo",
-  "ambiente agradável",
-  "lugar acolhedor",
-  "atendimento impecável",
-];
-
-// palavras-chave (as mesmas da faixa): peso 400 e champagne. O texto não muda.
+// palavras-chave destacadas na frase (peso 400 e champagne). O texto não muda.
 const DESTAQUES = ["unhas impecáveis", "aula de visagismo", "vale muito", "princesa", "autoestima renovada"];
 
 /** Quebra o texto em palavras e marca as que fazem parte de uma palavra-chave. */
@@ -300,31 +288,7 @@ function LocalCard() {
   );
 }
 
-/** Faixa de palavras das clientes: marquee lento, só contorno, preenche em champagne no hover. */
-function Faixa() {
-  const item = (aria: boolean, k: number) => (
-    <ul key={k} className="flex shrink-0 items-center" aria-hidden={aria || undefined}>
-      {PALAVRAS.map((p, n) => (
-        <li key={p} className="flex items-center">
-          <span className={`palavra ${n % 2 === 0 ? "palavra-cheia" : "palavra-contorno"} font-display text-[clamp(40px,7.2vw,112px)] leading-[1.1] whitespace-nowrap`}>{p}</span>
-          <span className="mx-[clamp(24px,3.5vw,56px)] block h-2.5 w-2.5 rotate-45 bg-champagne" aria-hidden="true" />
-        </li>
-      ))}
-    </ul>
-  );
-  return (
-    <div className="group mt-20 overflow-hidden border-y border-champagne/15 py-6 motion-reduce:overflow-x-auto md:mt-28" aria-label="Palavras das clientes">
-      <div className="flex w-max [animation:marquee_70s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:!animate-none">
-        {item(false, 0)}
-        <div className="flex motion-reduce:hidden" aria-hidden="true">
-          {item(true, 1)}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/** Avaliações da Home: uma em destaque + card de localização + faixa de palavras. Fundo escuro. */
+/** Avaliações da Home: uma em destaque + card de localização. Fundo escuro. */
 export default function ReviewsHome() {
   return (
     <section className="relative overflow-hidden bg-ink py-24 md:py-32" aria-labelledby="rev-title">
@@ -343,7 +307,6 @@ export default function ReviewsHome() {
           </div>
         </div>
       </div>
-      <Faixa />
     </section>
   );
 }

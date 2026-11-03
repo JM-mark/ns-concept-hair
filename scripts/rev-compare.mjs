@@ -33,12 +33,9 @@ for (const [label, vp, mobile] of [["1440", { width: 1440, height: 900 }, false]
   await page.mouse.move(300, 450); await sleep(400);
   await page.screenshot({ path: `${OUT}/${prefix}-frase-${label}.png` });
   await page.mouse.move(5, 5);
-  await to(page, ".palavra", -380); await sleep(1500);
-  await page.screenshot({ path: `${OUT}/${prefix}-faixa-${label}.png` });
-  // palavra preenchida (degradê) e contorno lado a lado, parando a faixa
-  await page.evaluate(() => { const t = document.querySelector(".palavra").closest("div.flex"); const f = document.querySelectorAll(".palavra-cheia")[1]; t.style.animation = "none"; const r = f.getBoundingClientRect(); const base = t.getBoundingClientRect().left; t.style.transform = "translateX(" + (-(r.left - base) + 20) + "px)"; });
-  await sleep(500);
-  await page.screenshot({ path: `${OUT}/${prefix}-faixa2-${label}.png` });
+  await to(page, "section[aria-labelledby='book-title']", -700); await sleep(1500);
+  await page.screenshot({ path: `${OUT}/${prefix}-fim-${label}.png` });
+
   await ctx.close();
 }
 await browser.close(); server?.close(); console.log("ok", prefix);
