@@ -23,6 +23,25 @@ const PALAVRAS = [
   "atendimento impecável",
 ];
 
+// palavras-chave (as mesmas da faixa): peso 400 e champagne. O texto não muda.
+const DESTAQUES = ["unhas impecáveis", "aula de visagismo", "vale muito", "princesa", "autoestima renovada"];
+
+/** Quebra o texto em palavras e marca as que fazem parte de uma palavra-chave. */
+function palavras(texto: string): { w: string; hl: boolean }[] {
+  const low = texto.toLowerCase();
+  const ranges: [number, number][] = [];
+  for (const d of DESTAQUES) {
+    const k = low.indexOf(d);
+    if (k >= 0) ranges.push([k, k + d.length]);
+  }
+  let pos = 0;
+  return texto.split(" ").map((w) => {
+    const ini = texto.indexOf(w, pos);
+    pos = ini + w.length;
+    return { w, hl: ranges.some(([a, b]) => ini < b && ini + w.length > a) };
+  });
+}
+
 const pad = (n: number) => String(n).padStart(2, "0");
 
 function Quote() {
@@ -113,7 +132,7 @@ function Quote() {
   }, [paused, hidden, i, auto]);
 
   const r = LIST[i];
-  const words = r.texto.split(" ");
+  const words = palavras(r.texto);
 
   return (
     <div
@@ -140,31 +159,42 @@ function Quote() {
       style={{ touchAction: "pan-y" }}
     >
       <div className="relative">
-        {/* aspas: traço vertical fino champagne (1px x 64px) */}
-        <span className="pointer-events-none absolute left-0 top-[0.35em] block h-16 w-px bg-champagne" aria-hidden="true" />
         <div className="quote-body">
-        <div aria-live="polite" aria-atomic="true">
+        <div aria-live="polite" aria-atomic="true" className="grid text-[clamp(20px,2.05vw,30px)]">
           <p className="sr-only">
             {r.texto} {r.nome}, avaliação no Google
           </p>
-          <blockquote
-            ref={quote}
-            aria-hidden="true"
-            className="min-h-[9.5em] max-w-[30ch] text-[clamp(22px,2.3vw,34px)] font-light leading-[1.4] tracking-[-0.005em] text-ivory/90 md:min-h-[8em]"
-          >
-            {words.map((w, k) => (
-              <span key={`${i}-${k}`}>
-                <span className="inline-block overflow-hidden pb-[0.18em] align-top -mb-[0.18em]">
-                  <span className="qwi inline-block">{w}</span>
-                </span>{" "}
-              </span>
-            ))}
-          </blockquote>
+          {/* reserva a altura da frase mais longa (invisível), para o resto da seção não pular na troca */}
+          {LIST.map((x) => (
+            <p key={x.nome} aria-hidden="true" className="invisible col-start-1 row-start-1 max-w-[34ch] leading-[1.55] tracking-[0.01em]" style={{ fontStretch: "112%", fontWeight: 200 }}>
+              {x.texto}
+            </p>
+          ))}
+          {/* traço vertical champagne (1px), da altura da frase */}
+          <div className="relative col-start-1 row-start-1">
+            <span className="pointer-events-none absolute -left-6 bottom-[0.35em] top-[0.35em] block w-px bg-champagne lg:-left-10" aria-hidden="true" />
+            <blockquote
+              ref={quote}
+              aria-hidden="true"
+              className="max-w-[34ch] leading-[1.55] tracking-[0.01em] text-ivory/90 [font-variation-settings:'wght'_200,'wdth'_112]"
+              style={{ fontStretch: "112%", fontWeight: 200 }}
+            >
+              {words.map(({ w, hl }, k) => (
+                <span key={`${i}-${k}`}>
+                  <span className="inline-block overflow-hidden pb-[0.18em] align-top -mb-[0.18em]">
+                    <span className={`qwi inline-block ${hl ? "text-champagne [font-variation-settings:'wght'_400,'wdth'_112]" : ""}`} style={hl ? { fontWeight: 400 } : undefined}>
+                      {w}
+                    </span>
+                  </span>{" "}
+                </span>
+              ))}
+            </blockquote>
+          </div>
         </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] uppercase [font-stretch:125%]">
-          <span className="font-medium tracking-[0.24em] text-ivory">{r.nome}</span>
-          <a href={r.url ?? SITE.maps} target="_blank" rel="noopener noreferrer" className="link-line font-normal tracking-[0.24em] text-champagne/70 hover:text-champagne">
+          <span className="font-normal tracking-[0.28em] text-ivory">{r.nome}</span>
+          <a href={r.url ?? SITE.maps} target="_blank" rel="noopener noreferrer" className="link-line font-light tracking-[0.28em] text-champagne/70 hover:text-champagne">
             Avaliação no Google
           </a>
         </div>
@@ -274,9 +304,9 @@ function LocalCard() {
 function Faixa() {
   const item = (aria: boolean, k: number) => (
     <ul key={k} className="flex shrink-0 items-center" aria-hidden={aria || undefined}>
-      {PALAVRAS.map((p) => (
+      {PALAVRAS.map((p, n) => (
         <li key={p} className="flex items-center">
-          <span className="palavra font-display text-[clamp(40px,7.2vw,112px)] leading-[1.1] whitespace-nowrap">{p}</span>
+          <span className={`palavra ${n % 2 === 0 ? "palavra-cheia" : "palavra-contorno"} font-display text-[clamp(40px,7.2vw,112px)] leading-[1.1] whitespace-nowrap`}>{p}</span>
           <span className="mx-[clamp(24px,3.5vw,56px)] block h-2.5 w-2.5 rotate-45 bg-champagne" aria-hidden="true" />
         </li>
       ))}
@@ -284,7 +314,7 @@ function Faixa() {
   );
   return (
     <div className="group mt-20 overflow-hidden border-y border-champagne/15 py-6 motion-reduce:overflow-x-auto md:mt-28" aria-label="Palavras das clientes">
-      <div className="flex w-max [animation:marquee_60s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:!animate-none">
+      <div className="flex w-max [animation:marquee_70s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:!animate-none">
         {item(false, 0)}
         <div className="flex motion-reduce:hidden" aria-hidden="true">
           {item(true, 1)}
