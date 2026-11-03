@@ -23,7 +23,7 @@ export default function MobileBar() {
     >
       <Link
         href="/agendar/"
-        className="label btn-primary flex min-h-[48px] flex-1 items-center justify-center bg-[image:var(--champagne-grad)] text-ink"
+        className="btn btn-primary flex-1"
       >
         Agendar
       </Link>
@@ -32,7 +32,7 @@ export default function MobileBar() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Falar no WhatsApp"
-        className="flex h-12 w-12 items-center justify-center border border-champagne text-champagne"
+        className="flex h-12 w-12 items-center justify-center rounded-[2px] border border-champagne/50 text-champagne"
       >
         <WhatsAppIcon className="h-5 w-5" />
       </a>

@@ -30,12 +30,19 @@ export default function Button({ href, children, variant = "ghost", className = 
     if (ref.current) gsap.to(ref.current, { x: 0, y: 0, duration: 0.6, ease: "power3.out" });
   };
 
-  const cls = `btn label ${variant === "primary" ? "btn-primary" : variant === "ivory" ? "btn-ivory" : variant === "glass" ? "btn-glass" : ""} ${className}`;
+  const cls = `btn ${variant === "primary" ? "btn-primary" : variant === "ivory" ? "btn-ivory" : variant === "glass" ? "btn-glass" : ""} ${className}`;
+  const arrow = children.trimEnd().endsWith("→");
+  const text = arrow ? children.trimEnd().slice(0, -1).trimEnd() : children;
   const inner = (
     <span className="btn-clip">
       <span className="btn-label" data-label={children}>
         {icon}
-        {children}
+        {text}
+        {arrow && (
+          <span className="arrow" aria-hidden="true">
+            →
+          </span>
+        )}
       </span>
     </span>
   );

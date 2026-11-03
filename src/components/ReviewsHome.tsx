@@ -139,15 +139,27 @@ function Quote() {
       }}
       style={{ touchAction: "pan-y" }}
     >
-      <div className="relative lg:pl-24">
-        <span className="pointer-events-none block h-[70px] text-[120px] leading-[0.9] text-champagne select-none lg:absolute lg:left-0 lg:top-0 lg:h-auto" aria-hidden="true">
+      <div className="relative">
+        {/* aspas, opção A: traço vertical fino (1px x 64px) */}
+        <span className="aspa-a pointer-events-none absolute left-0 top-[0.35em] block h-16 w-px bg-champagne" aria-hidden="true" />
+        {/* aspas, opção B: aspa em Archivo expandida peso 200, 96px, champagne a 60% */}
+        <span
+          className="aspa-b pointer-events-none mb-2 block h-[56px] select-none text-[96px] leading-[0.9] text-champagne/60 lg:absolute lg:left-0 lg:top-0 lg:mb-0 lg:h-auto"
+          style={{ fontStretch: "125%", fontWeight: 200 }}
+          aria-hidden="true"
+        >
           “
         </span>
+        <div className="quote-body">
         <div aria-live="polite" aria-atomic="true">
           <p className="sr-only">
             {r.texto} {r.nome}, avaliação no Google
           </p>
-          <blockquote ref={quote} aria-hidden="true" className="min-h-[9.5em] text-[clamp(24px,2.9vw,42px)] leading-[1.25] text-ivory md:min-h-[7.5em]">
+          <blockquote
+            ref={quote}
+            aria-hidden="true"
+            className="min-h-[9.5em] max-w-[30ch] text-[clamp(22px,2.3vw,34px)] font-light leading-[1.4] tracking-[-0.005em] text-ivory/90 md:min-h-[8em]"
+          >
             {words.map((w, k) => (
               <span key={`${i}-${k}`}>
                 <span className="inline-block overflow-hidden pb-[0.18em] align-top -mb-[0.18em]">
@@ -158,18 +170,18 @@ function Quote() {
           </blockquote>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] uppercase tracking-[0.08em]">
-          <span className="text-ivory">{r.nome}</span>
-          <a href={r.url ?? SITE.maps} target="_blank" rel="noopener noreferrer" className="link-line text-champagne">
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] uppercase [font-stretch:125%]">
+          <span className="font-medium tracking-[0.24em] text-ivory">{r.nome}</span>
+          <a href={r.url ?? SITE.maps} target="_blank" rel="noopener noreferrer" className="link-line font-normal tracking-[0.24em] text-champagne/70 hover:text-champagne">
             Avaliação no Google
           </a>
         </div>
 
         <div className="mt-10 flex items-center gap-5">
-          <span className="text-[13px] tabular-nums tracking-[0.08em] text-ivory/70" aria-label={`Avaliação ${i + 1} de ${LIST.length}`}>
+          <span className="text-[11px] font-normal tabular-nums tracking-[0.16em] text-ivory/70" aria-label={`Avaliação ${i + 1} de ${LIST.length}`}>
             {pad(i + 1)} / {pad(LIST.length)}
           </span>
-          <span className="relative block h-[2px] min-w-[80px] flex-1 bg-champagne/20" aria-hidden="true">
+          <span className="relative block h-px min-w-[80px] flex-1 bg-champagne/20" aria-hidden="true">
             <span ref={bar} className="absolute inset-0 origin-left bg-champagne" style={{ transform: auto ? "scaleX(0)" : "scaleX(1)" }} />
           </span>
           <div className="flex gap-3">
@@ -177,22 +189,41 @@ function Quote() {
               type="button"
               onClick={() => step(-1)}
               aria-label="Avaliação anterior"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-champagne/40 text-champagne transition-colors hover:bg-champagne hover:text-ink"
+              className="group flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors duration-300 hover:border-champagne hover:text-champagne focus-visible:border-champagne"
             >
-              ←
+              <Seta dir={-1} />
             </button>
             <button
               type="button"
               onClick={() => step(1)}
               aria-label="Próxima avaliação"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-champagne/40 text-champagne transition-colors hover:bg-champagne hover:text-ink"
+              className="group flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors duration-300 hover:border-champagne hover:text-champagne focus-visible:border-champagne"
             >
-              →
+              <Seta dir={1} />
             </button>
           </div>
         </div>
+        </div>
       </div>
     </div>
+  );
+}
+
+function Seta({ dir }: { dir: 1 | -1 }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="square"
+      className={`transition-transform duration-300 ${dir === 1 ? "group-hover:translate-x-[3px]" : "group-hover:-translate-x-[3px]"}`}
+      aria-hidden="true"
+    >
+      {dir === 1 ? <path d="M4 12h16M14 6l6 6-6 6" /> : <path d="M20 12H4M10 6l-6 6 6 6" />}
+    </svg>
   );
 }
 
@@ -214,7 +245,7 @@ function LocalCard() {
           tabIndex={-1}
           onLoad={() => setLoaded(true)}
           className="pointer-events-none absolute inset-0 h-full w-full border-0 transition-opacity duration-700"
-          style={{ filter: "grayscale(1) invert(0.92) contrast(0.9) brightness(0.9)", opacity: loaded ? 1 : 0 }}
+          style={{ filter: "grayscale(1) invert(0.92) contrast(0.85) brightness(0.85) sepia(0.15)", opacity: loaded ? 1 : 0 }}
         />
         <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
           <span className="pin-pulse absolute inset-0 rounded-full border border-champagne" />
@@ -226,14 +257,16 @@ function LocalCard() {
         <a href={SITE.maps} target="_blank" rel="noopener noreferrer" aria-label="Abrir o mapa no Google Maps" className="absolute inset-0 z-20" />
       </div>
       <div className="p-6 md:p-7">
-        <address className="not-italic text-[15px] leading-relaxed text-ivory">
-          {e.rua} — {e.complemento}
-          <br />
-          <span className="text-ivory/70">
+        <address className="not-italic">
+          <span className="block text-[15px] font-normal leading-relaxed text-ivory">
+            {e.rua} — {e.complemento}
+          </span>
+          <span className="mt-1 block text-[13px] tracking-[0.02em] text-champagne/75">
             {e.bairro} · {e.cidade}/{e.uf}
           </span>
         </address>
-        <p className="mt-4 text-[14px] text-ivory/70">{SITE.horarioResumo.replace("Ter a sex, 8h às 19h · Sáb, 8h às 18h", "Ter a sex 8h–19h · Sáb 8h–18h")}</p>
+        <hr className="my-4 border-0 border-t border-champagne/15" />
+        <p className="text-[13px] tracking-[0.02em] text-champagne/75">Ter a sex 8h–19h · Sáb 8h–18h</p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Button href={SITE.rotaMaps} variant="primary">
             Como chegar
@@ -272,7 +305,7 @@ function Faixa() {
 /** Avaliações da Home: uma em destaque + card de localização + faixa de palavras. Fundo escuro. */
 export default function ReviewsHome() {
   return (
-    <section className="relative overflow-hidden bg-ink py-24 md:py-32" aria-labelledby="rev-title">
+    <section className="relative overflow-hidden bg-ink py-24 md:py-32" aria-labelledby="rev-title" data-aspas="traco">
       <div className="mx-auto max-w-[1440px] px-5 md:px-10">
         <Fade as="p" className="eyebrow mb-6">
           <span id="rev-title">03 — Avaliações</span>

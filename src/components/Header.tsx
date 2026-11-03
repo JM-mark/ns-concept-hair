@@ -122,9 +122,9 @@ export default function Header() {
 
           <Link
             href="/agendar/"
-            className={`btn z-10 hidden !min-h-[40px] !px-5 sm:inline-flex ${ink ? "btn-primary" : "btn-ivory"}`}
+            className="btn btn-primary z-10 hidden sm:inline-flex"
           >
-            <span className="btn-clip label text-[12px]">Agendar</span>
+            <span className="btn-clip">Agendar</span>
           </Link>
         </div>
       </header>

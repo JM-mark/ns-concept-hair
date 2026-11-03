@@ -139,27 +139,40 @@ em {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-/* Botões em pílula: o fundo preenche da esquerda para a direita */
+/* Botões: retangulares (2px), sem gradiente. Primário champagne sólido; secundário com borda. O preenchimento desliza da esquerda (400ms). */
 .btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  padding: 0 32px;
-  border: 1px solid var(--champagne);
-  border-radius: 9999px;
-  color: var(--champagne);
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 28px;
+  border: 1px solid rgb(205 184 150 / 0.5);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--ivory);
+  font-family: var(--font-sans);
+  font-stretch: 125%;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
   overflow: hidden;
   cursor: pointer;
   isolation: isolate;
-  transition: color 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
-  will-change: transform;
+  transition: color 0.4s ease-out, border-color 0.4s ease-out;
 }
 .btn .btn-clip,
 .btn .btn-label {
   display: block;
   white-space: nowrap;
+}
+.btn .btn-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 .btn::before {
   content: "";
@@ -169,7 +182,7 @@ em {
   background: var(--champagne);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.55s var(--ease-out);
+  transition: transform 0.4s ease-out;
 }
 .btn:hover::before,
 .btn:focus-visible::before {
@@ -178,36 +191,41 @@ em {
 .btn:hover,
 .btn:focus-visible {
   color: var(--ink);
+  border-color: var(--champagne);
 }
-.btn-primary {
-  background: var(--champagne-grad);
-  color: var(--ink);
-  border-color: transparent;
+.btn:focus-visible {
+  outline: 1px solid var(--champagne);
+  outline-offset: 3px;
 }
-.btn-primary::before {
-  background: linear-gradient(120deg, #fff6e6 0%, #e4cfa9 50%, #b6976c 100%);
+.btn .arrow {
+  display: inline-block;
+  transition: transform 0.4s ease-out;
 }
-/* Botão sólido marfim (hero) e vidro */
+.btn:hover .arrow,
+.btn:focus-visible .arrow {
+  transform: translateX(4px);
+}
+/* primário (btn-ivory é o mesmo botão, nome antigo) */
+.btn-primary,
 .btn-ivory {
-  background: var(--ivory);
+  background: #c9ae88;
   color: var(--ink);
-  border-color: transparent;
+  border-color: #c9ae88;
 }
+.btn-primary::before,
 .btn-ivory::before {
-  background: var(--champagne);
+  background: #b89b72;
 }
-.btn-glass {
-  background: rgb(255 255 255 / 0.1);
-  border-color: rgb(243 238 230 / 0.4);
-  color: var(--ivory);
-  backdrop-filter: blur(10px);
+.btn-primary:hover,
+.btn-primary:focus-visible,
+.btn-ivory:hover,
+.btn-ivory:focus-visible {
+  border-color: #b89b72;
 }
-.btn-glass::before {
-  background: var(--ivory);
-}
+/* em seções de areia: mesmos botões, em bronze escuro para manter o contraste */
 .on-light .btn {
   color: var(--bronze-deep);
-  border-color: var(--bronze-deep);
+  border-color: rgb(94 70 48 / 0.5);
 }
 .on-light .btn::before {
   background: var(--bronze-deep);
@@ -215,18 +233,26 @@ em {
 .on-light .btn:hover,
 .on-light .btn:focus-visible {
   color: var(--ivory);
+  border-color: var(--bronze-deep);
 }
-.on-light .btn-primary {
+.on-light .btn:focus-visible {
+  outline-color: var(--bronze-deep);
+}
+.on-light .btn-primary,
+.on-light .btn-ivory {
   background: var(--bronze-deep);
   color: var(--ivory);
-  border-color: transparent;
+  border-color: var(--bronze-deep);
 }
-.on-light .btn-primary::before {
+.on-light .btn-primary::before,
+.on-light .btn-ivory::before {
   background: var(--ink);
 }
 .on-light .btn-primary:hover,
-.on-light .btn-primary:focus-visible {
-  color: var(--ivory);
+.on-light .btn-primary:focus-visible,
+.on-light .btn-ivory:hover,
+.on-light .btn-ivory:focus-visible {
+  border-color: var(--ink);
 }
 
 /* Link com hairline crescendo */
@@ -418,13 +444,31 @@ html[data-hero="done"] .home-logo {
   }
 }
 
-/* Faixa "palavras das clientes": só contorno; preenche em champagne no hover */
-.palavra {
+/* Faixa "palavras das clientes": Archivo expandida 200, só contorno (0,75px); a palavra sob o mouse preenche em champagne a 70% */
+.font-display.palavra {
+  font-weight: 200 !important;
   color: transparent;
-  -webkit-text-stroke: 1px rgb(205 184 150 / 0.4);
+  -webkit-text-stroke: 0.75px rgb(205 184 150 / 0.4);
   transition: color 0.3s, -webkit-text-stroke-color 0.3s;
 }
-.palavra:hover {
-  color: var(--champagne);
-  -webkit-text-stroke-color: var(--champagne);
+.font-display.palavra:hover {
+  color: rgb(205 184 150 / 0.7);
+  -webkit-text-stroke-color: rgb(205 184 150 / 0.7);
+}
+
+/* Aspas da avaliação: "traco" (linha vertical fina) ou "aspa" (Archivo expandida 200). Dois candidatos para escolha. */
+[data-aspas="traco"] .aspa-b,
+[data-aspas="aspa"] .aspa-a {
+  display: none;
+}
+[data-aspas="traco"] .quote-body {
+  padding-left: 1.5rem;
+}
+@media (min-width: 1024px) {
+  [data-aspas="traco"] .quote-body {
+    padding-left: 2.5rem;
+  }
+  [data-aspas="aspa"] .quote-body {
+    padding-left: 6.5rem;
+  }
 }

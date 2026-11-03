@@ -133,14 +133,14 @@ export default function BookingStepper() {
             Se a conversa com o salão não abriu no WhatsApp, use o botão abaixo. Assim que o salão confirmar, você recebe a resposta no WhatsApp.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
-            <a href={whatsappUrl(b)} target="_blank" rel="noopener noreferrer" className="btn btn-primary label">
+            <a href={whatsappUrl(b)} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               <span className="btn-clip">
                 <span className="btn-label" data-label="Abrir o WhatsApp de novo">
                   Abrir o WhatsApp de novo
                 </span>
               </span>
             </a>
-            <button type="button" onClick={download} className="btn label">
+            <button type="button" onClick={download} className="btn">
               <span className="btn-clip">
                 <span className="btn-label" data-label="Adicionar à agenda">
                   Adicionar à agenda
@@ -382,7 +382,7 @@ export default function BookingStepper() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={send}
-                    className="btn btn-primary label mt-10 inline-flex"
+                    className="btn btn-primary mt-10 inline-flex"
                   >
                     <span className="btn-clip">
                       <span className="btn-label inline-flex items-center gap-3" data-label="Enviar pelo WhatsApp">
@@ -406,7 +406,7 @@ export default function BookingStepper() {
               Voltar
             </button>
             {step < 4 && (
-              <button type="button" onClick={next} className="btn btn-primary label">
+              <button type="button" onClick={next} className="btn btn-primary">
                 <span className="btn-clip">
                   <span className="btn-label" data-label="Continuar">
                     Continuar
