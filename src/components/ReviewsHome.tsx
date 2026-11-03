@@ -140,16 +140,8 @@ function Quote() {
       style={{ touchAction: "pan-y" }}
     >
       <div className="relative">
-        {/* aspas, opção A: traço vertical fino (1px x 64px) */}
-        <span className="aspa-a pointer-events-none absolute left-0 top-[0.35em] block h-16 w-px bg-champagne" aria-hidden="true" />
-        {/* aspas, opção B: aspa em Archivo expandida peso 200, 96px, champagne a 60% */}
-        <span
-          className="aspa-b pointer-events-none mb-2 block h-[56px] select-none text-[96px] leading-[0.9] text-champagne/60 lg:absolute lg:left-0 lg:top-0 lg:mb-0 lg:h-auto"
-          style={{ fontStretch: "125%", fontWeight: 200 }}
-          aria-hidden="true"
-        >
-          “
-        </span>
+        {/* aspas: traço vertical fino champagne (1px x 64px) */}
+        <span className="pointer-events-none absolute left-0 top-[0.35em] block h-16 w-px bg-champagne" aria-hidden="true" />
         <div className="quote-body">
         <div aria-live="polite" aria-atomic="true">
           <p className="sr-only">
@@ -305,7 +297,7 @@ function Faixa() {
 /** Avaliações da Home: uma em destaque + card de localização + faixa de palavras. Fundo escuro. */
 export default function ReviewsHome() {
   return (
-    <section className="relative overflow-hidden bg-ink py-24 md:py-32" aria-labelledby="rev-title" data-aspas="traco">
+    <section className="relative overflow-hidden bg-ink py-24 md:py-32" aria-labelledby="rev-title">
       <div className="mx-auto max-w-[1440px] px-5 md:px-10">
         <Fade as="p" className="eyebrow mb-6">
           <span id="rev-title">03 — Avaliações</span>

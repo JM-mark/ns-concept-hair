@@ -456,19 +456,12 @@ html[data-hero="done"] .home-logo {
   -webkit-text-stroke-color: rgb(205 184 150 / 0.7);
 }
 
-/* Aspas da avaliação: "traco" (linha vertical fina) ou "aspa" (Archivo expandida 200). Dois candidatos para escolha. */
-[data-aspas="traco"] .aspa-b,
-[data-aspas="aspa"] .aspa-a {
-  display: none;
-}
-[data-aspas="traco"] .quote-body {
+/* Aspas da avaliação: traço vertical fino; o texto recua para dar espaço a ele */
+.quote-body {
   padding-left: 1.5rem;
 }
 @media (min-width: 1024px) {
-  [data-aspas="traco"] .quote-body {
+  .quote-body {
     padding-left: 2.5rem;
-  }
-  [data-aspas="aspa"] .quote-body {
-    padding-left: 6.5rem;
   }
 }
