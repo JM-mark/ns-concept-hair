@@ -65,7 +65,6 @@ export default function Footer() {
             <MailIcon className="h-5 w-5" />
           </a>
         </div>
-        <p className="mt-6 text-[13px] text-mute">{SITE.lgbt}</p>
 
         <div className="hairline mt-12" />
         <div className="mt-6 flex flex-col justify-between gap-2 text-[13px] text-mute sm:flex-row">

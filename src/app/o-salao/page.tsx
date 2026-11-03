@@ -12,7 +12,7 @@ import { photosFor } from "@/content/photos";
 
 export const metadata: Metadata = {
   title: { absolute: "O salão: espaço acolhedor em Indaiatuba | NS Concept Hair" },
-  description: "Conheça o NS Concept Hair, salão em Indaiatuba (SP): um espaço acolhedor no 2º andar, pensado para você chegar como é. Espaço LGBTQ+ friendly.",
+  description: "Conheça o NS Concept Hair, salão em Indaiatuba (SP): um espaço acolhedor no 2º andar, pensado para você chegar como é. Veja o espaço e como chegar.",
   alternates: { canonical: "o-salao/" },
 };
 
@@ -43,13 +43,6 @@ export default function OSalaoPage() {
       </section>
 
       {espaco.length > 0 && <Gallery photos={espaco} />}
-
-      <section className="grain relative bg-graphite py-24 md:py-32">
-        <div className="mx-auto max-w-[900px] px-5 text-center md:px-10">
-          <p className="eyebrow mb-6">Para todas as pessoas</p>
-          <p className="text-[clamp(22px,2.6vw,34px)] font-light leading-[1.3]">{SITE.lgbt}. Aqui você chega como é e sai se sentindo cuidada.</p>
-        </div>
-      </section>
 
       <section className="bg-ink py-20 md:py-28" aria-labelledby="como-chegar">
         <div className="mx-auto grid max-w-[1440px] items-center gap-12 px-5 md:px-10 lg:grid-cols-12 lg:gap-20">

@@ -56,7 +56,6 @@ export default function ContatoPage() {
                 Ver no Google Maps
               </a>
               <p className="mt-2 text-[15px] text-mute">Fechado aos domingos e às segundas.</p>
-              <p className="mt-6 text-[15px] text-mute">{SITE.lgbt}.</p>
             </div>
             {/* TODO pedir ao salão uma foto atual da fachada (a placa do prédio ainda mostra o nome anterior) */}
             <ul className="space-y-3 text-[17px]">

@@ -32,7 +32,6 @@ export const SITE = {
   rotaMaps: "https://www.google.com/maps/dir/?api=1&destination=-23.0761675,-47.2161908",
   // Post do salão no Instagram + Google Maps: ter a sex 8h-19h, sáb 8h-18h. TODO confirmar segunda
   horarioResumo: "Ter a sex, 8h às 19h · Sáb, 8h às 18h",
-  lgbt: "Espaço LGBTQ+ friendly",
   // Vídeo do hero: Pexels, "A woman with long brown hair" (licença Pexels), https://www.pexels.com/video/a-woman-with-long-brown-hair-8955573/ . Gerado do original 4K por scripts/make-hero-4k.mjs; arquivos em public/video/
   heroVideo: true,
   heroVideoSrc: {
