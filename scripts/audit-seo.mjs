@@ -43,7 +43,7 @@ for (const f of achar(OUT).sort()) {
   linhas.push({ rota, title, tt: title.length, desc, dd: desc.length, canon, robots, h1: h1s.join(" / "), n: h1s.length, semAlt, altVazio, tipos: tipos.join("+") });
 }
 
-const esc = (s) => String(s).replace(/|/g, "¦"); // "|" do título quebraria a tabela markdown
+const esc = (s) => String(s).split("|").join("¦"); // "|" do título quebraria a tabela markdown
 const faixaT = (n) => (n >= 50 && n <= 60 ? "ok" : n < 50 ? "curto" : "longo");
 const faixaD = (n) => (n >= 140 && n <= 160 ? "ok" : n < 140 ? "curta" : "longa");
 console.log("| Página | Title (chars) | Description (chars) | Canonical | Robots | H1 | Imgs sem alt (alt vazio) | JSON-LD |");
