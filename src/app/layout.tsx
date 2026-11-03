@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
 import "./globals.css";
-import { SITE } from "@/content/site";
+import { INDEXABLE, SITE } from "@/content/site";
 import { hairSalonJsonLd } from "@/lib/jsonld";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -21,13 +21,14 @@ const archivo = Archivo({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
-  title: { default: "NS Concept Hair | Salão de beleza em Indaiatuba", template: "%s | NS Concept Hair" },
+  title: { default: "NS Concept Hair | Mega Hair e coloração em Indaiatuba", template: "%s | NS Concept Hair" },
+  robots: INDEXABLE ? { index: true, follow: true } : { index: false, follow: false },
   description: SITE.descricao,
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: SITE.nome,
-    title: "NS Concept Hair | Salão de beleza em Indaiatuba",
+    title: "NS Concept Hair | Mega Hair e coloração em Indaiatuba",
     description: SITE.descricao,
     images: [{ url: "og.jpg", width: 1200, height: 630 }],
   },

@@ -360,15 +360,6 @@ export const GENERATED: Record<string, Photo[]> = {
       "lqip": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAAAQBACdASoQABwAPu1iqU2ppaOiMAgBMB2JZACdAYy8YfRyRl7SwtATNADL9c8MoSUkzlyElgZ9wXOXvNH0RUmy+QDeeh0xQuIa0VuuC603Rrj6J1bOPG218HuJKV/nD/yiI1cBEKIVrfnkcUaWt5mI93rc+aHncdZqv9Lr+68L1KLeOTcml1/t5QyyGr5pVYSbpqkLMv4TKqc9rFAZgAAA",
       "w": 1126,
       "h": 2000
-    },
-    {
-      "src": "/photos/salao-4.webp",
-      "src800": "/photos/salao-4-800.webp",
-      "alt": "Frascos do perfume capilar Hair Splash sobre uma bancada de madeira",
-      "fonte": "https://www.instagram.com/reel/DcELlnZqEea/",
-      "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwAgCdASoQAA0AA4BaJaACdAYqXGDhhwQhAADcvandOHkpffYHi8mmwK59ysiOeqHy8DlRKsabx9LV33tAT8rYLWyANxX1q0vkAEbYRgIL4q4OsDCN0u0S+ZlXOrBbdzKtaFYylW0AAA==",
-      "w": 1179,
-      "h": 922
     }
   ],
   "fachada": [

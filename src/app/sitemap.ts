@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/content/site";
 import { SERVICES } from "@/content/services";
+import { LASTMOD } from "@/content/lastmod.generated";
 
 export const dynamic = "force-static";
 
@@ -14,5 +15,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "agendar/",
     "contato/",
   ];
-  return paths.map((p) => ({ url: `${SITE.url}${p}`, lastModified: new Date() }));
+  return paths.map((p) => ({ url: `${SITE.url}${p}`, lastModified: new Date(LASTMOD[p] ?? Date.now()) }));
 }

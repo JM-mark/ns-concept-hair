@@ -3,10 +3,10 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, reduceMotion } from "@/lib/gsap";
-import { SERVICES } from "@/content/services";
+import { SERVICES, type Service } from "@/content/services";
 
 // TODO confirmar etapas com o salão (vêm de services.ts)
-const STEPS = SERVICES[0].etapas ?? [];
+const PADRAO = SERVICES[0].etapas;
 
 const ICONS = [
   // lupa (avaliação)
@@ -35,7 +35,10 @@ const ICONS = [
 ];
 
 /** As 4 etapas do Mega Hair em linha: ícones em traço ligados por linha pontilhada que se desenha no scroll. */
-export default function StepsRow({ className = "" }: { className?: string }) {
+export default function StepsRow({ className = "", steps = PADRAO }: { className?: string; steps?: Service["etapas"] }) {
+  const n = steps.length;
+  // 3 etapas usam lupa, mecha e calendário; 4 usam os quatro ícones
+  const ico = n === 3 ? [0, 1, 3] : [0, 1, 2, 3];
   const ref = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -48,14 +51,15 @@ export default function StepsRow({ className = "" }: { className?: string }) {
 
   return (
     <div ref={ref} className={`relative ${className}`}>
-      <span className="sr-line absolute left-[12%] right-[12%] top-6 hidden border-t-2 border-dotted border-bronze-deep/60 md:block" aria-hidden="true" />
-      <ol className="relative grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">
-        {STEPS.map((s, i) => (
+      <span className="sr-line absolute top-6 hidden border-t-2 border-dotted border-bronze-deep/60 md:block" style={{ left: `${50 / n}%`, right: `${50 / n}%` }} aria-hidden="true" />
+      <ol className="relative grid grid-cols-2 gap-x-4 gap-y-8 md:[grid-template-columns:repeat(var(--n),minmax(0,1fr))]" style={{ "--n": n } as React.CSSProperties}>
+        {steps.map((s, i) => (
           <li key={s.titulo} className="flex flex-col items-center text-center">
-            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-bronze-deep [&>svg]:h-8 [&>svg]:w-8">{ICONS[i]}</span>
-            <span className="eyebrow mt-3 !text-[10px] !tracking-[0.25em]">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-bronze-deep [&>svg]:h-6 [&>svg]:w-6">{ICONS[ico[i]]}</span>
+            <span className="mt-3 text-[12px] font-normal uppercase tracking-[0.08em] text-bronze-deep">
               {i + 1}. {s.titulo}
             </span>
+            <span className="mt-1 hidden text-[13px] leading-snug text-bronze-deep md:block">{s.texto}</span>
           </li>
         ))}
       </ol>

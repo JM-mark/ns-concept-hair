@@ -43,12 +43,12 @@ Regras do cliente: **nenhuma foto de profissional do salão** (nem mão, braço 
 | O Salão, galeria | `salao-1.webp` | 720×… | https://www.instagram.com/stories/highlights/17893660139886340/ | @nsconcepthair (destaque "O salão") | espaço sem pessoas |
 | O Salão, galeria | `salao-2.webp` | 1080×… | https://www.instagram.com/reel/DVj0gicETsU/ | @nsconcepthair | espaço sem pessoas |
 | O Salão, galeria | `salao-3.webp` | 3216×… | https://www.instagram.com/reel/DVl_XekkQBG/ | @nsconcepthair | espaço sem pessoas |
-| O Salão, galeria | `salao-4.webp` | 1179×… | https://www.instagram.com/reel/DcELlnZqEea/ | @nsconcepthair | produto, sem pessoas |
 | Contato, fachada | `fachada.webp` | 3216×… | https://www.instagram.com/reel/DVFBN5gkUCh/ | @nsconcepthair | fachada, sem pessoas |
 
 ## Avisos
 - Posts com o Netto (DMJKFMHRBT-, DW6lzlhkYic, DbGNfTJROOD, DVrX9U4Ea7Q): só entram recortes de cabelo com pelo menos 900px de largura e nada do profissional. DbGNfTJROOD e DVrX9U4Ea7Q foram descartados (recorte limpo menor que 900px).
 - Fachada: a placa mostra o nome anterior, "Netto Sillva Concept Hair". Só aparece em /contato, com legenda e `// TODO pedir foto atual`.
+- Foto dos frascos (Hair Splash) retirada de /o-salao: produto com marca visível.
 - Destaque "O salão": só o primeiro story (recepção) mostra o espaço sem pessoas; os outros dois têm a equipe e não foram usados.
 - Maps, aba "Do proprietário": só traz retratos de clientes; a aba "Interior" tem uma selfie de academia. Nada de lá foi usado.
 - Vídeo do hero: Pexels, "A woman with long brown hair", https://www.pexels.com/video/a-woman-with-long-brown-hair-8955573/ (licença Pexels). Ver README.

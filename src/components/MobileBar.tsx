@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { whatsappLink } from "@/content/site";
 import { WhatsAppIcon } from "./Icons";
 
 /** Barra fixa no celular: aparece depois do hero. */
 export default function MobileBar() {
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > window.innerHeight * 1.05);
@@ -15,6 +17,7 @@ export default function MobileBar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  if (pathname === "/agendar/" || pathname === "/agendar") return null;
   return (
     <div
       className={`fixed inset-x-0 bottom-0 z-[80] flex gap-2 border-t border-[var(--line)] bg-ink/90 p-3 backdrop-blur-[12px] transition-transform duration-500 lg:hidden ${

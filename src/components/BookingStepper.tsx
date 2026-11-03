@@ -26,7 +26,7 @@ const STEPS = ["Serviço", "Data e horário", "Seus dados", "Resumo"];
 const field =
   "w-full rounded-none border-0 border-b border-white/30 bg-transparent px-0 py-3 text-[17px] text-ivory placeholder:text-ivory/50 focus:border-champagne focus:outline-none aria-[invalid=true]:border-[#ff9a8a]";
 
-export default function BookingStepper() {
+export default function BookingStepper({ onChange }: { onChange?: (b: Booking) => void } = {}) {
   const params = useSearchParams();
   const reduced = useReducedMotion();
   const [now] = useState(() => new Date());
@@ -41,6 +41,11 @@ export default function BookingStepper() {
   const heading = useRef<HTMLHeadingElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const mounted = useRef(false);
+
+  // avisa o painel de resumo da página
+  useEffect(() => {
+    onChange?.(b);
+  }, [b, onChange]);
 
   const hasMega = b.servicos.some((id) => optionById(id)?.slug === "mega-hair");
 
@@ -122,13 +127,12 @@ export default function BookingStepper() {
 
   return (
     <div ref={root} data-native-cursor className="scroll-mt-28">
-      <p className="eyebrow mb-6">Agendamento</p>
-
+      
       {done ? (
         <div role="status">
-          <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(28px,4.8vw,62px)] outline-none">
+          <h2 ref={heading} tabIndex={-1} className="font-display text-[clamp(28px,4.8vw,62px)] outline-none">
             Pedido pronto.
-          </h1>
+          </h2>
           <p className="mt-6 max-w-xl text-[18px] text-ivory/85">
             Se a conversa com o salão não abriu no WhatsApp, use o botão abaixo. Assim que o salão confirmar, você recebe a resposta no WhatsApp.
           </p>
@@ -176,9 +180,9 @@ export default function BookingStepper() {
             <motion.div key={step} {...anim} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
               {step === 1 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
+                  <h2 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Qual serviço você quer?
-                  </h1>
+                  </h2>
                   <p className="mt-3 text-[16px] text-mute">O salão confirma o horário pelo WhatsApp. Você pode escolher mais de um serviço.</p>
                   <div className="mt-10 space-y-10" data-err-focus={errors.servicos ? "" : undefined} tabIndex={errors.servicos ? -1 : undefined}>
                     {SERVICES.map((s) => (
@@ -194,7 +198,7 @@ export default function BookingStepper() {
                                 key={o.id}
                                 className={`flex min-h-[56px] cursor-pointer items-start gap-4 rounded-[14px] border p-4 transition-colors ${
                                   o.destaque ? "" : ""
-                                } ${on ? "border-champagne bg-champagne/10" : "border-[var(--line)] hover:border-champagne/70"} has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-champagne`}
+                                } ${on ? "border-champagne bg-champagne/10" : o.destaque ? "border-champagne/60" : "border-[var(--line)] hover:border-champagne/70"} has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-champagne`}
                               >
                                 <input type="checkbox" className="sr-only" checked={on} onChange={() => toggleServico(o.id)} />
                                 <span
@@ -202,8 +206,9 @@ export default function BookingStepper() {
                                   aria-hidden="true"
                                 />
                                 <span>
-                                  <span className={`block ${o.destaque ? "font-display text-[26px]" : "text-[17px]"}`}>{o.nome}</span>
+                                  <span className={`block text-[17px]`}>{o.nome}</span>
                                   {o.nota && <span className="mt-1 block text-[15px] text-mute">{o.nota}</span>}
+                                  {o.destaque && <span className="mt-2 inline-block text-[11px] uppercase tracking-[0.16em] text-champagne">Carro-chefe</span>}
                                 </span>
                               </label>
                             );
@@ -222,9 +227,9 @@ export default function BookingStepper() {
 
               {step === 2 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
+                  <h2 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Quando fica bom?
-                  </h1>
+                  </h2>
                   <p className="mt-3 mb-10 text-[16px] text-mute">Escolha o dia e um horário, ou só o período, se preferir.</p>
                   <BookingCalendar
                     data={b.data}
@@ -242,9 +247,9 @@ export default function BookingStepper() {
 
               {step === 3 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
+                  <h2 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Seus dados
-                  </h1>
+                  </h2>
                   <form
                     className="mt-10 grid max-w-2xl gap-6"
                     noValidate
@@ -351,9 +356,9 @@ export default function BookingStepper() {
 
               {step === 4 && (
                 <section>
-                  <h1 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
+                  <h2 ref={heading} tabIndex={-1} className="font-display text-[clamp(22px,2.9vw,34px)] outline-none">
                     Confira o pedido
-                  </h1>
+                  </h2>
                   <p className="mt-3 text-[16px] text-mute">É uma solicitação: o salão confirma o horário pelo WhatsApp.</p>
                   <dl className="mt-10 max-w-2xl border border-[var(--line)]">
                     {(

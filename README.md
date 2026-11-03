@@ -45,3 +45,13 @@ Layout e motion inspirados na LuxySpa (Framer), somente inspiração. Tokens e p
 
 ## Fotos: onde cada arquivo aparece
 Regra do cliente: nenhuma foto de profissional, selfie não entra, nenhum arquivo em mais de um lugar. `node scripts/process-photos.mjs` gera as imagens e `node scripts/check-unique.mjs` confere a unicidade. A tabela completa (lugar, fonte e confirmação de cliente/resultado) está em `docs/fotos-usadas.md`.
+
+
+## Revisão 5: páginas internas, copy e SEO
+- **Prévia não indexável**: enquanto o site estiver em `jm-mark.github.io`, todas as páginas saem com `noindex, nofollow` e o `robots.txt` com `Disallow: /`. No domínio oficial, rodar o build com `NEXT_PUBLIC_INDEXABLE=true` e `NEXT_PUBLIC_SITE_URL=https://dominio-oficial.com.br/` (com a barra no fim). A URL do site vem só de `SITE.url` (`src/content/site.ts`): canonical, Open Graph, sitemap e JSON-LD.
+- **Títulos e descrições**: `src/content/seo.ts`. **Dados estruturados**: `src/lib/jsonld.ts` (HairSalon na Home, Service nas páginas de serviço, BreadcrumbList nas internas; sem nota, sem avaliações e sem `priceRange` até o salão confirmar).
+- **Imagens de compartilhamento**: `node scripts/make-og.mjs` (depois de `npm run build`) gera `public/og/og-<serviço>.jpg`.
+- **Sitemap**: `lastmod` vem do último commit de cada página (`scripts/gen-lastmod.mjs`, roda no `prebuild`; o workflow usa `fetch-depth: 0`). As 6 páginas de serviço compartilham `src/content/services.ts`.
+- **Auditoria**: `node scripts/audit-seo.mjs` (title, description, canonical, robots, H1, imagens sem alt, JSON-LD) e `node scripts/check-titles.mjs` (nenhum título com palavra partida em 390/768/1024/1440px).
+- **Textos dos serviços**: `node scripts/export-textos.mjs` gera `docs/textos-servicos.md` para o salão revisar.
+- **Pendências**: foto atual da fachada (a placa ainda mostra o nome anterior; a foto saiu de /contato), confirmar etapas e respostas marcadas com `// TODO` em `services.ts`, horário de segunda.

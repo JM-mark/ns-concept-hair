@@ -272,7 +272,10 @@ em {
 /* Máscara de linha de título */
 .line-mask {
   display: block;
+  max-width: 100%;
   overflow: hidden;
+  overflow-wrap: anywhere;
+  hyphens: manual;
   padding-bottom: 0.12em;
   margin-bottom: -0.12em;
 }

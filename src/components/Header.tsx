@@ -84,6 +84,8 @@ export default function Header() {
   }, [open]);
 
   const e = SITE.endereco;
+  // página atual: "/" só na Home; as demais por prefixo (/servicos/mega-hair/ marca "Serviços")
+  const atual = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
   const floating = scrolled && !open;
   const ink = open; // sobre areia, texto escuro
 
@@ -117,7 +119,7 @@ export default function Header() {
             className={`absolute left-1/2 top-1/2 block h-9 -translate-x-1/2 -translate-y-1/2 md:h-10 ${isHome ? "home-logo" : ""}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={asset(ink ? "/brand/ns-monograma-escuro.png" : "/brand/ns-monograma-champagne.png")} alt="NS Concept Hair" className="h-full w-auto" />
+            <img src={asset(ink ? "/brand/ns-monograma-escuro.png" : "/brand/ns-monograma-champagne.png")} alt="" aria-hidden="true" className="h-full w-auto" />
           </Link>
 
           <Link
@@ -143,13 +145,17 @@ export default function Header() {
           <ul className="space-y-1">
             {[{ href: "/", label: "Início" }, ...NAV].map((item) => (
               <li key={item.href} className="overflow-hidden">
-                <div data-m>
+                <div data-m className="relative">
                   <Link
                     href={item.href}
+                    aria-current={atual(item.href) ? "page" : undefined}
                     onClick={() => setOpen(false)}
                     className="block font-display text-[clamp(31px,4.8vw,50px)] leading-[1.12] transition-colors hover:text-bronze"
                   >
-                    {item.label}
+                    <span className="relative inline-block">
+                      {atual(item.href) && <span className="absolute -left-5 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-bronze-deep md:-left-7" aria-hidden="true" />}
+                      {item.label}
+                    </span>
                   </Link>
                   {item.href === "/servicos/" && (
                     <ul className="mb-3 flex flex-wrap justify-center gap-x-6 gap-y-1">
@@ -183,7 +189,11 @@ export default function Header() {
               </p>
             </div>
           </address>
-          <div data-m>
+          <div data-m className="flex flex-col items-start gap-4 md:items-end">
+            <p className="text-bronze-deep md:text-right">{SITE.horarioResumo.replace("Ter a sex, 8h às 19h · Sáb, 8h às 18h", "Ter a sex 8h–19h · Sáb 8h–18h")}</p>
+            <Link href="/agendar/" onClick={() => setOpen(false)} className="btn btn-primary">
+              <span className="btn-clip">Agendar horário</span>
+            </Link>
             <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="link-line inline-flex items-center gap-2 text-bronze-deep">
               <InstagramIcon className="h-4 w-4" /> @nsconcepthair
             </a>

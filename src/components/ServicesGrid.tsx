@@ -3,6 +3,7 @@ import { SERVICES, serviceHref } from "@/content/services";
 import { firstPhoto } from "@/content/photos";
 import { asset } from "@/lib/asset";
 import { Fade, SplitTitle } from "./motion";
+import BrowPanel from "./BrowPanel";
 
 type Cell = { key: string; nome: string; href: string; itens: string[]; agendar: string; foto?: ReturnType<typeof firstPhoto> };
 
@@ -31,7 +32,7 @@ function cellsFor(variant: "home" | "full"): Cell[] {
 /** Card retrato 3:4: a foto inteira, nome e itens embaixo (fora da foto). Brilho diagonal no hover, sem zoom. */
 function ServiceCard({ c, n }: { c: Cell; n: number }) {
   return (
-    <li className="w-[72%] shrink-0 snap-start sm:w-[46%] md:w-auto">
+    <li className="w-[72%] shrink-0 snap-start sm:w-[46%] md:w-[34%] lg:w-auto">
       <Link href={c.href} className="shine group block">
         <div className="relative aspect-[3/4] overflow-hidden rounded-[6px] bg-graphite">
           {c.foto ? (
@@ -48,16 +49,13 @@ function ServiceCard({ c, n }: { c: Cell; n: number }) {
               className="h-full w-full object-cover object-[50%_20%]"
             />
           ) : (
-            <svg viewBox="0 0 400 200" fill="none" className="absolute left-1/2 top-[40%] w-[70%] -translate-x-1/2" aria-hidden="true">
-              <path d="M20 120 C 90 40, 220 20, 380 70" stroke="var(--champagne)" strokeOpacity="0.55" strokeWidth="1.4" strokeLinecap="round" />
-              <path d="M40 140 C 110 70, 230 50, 370 96" stroke="var(--champagne)" strokeOpacity="0.25" strokeWidth="1" strokeLinecap="round" />
-            </svg>
+            <BrowPanel nome={c.nome} className="absolute inset-0" />
           )}
           <span className="shine-sweep" aria-hidden="true" />
         </div>
         <div className="pt-4">
           <p className="text-[12px] tabular-nums text-ivory/50">{String(n).padStart(2, "0")}</p>
-          <h3 className="mt-1 font-display text-[clamp(17px,1.4vw,21px)] leading-tight text-ivory">{c.nome}</h3>
+          <h3 className={`mt-1 font-display text-[clamp(14px,1.5vw,22px)] leading-tight text-ivory ${c.foto ? "" : "sr-only"}`}>{c.nome}</h3>
           <p className="mt-2 text-[14px] text-ivory/70">{c.itens.join(" · ")}</p>
           <span className="label link-line mt-3 inline-block text-champagne">Ver serviço →</span>
         </div>
@@ -69,7 +67,7 @@ function ServiceCard({ c, n }: { c: Cell; n: number }) {
 /** Serviços: título acima, fileira de cards retrato (carrossel com snap no celular). */
 export default function ServicesGrid({ variant = "home" }: { variant?: "home" | "full" }) {
   const cells = cellsFor(variant);
-  const cols = variant === "home" ? "md:grid-cols-5" : "md:grid-cols-3";
+  const cols = variant === "home" ? "lg:grid-cols-5" : "lg:grid-cols-3";
   return (
     <section
       className="bg-ink py-20 md:py-28"
@@ -94,8 +92,8 @@ export default function ServicesGrid({ variant = "home" }: { variant?: "home" | 
         </div>
       )}
       <ul
-        className={`mx-auto flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:grid md:gap-5 md:overflow-visible md:px-10 [&::-webkit-scrollbar]:hidden ${cols} ${
-          variant === "full" ? "md:gap-y-14" : ""
+        className={`mx-auto flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:none] lg:grid lg:gap-5 lg:overflow-visible md:px-10 [&::-webkit-scrollbar]:hidden ${cols} ${
+          variant === "full" ? "lg:gap-y-14" : ""
         }`}
       >
         {cells.map((c, i) => (

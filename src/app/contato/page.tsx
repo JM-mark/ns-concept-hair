@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
 import PageHero from "@/components/PageHero";
 import Button from "@/components/Button";
 import { SITE, whatsappLink } from "@/content/site";
-import Visual from "@/components/Visual";
-import { firstPhoto } from "@/content/photos";
+import MapCard from "@/components/MapCard";
 import { InstagramIcon, MailIcon, PinIcon, WhatsAppIcon } from "@/components/Icons";
 
 export const metadata: Metadata = {
-  title: "Contato",
-  description: "Endereço, horário, WhatsApp e como chegar ao NS Concept Hair, em Indaiatuba.",
+  title: { absolute: "Contato, endereço e horário | NS Concept Hair, Indaiatuba" },
+  description: "Fale com o NS Concept Hair pelo WhatsApp ou venha nos visitar: endereço no 2º andar em Indaiatuba (SP), horário de funcionamento e como chegar.",
   alternates: { canonical: "contato/" },
 };
 
@@ -16,6 +17,7 @@ export default function ContatoPage() {
   const e = SITE.endereco;
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ nome: "Contato", path: "contato/" }])} />
       <PageHero
         label="Contato"
         lines={["Vamos", "conversar."]}
@@ -50,18 +52,13 @@ export default function ContatoPage() {
             <div>
               <h2 className="label mb-3 !font-sans text-champagne">Horário</h2>
               <p className="text-[17px]">{SITE.horarioResumo}</p>
-              <p className="mt-2 text-[15px] text-mute">Para o horário completo, confira o Google Maps.</p>
               <a href={SITE.maps} target="_blank" rel="noopener noreferrer" className="label link-line mt-3 inline-block text-champagne">
                 Ver no Google Maps
               </a>
               <p className="mt-2 text-[15px] text-mute">Fechado aos domingos e às segundas.</p>
               <p className="mt-6 text-[15px] text-mute">{SITE.lgbt}.</p>
             </div>
-            <figure>
-              {/* TODO pedir foto atual da fachada ao salão */}
-              <Visual photo={firstPhoto("fachada")} label="Fachada do prédio" className="aspect-[4/3] w-full" position="50% 38%" sizes="(min-width:1024px) 40vw, 100vw" />
-              <figcaption className="mt-3 text-[13px] text-mute">Fachada do prédio (placa com o nome anterior do salão)</figcaption>
-            </figure>
+            {/* TODO pedir ao salão uma foto atual da fachada (a placa do prédio ainda mostra o nome anterior) */}
             <ul className="space-y-3 text-[17px]">
               <li>
                 <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="link-line inline-flex items-center gap-3">
@@ -86,15 +83,7 @@ export default function ContatoPage() {
             </ul>
           </div>
           <div className="lg:col-span-7">
-            <div className="relative aspect-[4/3] w-full overflow-hidden border border-[var(--line)] lg:aspect-[5/4]">
-              <iframe
-                title="Mapa: NS Concept Hair, Indaiatuba"
-                src={SITE.mapsEmbed}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="map-dark absolute inset-0 h-full w-full border-0"
-              />
-            </div>
+            <MapCard mapHeight="h-[380px] lg:h-[560px]" detalhes={false} />
           </div>
         </div>
       </section>

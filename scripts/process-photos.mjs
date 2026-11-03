@@ -62,7 +62,6 @@ const SPEC = [
   { name: "salao-1", group: "salao-detalhes", file: "scripts/_work/hl/hl_00a.jpg", post: "https://www.instagram.com/stories/highlights/17893660139886340/", by: "@nsconcepthair (destaque \"O salão\")", alt: "Recepção do salão, com poltronas cinza e quadro na parede", conf: "espaço sem pessoas", uso: "O Salão, galeria" },
   { name: "salao-2", group: "salao-detalhes", file: raw("DVj0gicETsU"), post: ig("DVj0gicETsU", 1), by: "@nsconcepthair", alt: "Monograma NS entre flores e embalagens do salão", conf: "espaço sem pessoas", uso: "O Salão, galeria" },
   { name: "salao-3", group: "salao-detalhes", file: raw("DVl_XekkQBG"), post: ig("DVl_XekkQBG", 1), by: "@nsconcepthair", alt: "Detalhe da fachada do salão, com folhagem e céu azul", conf: "espaço sem pessoas", uso: "O Salão, galeria" },
-  { name: "salao-4", group: "salao-detalhes", file: raw("DcELlnZqEea"), post: ig("DcELlnZqEea", 1), by: "@nsconcepthair", alt: "Frascos do perfume capilar Hair Splash sobre uma bancada de madeira", crop: [0, 0.18, 1, 0.44], conf: "produto, sem pessoas", uso: "O Salão, galeria" },
   { name: "fachada", group: "fachada", file: raw("DVFBN5gkUCh"), post: ig("DVFBN5gkUCh", 1), by: "@nsconcepthair", alt: "Fachada do prédio com o monograma NS, em Indaiatuba (placa com o nome anterior do salão)", crop: [0, 0, 1, 0.68], conf: "fachada, sem pessoas", uso: "Contato, fachada" },
 ];
 
@@ -138,6 +137,7 @@ ${rows}
 ## Avisos
 - Posts com o Netto (DMJKFMHRBT-, DW6lzlhkYic, DbGNfTJROOD, DVrX9U4Ea7Q): só entram recortes de cabelo com pelo menos 900px de largura e nada do profissional. DbGNfTJROOD e DVrX9U4Ea7Q foram descartados (recorte limpo menor que 900px).
 - Fachada: a placa mostra o nome anterior, "Netto Sillva Concept Hair". Só aparece em /contato, com legenda e \`// TODO pedir foto atual\`.
+- Foto dos frascos (Hair Splash) retirada de /o-salao: produto com marca visível.
 - Destaque "O salão": só o primeiro story (recepção) mostra o espaço sem pessoas; os outros dois têm a equipe e não foram usados.
 - Maps, aba "Do proprietário": só traz retratos de clientes; a aba "Interior" tem uma selfie de academia. Nada de lá foi usado.
 - Vídeo do hero: Pexels, "A woman with long brown hair", https://www.pexels.com/video/a-woman-with-long-brown-hair-8955573/ (licença Pexels). Ver README.

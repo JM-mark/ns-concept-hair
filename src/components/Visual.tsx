@@ -1,10 +1,10 @@
 import type { Photo } from "@/content/photos";
 import { asset } from "@/lib/asset";
 import { PhotoReveal } from "./motion";
+import BrowPanel from "./BrowPanel";
 
 type Props = {
   photo?: Photo;
-  num?: string;
   label: string;
   className?: string;
   sizes?: string;
@@ -17,7 +17,7 @@ type Props = {
  * Foto real quando existe; senão painel tipográfico (número grande + nome).
  * Nunca foto de banco.
  */
-export default function Visual({ photo, num, label, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority, dataCursor, position }: Props) {
+export default function Visual({ photo, label, className = "", sizes = "(min-width: 1024px) 50vw, 100vw", priority, dataCursor, position }: Props) {
   if (photo) {
     return (
       <PhotoReveal className={`relative overflow-hidden rounded-[6px] bg-graphite ${className}`} dataCursor={dataCursor}>
@@ -38,26 +38,5 @@ export default function Visual({ photo, num, label, className = "", sizes = "(mi
       </PhotoReveal>
     );
   }
-  return (
-    <div
-      className={`relative flex items-end overflow-hidden rounded-[16px] bg-graphite p-6 md:p-8 ${className}`}
-      role="img"
-      aria-label={label}
-    >
-      <div
-        className="pointer-events-none absolute inset-0"
-        aria-hidden="true"
-        style={{
-          background:
-            "linear-gradient(122deg, transparent 0 48.6%, rgb(205 184 150 / 0.28) 48.6% 49%, transparent 49% 100%), radial-gradient(120% 90% at 85% 10%, rgb(205 184 150 / 0.08), transparent 60%)",
-        }}
-      />
-      {num && (
-        <span className="absolute right-5 top-2 font-display text-[clamp(63px,9.5vw,140px)] leading-none text-champagne/20" aria-hidden="true">
-          {num}
-        </span>
-      )}
-      <span className="label relative text-champagne">{label}</span>
-    </div>
-  );
+  return <BrowPanel nome={label} className={className} />;
 }

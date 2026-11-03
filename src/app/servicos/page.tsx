@@ -2,16 +2,20 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import ServicesGrid from "@/components/ServicesGrid";
 import CtaBand from "@/components/CtaBand";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/jsonld";
+import { SEO_SERVICOS_LISTA } from "@/content/seo";
 
 export const metadata: Metadata = {
-  title: "Serviços",
-  description: "Mega Hair, coloração, corte com visagismo, tratamentos, unhas e design de sobrancelhas em Indaiatuba.",
+  title: { absolute: SEO_SERVICOS_LISTA.titulo },
+  description: SEO_SERVICOS_LISTA.descricao,
   alternates: { canonical: "servicos/" },
 };
 
 export default function ServicosPage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ nome: "Serviços", path: "servicos/" }])} />
       <PageHero
         label="Serviços"
         lines={["Seis formas de", "cuidar."]}

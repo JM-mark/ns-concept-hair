@@ -23,7 +23,7 @@ export default function PageHero({
         <Fade as="p" className="eyebrow mb-8" trigger="load">
           {label}
         </Fade>
-        <SplitTitle as="h1" trigger="load" lines={lines} className="max-w-5xl font-display text-[clamp(44px,7.5vw,112px)] font-medium leading-[0.98]" />
+        <SplitTitle as="h1" trigger="load" lines={lines} className="max-w-full font-display text-[clamp(28px,8.2vw,104px)] leading-[1.02] [hyphens:manual]" />
         {intro && (
           <Fade as="p" trigger="load" delay={0.3} className="mt-8 max-w-xl text-[18px] text-ivory/80">
             {intro}

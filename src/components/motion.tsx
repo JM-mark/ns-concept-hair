@@ -39,7 +39,7 @@ export function SplitTitle({ lines, as: Tag = "h2", className = "", trigger = "s
     <Tag ref={ref} className={className}>
       {lines.map((l, i) => (
         <span key={i} className="line-mask">
-          <span>{l}</span>
+          <span>{l}</span>{" "}
         </span>
       ))}
     </Tag>

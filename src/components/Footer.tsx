@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="grain relative border-t border-[var(--line)] bg-ink pb-24 pt-20 text-center lg:pb-12">
       <div className="mx-auto max-w-[1100px] px-5 md:px-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={asset("/brand/ns-monograma-champagne.png")} alt="NS Concept Hair" className="mx-auto h-28 w-auto md:h-36" />
+        <img src={asset("/brand/ns-monograma-champagne.png")} alt="" aria-hidden="true" className="mx-auto h-28 w-auto md:h-36" />
         <p className="eyebrow mt-6 !text-[11px]">Concept Hair</p>
 
         <ul className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3">

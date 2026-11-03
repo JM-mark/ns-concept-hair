@@ -304,7 +304,7 @@ export default function Hero() {
               <span className="block" aria-hidden="true">
                 Seu espaço
               </span>
-            </span>
+            </span>{" "}
             <span className="h-line -mb-[0.1em] block overflow-hidden pb-[0.1em]">
               <span className="block" aria-hidden="true">
                 para ser cuidada.
@@ -313,7 +313,7 @@ export default function Hero() {
           </h1>
           <div className="mt-8 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <p className="h-sub invisible max-w-md text-[17px] text-ivory/85">
-              Mega Hair, coloração e visagismo com exclusividade. Beleza, cuidado e experiência em cada detalhe.
+              Mega Hair, coloração e visagismo com exclusividade, em Indaiatuba.
             </p>
             <div className="h-cta invisible flex flex-wrap gap-3">
               <Button href="/agendar/" variant="ivory">

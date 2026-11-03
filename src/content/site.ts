@@ -1,11 +1,16 @@
 import { asset } from "@/lib/asset";
 
+/** Enquanto o site estiver no domínio de prévia (github.io), fica `false`: noindex em todas as páginas e `Disallow: /` no robots.txt.
+ *  No domínio oficial, definir NEXT_PUBLIC_INDEXABLE=true (e NEXT_PUBLIC_SITE_URL) no build. */
+export const INDEXABLE = process.env.NEXT_PUBLIC_INDEXABLE === "true";
+
 export const SITE = {
   nome: "NS Concept Hair",
   tagline: "Seu espaço para ser cuidada.",
   descricao:
     "Salão em Indaiatuba: Mega Hair, coloração, visagismo, tratamentos, unhas e sobrancelhas. Beleza, cuidado e experiência em cada detalhe.",
-  url: "https://jm-mark.github.io/ns-concept-hair/",
+  // URL única do site: canonical, Open Graph, sitemap e JSON-LD usam esta variável. Termina com "/".
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://jm-mark.github.io/ns-concept-hair/",
   endereco: {
     rua: "R. Miguel Fernandes García Filho, 418",
     complemento: "2º andar",
@@ -17,7 +22,7 @@ export const SITE = {
   geo: { lat: -23.0761675, lng: -47.2161908 },
   telefone: "(19) 99351-4120",
   whatsapp: "5519993514120",
-  email: "Nettosillvaconcepthair@gmail.com",
+  email: "nettosillvaconcepthair@gmail.com",
   instagram: "https://www.instagram.com/nsconcepthair/",
   instagramDiretor: "https://www.instagram.com/nettosillva.ns/",
   linkBio: "https://bio.site/nsconcepthair",
